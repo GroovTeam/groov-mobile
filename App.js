@@ -19,7 +19,7 @@ function DevSelector({ navigation }) {
     <View style={Styles.container}>
       <Button
         raised
-        text="Test Registration Sequence"
+        text='Test Registration Sequence'
         onPress={() => navigation.navigate('Greet')}
         />
     </View>
