@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { DevTools, Feed, Explore, Profile } from './tpc-utils/ExpoPages';
+import { DevTools, Feed, Explore, Profile } from './pages/ExpoPages';
 
 // Create a stack to manage the user's open pages.
 const BottomTabs = createBottomTabNavigator();
