@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Styles } from '../components/ExpoComponents';
+import Styles from '../components/Styles';
  
 const Profile = ({ navigation }) => {
   return (
