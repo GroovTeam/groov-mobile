@@ -1,21 +1,62 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { DevTools, Feed, Explore, Profile } from 'tpc-utils/ExpoPages';
 
-export default function App() {
+// Create a stack to manage the user's open pages.
+const BottomTabs = createBottomTabNavigator();
+
+/**
+ * Main application
+ */
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <BottomTabs.Navigator>
+        <BottomTabs.Screen
+          name='Dev'
+          component={DevTools}
+          options={{
+            tabBarLabel: 'Dev',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name='cog' color={color} size={size} />
+            ),
+          }}
+        />
+        <BottomTabs.Screen
+          name='Feed'
+          component={Feed}
+          options={{
+            tabBarLabel: 'Feed',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name='home' color={color} size={size} />
+            ),
+          }}
+        />
+        <BottomTabs.Screen
+          name='Explore'
+          component={Explore}
+          options={{
+            tabBarLabel: 'Explore',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name='magnify' color={color} size={size} />
+            ),
+          }}
+        />
+        <BottomTabs.Screen
+          name='Profile'
+          component={Profile}
+          options={{
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name='account' color={color} size={size} />
+            ),
+          }}
+        />
+      </BottomTabs.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
