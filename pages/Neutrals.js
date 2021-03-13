@@ -1,30 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Styles from '../components/Styles';
 import SwipeConfig from '../components/SwipeConfig';
 import GenreSelections from '../components/GenreSelections';
 
-const Greeting = ({ navigation }) => {
+const Neutrals = ({ route, navigation }) => {
+  const [ genres, setGenres ] = useState(route.params.genres);
 
-  const DATA = [
-    'Rap',
-    'Opera',
-    'Country',
-    'Pop',
-    'Latin',
-    'Musical-Theatre',
-    'Rock',
-    'Alternative',
-    'Hip-Hop',
-    'K-Pop',
-    'Samba',
-  ];
+  const updateNeutrals = (key) => {
+    const curGenres = genres;
+    curGenres[key] = !curGenres[key];
+    setGenres(curGenres);
+  }
+
+  const proceed = () => {
+    // Deep clone genres
+    const genresExcludingNeutrals = JSON.parse(JSON.stringify(genres));
+
+    // Delete liked objects from options
+    for (const [key, value] of Object.entries(genresExcludingNeutrals))
+      if (value)
+        delete genresExcludingNeutrals[key];
+
+    // Navigate with new items
+    navigation.navigate('Dev', {genres: genresExcludingNeutrals});
+  }
 
   return (
   <GestureRecognizer
     onSwipeRight={() => navigation.navigate('Like')}
-    onSwipeLeft={() => navigation.navigate('Dev')}
+    onSwipeLeft={proceed}
     config={SwipeConfig}
     style={Styles.container}
     >
@@ -36,11 +42,12 @@ const Greeting = ({ navigation }) => {
       to?
       </Text>
       <GenreSelections
-        data={DATA}
+        data={genres}
         color={'#0000FF44'}
+        updateButtons={updateNeutrals}
       />
   </GestureRecognizer>
   );
 }
  
-export default Greeting;
+export default Neutrals;

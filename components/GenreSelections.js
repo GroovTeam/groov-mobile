@@ -21,17 +21,21 @@ const containerStyles = StyleSheet.create({
   },
 });
 
-const GenreSelections = ({ data, color }) => {
-
+const GenreSelections = ({ data, color, updateButtons }) => {
 
   const items = []
 
-  for (const [index, value] of data.entries()) {
+  const toggleButton = (key) => {
+    updateButtons(key);
+  }
+
+  for (const [key, value] of Object.entries(data)) {
     items.push(
     <View style={containerStyles.smallPadding}>
       <GenreSelectionButton
-        text={value}
+        text={key}
         color={color}
+        toggleSelf={toggleButton}
         />
     </View>
     );

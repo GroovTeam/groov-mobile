@@ -23,21 +23,26 @@ const buttonStyles = StyleSheet.create({
   },
 });
 
-const GenreSelectionButton = ({ text, color }) => {
+const GenreSelectionButton = ({ text, color, toggleSelf }) => {
   const [ selected, setSelected ] = useState(false);
   
   const customColor = StyleSheet.create({
     apply: {
       backgroundColor: color,
     },
-  })
+  });
+
+  const select = () => {
+    setSelected(!selected);
+    toggleSelf(text);
+  }
 
   const selectedStyle = selected ? customColor.apply : buttonStyles.whiteBackground;
 
   return (
     <Button
       containerStyle={[buttonStyles.internalContainer, selectedStyle]}
-      onPress={() => setSelected(!selected)}>
+      onPress={select}>
       <Text style={buttonStyles.text}>{text}</Text>
     </Button>
   );
