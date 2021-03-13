@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { Styles, SwipeConfig } from '../components/ExpoComponents';
+import Styles from '../components/Styles';
+import SwipeConfig from '../components/SwipeConfig';
  
 const Greeting = ({ navigation }) => {
   return (
@@ -11,14 +12,14 @@ const Greeting = ({ navigation }) => {
     config={SwipeConfig}
     style={Styles.container}
     >
-      <Text style={Styles.text}>
+      <Text style={[Styles.text, Styles.headerText]}>
         Hi, nice to&nbsp;
         <Text style={Styles.blueAccentText}>
         meet&nbsp;
         </Text>
         you
       </Text>
-      <Text style={Styles.text}>
+      <Text style={[Styles.text, Styles.headerText]}>
         Let's get to&nbsp;
         <Text style={Styles.blueAccentText}>
         know&nbsp;

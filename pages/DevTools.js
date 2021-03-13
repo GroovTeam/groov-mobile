@@ -3,8 +3,11 @@ import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Button } from 'react-native-material-ui';
-import { Greeting, Likes, Dislikes, Neutrals } from './ExpoPages';
-import { Styles } from '../components/ExpoComponents';
+import Greeting from './Greeting';
+import Likes from './Likes';
+import Dislikes from './Dislikes';
+import Neutrals from './Neutrals';
+import Styles from '../components/Styles';
 
 /**
  * General menu to aid in the development and testing process.

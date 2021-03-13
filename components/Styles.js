@@ -13,8 +13,12 @@ const styles = StyleSheet.create({
   text: {
     color: 'rgb(0,0,0)',
     fontSize: 25,
-    fontWeight: '100',
+    fontWeight: '200',
     textAlign: 'center',
+  },
+  headerText: {
+    fontSize: 35,
+    fontWeight: '200',
   },
   blueAccentText: {
     color: 'rgb(59,108,212)',

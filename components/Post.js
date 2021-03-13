@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image, Dimensions, StyleSheet } from 'react-native';
-import { Interactions } from './ExpoComponents';
+import Interactions from './Interactions';
 
 const window = Dimensions.get("window");
 const [ windowWidth, windowHeight ] = [ window.width, window.height ];
