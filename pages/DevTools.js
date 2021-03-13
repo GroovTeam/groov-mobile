@@ -7,6 +7,7 @@ import Greeting from './Greeting';
 import Likes from './Likes';
 import Dislikes from './Dislikes';
 import Neutrals from './Neutrals';
+import RecallChosenGenres from './RecallChosenGenres';
 import Styles from '../components/Styles';
 
 /**
@@ -37,10 +38,11 @@ const DevTools = () => {
     <NavigationContainer independent={true}>
       <Stack.Navigator>
         <Stack.Screen name='Dev'      component={DevSelector} />
-        <Stack.Screen name='Greet'    component={Greeting}    />
-        <Stack.Screen name='Like'     component={Likes}       />
-        <Stack.Screen name='Dislike'  component={Dislikes}    />
-        <Stack.Screen name='Neutral'  component={Neutrals}    />
+        <Stack.Screen name='Greet'    component={Greeting} />
+        <Stack.Screen name='Like'     component={Likes} />
+        <Stack.Screen name='Dislike'  component={Dislikes} />
+        <Stack.Screen name='Neutral'  component={Neutrals} />
+        <Stack.Screen name='Recall'   component={RecallChosenGenres} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -28,16 +28,25 @@ const Likes = ({ navigation }) => {
   }
 
   const proceed = () => {
-    // Deep clone genres
-    const genresExcludingLiked =  JSON.parse(JSON.stringify(genres));
+    const profileData = {
+      liked: [],
+      disliked: [],
+      neutral: [],
+    };
+    const remainingGenres = {};
 
     // Delete liked objects from options
-    for (const [key, value] of Object.entries(genresExcludingLiked))
+    for (const [key, value] of Object.entries(genres))
       if (value)
-        delete genresExcludingLiked[key];
+        profileData.liked.push(key);
+      else
+        remainingGenres[key] = value;
 
     // Navigate with new items
-    navigation.navigate('Dislike', {genres: genresExcludingLiked});
+    navigation.navigate('Dislike', {
+      genres: remainingGenres,
+      profileData: profileData,
+    });
   }
 
   return (

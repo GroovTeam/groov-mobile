@@ -15,21 +15,22 @@ const Neutrals = ({ route, navigation }) => {
   }
 
   const proceed = () => {
-    // Deep clone genres
-    const genresExcludingNeutrals = JSON.parse(JSON.stringify(genres));
+    const profileData = route.params.profileData;
 
     // Delete liked objects from options
-    for (const [key, value] of Object.entries(genresExcludingNeutrals))
+    for (const [key, value] of Object.entries(genres))
       if (value)
-        delete genresExcludingNeutrals[key];
+        profileData.neutral.push(key);
 
     // Navigate with new items
-    navigation.navigate('Dev', {genres: genresExcludingNeutrals});
+    navigation.navigate('Recall', {
+      profileData: profileData,
+    });
   }
 
   return (
   <GestureRecognizer
-    onSwipeRight={() => navigation.navigate('Like')}
+    onSwipeRight={() => navigation.navigate('Dislike')}
     onSwipeLeft={proceed}
     config={SwipeConfig}
     style={Styles.container}
