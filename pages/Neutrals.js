@@ -5,24 +5,33 @@ import Styles from '../components/Styles';
 import SwipeConfig from '../components/SwipeConfig';
 import GenreSelections from '../components/GenreSelections';
 
+/**
+ * Selection menu for a user's 'learn more's.
+ * 
+ * @param {Route} route
+ * @param {Navigator} navigation 
+ */
 const Neutrals = ({ route, navigation }) => {
+  // Genres are stateful and inhereted from previous selections.
   const [ genres, setGenres ] = useState(route.params.genres);
 
+  // Update a dislike by key.
   const updateNeutrals = (key) => {
     const curGenres = genres;
     curGenres[key] = !curGenres[key];
     setGenres(curGenres);
   }
 
+  // Proceed to the next step in registration.
   const proceed = () => {
     const profileData = route.params.profileData;
 
-    // Delete liked objects from options
+    // Add selected values to profileData, and push the rest to next step.
     for (const [key, value] of Object.entries(genres))
       if (value)
         profileData.neutral.push(key);
 
-    // Navigate with new items
+    // Navigate with new items.
     navigation.navigate('Recall', {
       profileData: profileData,
     });

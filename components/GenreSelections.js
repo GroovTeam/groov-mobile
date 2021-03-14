@@ -5,6 +5,7 @@ import GenreSelectionButton from './GenreSelectionButton';
 const window = Dimensions.get("window");
 const [ windowWidth, windowHeight ] = [ window.width, window.height ];
 
+// Styles for organizing the buttons.
 const containerStyles = StyleSheet.create({
   smallPadding: {
     padding: 2,
@@ -21,6 +22,13 @@ const containerStyles = StyleSheet.create({
   },
 });
 
+/**
+ * 
+ * @param {Object} data the data to render onto the buttons.
+ * @param {String} color the color to render for selections.
+ * @param {Callback} updateButtons update a button's status by key.
+ * @returns 
+ */
 const GenreSelections = ({ data, color, updateButtons }) => {
 
   const items = []

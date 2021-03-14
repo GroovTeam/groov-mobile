@@ -10,6 +10,7 @@ import { IconToggle } from 'react-native-material-ui';
  * 
  */
 
+// Space those icons nicely!
 const IconStyles = StyleSheet.create({
   'evenSpace': {
     justifyContent: 'space-evenly',

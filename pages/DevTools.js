@@ -31,7 +31,7 @@ function DevSelector({ navigation }) {
 const Stack = createStackNavigator();
 
 /**
- * Main application
+ * Holds a suite of buttons to test various development tools
  */
 const DevTools = () => {
   return (

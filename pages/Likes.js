@@ -5,8 +5,15 @@ import Styles from '../components/Styles';
 import SwipeConfig from '../components/SwipeConfig';
 import GenreSelections from '../components/GenreSelections';
 
+/**
+ * Selection menu for a user's likes.
+ * 
+ * @param {Navigator} navigation 
+ */
 const Likes = ({ navigation }) => {
 
+  // Genres are stateful.
+  // TODO: Retrieve genres from API.
   const [ genres, setGenres ] = useState({
     'Rap': false,
     'Opera': false,
@@ -21,13 +28,16 @@ const Likes = ({ navigation }) => {
     'Samba': false,
   });
 
+  // Update a like by key.
   const updateLiked = (key) => {
     const curGenres = genres;
     curGenres[key] = !curGenres[key];
     setGenres(curGenres);
   }
 
+  // Proceed to the next step in registration.
   const proceed = () => {
+    // Create profileData to be passed along.
     const profileData = {
       liked: [],
       disliked: [],
@@ -35,14 +45,14 @@ const Likes = ({ navigation }) => {
     };
     const remainingGenres = {};
 
-    // Delete liked objects from options
+    // Add selected values to profileData, and push the rest to next step.
     for (const [key, value] of Object.entries(genres))
       if (value)
         profileData.liked.push(key);
       else
         remainingGenres[key] = value;
 
-    // Navigate with new items
+    // Navigate with new items.
     navigation.navigate('Dislike', {
       genres: remainingGenres,
       profileData: profileData,
