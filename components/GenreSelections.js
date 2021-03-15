@@ -39,7 +39,10 @@ const GenreSelections = ({ data, color, updateButtons }) => {
 
   for (const [key, value] of Object.entries(data)) {
     items.push(
-    <View style={containerStyles.smallPadding}>
+    <View
+      key={key}
+      style={containerStyles.smallPadding}
+    >
       <GenreSelectionButton
         text={key}
         color={color}
