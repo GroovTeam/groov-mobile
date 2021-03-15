@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import { Styles, SwipeConfig } from '../components/ExpoComponents';
+import Styles from '../components/Styles';
+import SwipeConfig from '../components/SwipeConfig';
  
 const Greeting = ({ navigation }) => {
   return (

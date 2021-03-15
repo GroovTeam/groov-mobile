@@ -1,7 +1,8 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { Styles, Post } from '../components/ExpoComponents';
+import Styles from '../components/Styles';
+import Post from '../components/Post';
 
 const POSTS = [
   {
