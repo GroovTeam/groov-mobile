@@ -10,10 +10,21 @@ import SwipeConfig from '../components/SwipeConfig';
  * @param {Navigator} navigation 
  */
 const Greeting = ({ navigation }) => {
+
+  // Proceed to the next step in registration.
+  const proceed = () => {
+    // Create profileData to be passed along.
+    const profileData = {};
+
+    // Navigate with new items.
+    navigation.navigate('Name', {
+      profileData: profileData,
+    });
+  }
+
   return (
     <GestureRecognizer
-    onSwipeRight={() => navigation.navigate('Dev')}
-    onSwipeLeft={() => navigation.navigate('Like')}
+    onSwipeLeft={proceed}
     config={SwipeConfig}
     style={Styles.container}
     >

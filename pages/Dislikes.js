@@ -27,6 +27,8 @@ const Dislikes = ({ route, navigation }) => {
     const profileData = route.params.profileData;
     const remainingGenres = {};
 
+    profileData.disliked = [];
+
     // Add selected values to profileData, and push the rest to next step.
     for (const [key, value] of Object.entries(genres))
       if (value)
