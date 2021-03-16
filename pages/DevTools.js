@@ -1,34 +1,22 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Button } from 'react-native-material-ui';
-import Greeting from './Greeting';
-import Likes from './Likes';
-import Dislikes from './Dislikes';
-import Neutrals from './Neutrals';
-import RecallChosenGenres from './RecallChosenGenres';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import Styles from '../components/Styles';
+import Registration from './Registration';
 
-/**
- * General menu to aid in the development and testing process.
- * 
- * @param {Navigator} navigation 
- */
-function DevSelector({ navigation }) {
+const DevMessage = () => {
   return (
     <View style={Styles.container}>
-      <Button
-        raised
-        text='Test Registration Sequence'
-        onPress={() => navigation.navigate('Greet')}
-        />
+      <Text style={Styles.text}>
+        Swipe from the left to access dev menu.
+      </Text>
     </View>
   );
 }
 
 // Create a stack to manage the user's open pages.
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 /**
  * Holds a suite of buttons to test various development tools
@@ -36,14 +24,10 @@ const Stack = createStackNavigator();
 const DevTools = () => {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator>
-        <Stack.Screen name='Dev'      component={DevSelector} />
-        <Stack.Screen name='Greet'    component={Greeting} />
-        <Stack.Screen name='Like'     component={Likes} />
-        <Stack.Screen name='Dislike'  component={Dislikes} />
-        <Stack.Screen name='Neutral'  component={Neutrals} />
-        <Stack.Screen name='Recall'   component={RecallChosenGenres} />
-      </Stack.Navigator>
+      <Drawer.Navigator>
+        <Drawer.Screen name='Dev' component={DevMessage} />
+        <Drawer.Screen name='Reg' component={Registration} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
