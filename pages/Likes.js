@@ -60,7 +60,7 @@ const Likes = ({ route, navigation }) => {
 
   return (
     <GestureRecognizer
-      onSwipeRight={() => navigation.navigate('Greet')}
+      onSwipeRight={() => navigation.navigate('Email')}
       onSwipeLeft={proceed}
       config={SwipeConfig}
       style={Styles.container}

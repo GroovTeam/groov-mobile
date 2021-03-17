@@ -16,7 +16,9 @@ const Handle = ({ route, navigation }) => {
   const [handle, setHandle] = useState('');
 
   const updateHandle = (text) => {
-    const handleWithoutAt = text.substr(1);
+    let handleWithoutAt = text;
+    if (text.charAt(0) == '@')
+      handleWithoutAt = handleWithoutAt.substr(1);
     setHandle(handleWithoutAt);
   };
 
@@ -49,13 +51,13 @@ const Handle = ({ route, navigation }) => {
         </Text>
         you?
       </Text>
-      <View style={{marginTop: 15}}>
-        <TextInput 
-          style={InputStyles.textInput}
-          onChangeText={text => updateHandle(text)}
-          value={'@' + handle}
-        />
-      </View>
+      <View style={{marginTop: 15}}/>
+      <TextInput 
+        style={InputStyles.textInput}
+        placeholder={'@handle'}
+        onChangeText={text => updateHandle(text)}
+        value={handle !== '' ? '@' + handle : null}
+      />
     </GestureRecognizer>
   );
 };

@@ -12,17 +12,19 @@ import SwipeConfig from '../components/SwipeConfig';
  * @param {Navigator} navigation 
  */
 const Handle = ({ route, navigation }) => {
-  // Names are stateful
+  // Email and Password are stateful
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // Proceed to the next step in registration.
   const proceed = () => {
     // Create profileData to be passed along.
     const profileData = route.params.profileData;
 
-    if (email == '') return;
+    if (email == '' || password == '') return;
 
     profileData.email = email;
+    profileData.password = password;
 
     // Navigate with new items.
     navigation.navigate('Like', {
@@ -38,19 +40,23 @@ const Handle = ({ route, navigation }) => {
       style={Styles.container}
     >
       <Text style={[Styles.text, Styles.headerText]}>
-        How should we&nbsp;
+        How do you want to&nbsp;
         <Text style={Styles.blueAccentText}>
-        reach&nbsp;
+        login?
         </Text>
-        you?
       </Text>
-      <View style={{marginTop: 15}}>
-        <TextInput 
-          style={InputStyles.textInput}
-          placeholder='wevibe@gmail.com'
-          onChangeText={text => setEmail(text)}
-        />
-      </View>
+      <View style={{marginTop: 15}} />
+      <TextInput 
+        style={InputStyles.textInput}
+        placeholder='wevibe@gmail.com'
+        onChangeText={text => setEmail(text)}
+      />
+      <TextInput
+        secureTextEntry={true}
+        style={InputStyles.textInput}
+        placeholder={'password'}
+        onChangeText={text => setPassword(text)}
+      />
     </GestureRecognizer>
   );
 };

@@ -46,18 +46,17 @@ const Name = ({ route, navigation }) => {
         name?
         </Text>
       </Text>
-      <View style={{marginTop: 15}}>
-        <TextInput 
-          style={InputStyles.textInput}
-          placeholder='john'
-          onChangeText={text => setFirstName(text)}
-        />
-        <TextInput 
-          style={InputStyles.textInput}
-          placeholder='smith'
-          onChangeText={text => setLastName(text)}
-        />
-      </View>
+      <View style={{marginTop: 15}}/>
+      <TextInput 
+        style={InputStyles.textInput}
+        placeholder='john'
+        onChangeText={text => setFirstName(text)}
+      />
+      <TextInput 
+        style={InputStyles.textInput}
+        placeholder='smith'
+        onChangeText={text => setLastName(text)}
+      />
     </GestureRecognizer>
   );
 };
