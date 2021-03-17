@@ -61,6 +61,6 @@ const App = () => {
       </BottomTabs.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default App;

@@ -20,7 +20,7 @@ const Neutrals = ({ route, navigation }) => {
     const curGenres = genres;
     curGenres[key] = !curGenres[key];
     setGenres(curGenres);
-  }
+  };
 
   // Proceed to the next step in registration.
   const proceed = () => {
@@ -37,21 +37,20 @@ const Neutrals = ({ route, navigation }) => {
     navigation.navigate('Recall', {
       profileData: profileData,
     });
-  }
+  };
  
-const Greeting = ({ navigation }) => {
   return (
-  <GestureRecognizer
-    onSwipeRight={() => navigation.navigate('Dislike')}
-    onSwipeLeft={proceed}
-    config={SwipeConfig}
-    style={Styles.container}
+    <GestureRecognizer
+      onSwipeRight={() => navigation.navigate('Dislike')}
+      onSwipeLeft={proceed}
+      config={SwipeConfig}
+      style={Styles.container}
     >
       <Text style={Styles.headerText}>
       What are you&nbsp;
-      <Text style={Styles.blueAccentText}>
-      open&nbsp;
-      </Text>
+        <Text style={Styles.blueAccentText}>
+        open&nbsp;
+        </Text>
       to?
       </Text>
       <GenreSelections
@@ -59,8 +58,8 @@ const Greeting = ({ navigation }) => {
         color={'#0000FF44'}
         updateButtons={updateNeutrals}
       />
-  </GestureRecognizer>
+    </GestureRecognizer>
   );
-}
+};
  
 export default Neutrals;

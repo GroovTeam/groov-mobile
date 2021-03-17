@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Styles from '../components/Styles';
  
-const Profile = ({ navigation }) => {
+const Profile = () => {
   return (
     <View style={Styles.container}>
       <Text style={Styles.text}>
@@ -10,6 +10,6 @@ const Profile = ({ navigation }) => {
       </Text>
     </View>
   );
-}
+};
 
 export default Profile;

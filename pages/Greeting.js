@@ -20,13 +20,13 @@ const Greeting = ({ navigation }) => {
     navigation.navigate('Name', {
       profileData: profileData,
     });
-  }
+  };
 
   return (
     <GestureRecognizer
-    onSwipeLeft={proceed}
-    config={SwipeConfig}
-    style={Styles.container}
+      onSwipeLeft={proceed}
+      config={SwipeConfig}
+      style={Styles.container}
     >
       <Text style={[Styles.text, Styles.headerText]}>
         Hi, nice to&nbsp;
@@ -36,7 +36,7 @@ const Greeting = ({ navigation }) => {
         you
       </Text>
       <Text style={[Styles.text, Styles.headerText]}>
-        Let's get to&nbsp;
+        Let&apos;s get to&nbsp;
         <Text style={Styles.blueAccentText}>
         know&nbsp;
         </Text>
@@ -44,6 +44,6 @@ const Greeting = ({ navigation }) => {
       </Text>
     </GestureRecognizer>
   );
-}
+};
  
 export default Greeting;

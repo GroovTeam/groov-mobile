@@ -20,7 +20,7 @@ const Dislikes = ({ route, navigation }) => {
     const curGenres = genres;
     curGenres[key] = !curGenres[key];
     setGenres(curGenres);
-  }
+  };
 
   // Proceed to the next step in registration.
   const proceed = () => {
@@ -41,14 +41,14 @@ const Dislikes = ({ route, navigation }) => {
       genres: remainingGenres,
       profileData: profileData,
     });
-  }
+  };
 
   return (
     <GestureRecognizer
-    onSwipeRight={() => navigation.navigate('Like')}
-    onSwipeLeft={proceed}
-    config={SwipeConfig}
-    style={Styles.container}
+      onSwipeRight={() => navigation.navigate('Like')}
+      onSwipeLeft={proceed}
+      config={SwipeConfig}
+      style={Styles.container}
     >
       <Text style={Styles.headerText}>
         What do you&nbsp;
@@ -63,6 +63,6 @@ const Dislikes = ({ route, navigation }) => {
       />
     </GestureRecognizer>
   );
-}
+};
  
 export default Dislikes;

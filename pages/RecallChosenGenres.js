@@ -8,7 +8,7 @@ import Styles from '../components/Styles';
  * @param {Route} route
  * @param {Navigator} navigation 
  */
-const Profile = ({ route, navigation }) => {
+const Profile = ({ route }) => {
 
   const profileData = route.params.profileData;
   const renderableProfileData = {
@@ -30,7 +30,7 @@ const Profile = ({ route, navigation }) => {
             key={e}
             style={Styles.text}
           >
-              {e},
+            {e},
           </Text>
         );
     }
@@ -40,8 +40,8 @@ const Profile = ({ route, navigation }) => {
             key={key}
             style={Styles.text}
           >
-              {value},
-          </Text>
+            {value},
+          </Text>;
   }
 
   return (
@@ -72,6 +72,6 @@ const Profile = ({ route, navigation }) => {
       {renderableProfileData.neutral}
     </View>
   );
-}
+};
  
 export default Profile;

@@ -44,7 +44,7 @@ const GenreSelectionButton = ({ text, color, toggleSelf }) => {
   const select = () => {
     setSelected(!selected);
     toggleSelf(text);
-  }
+  };
 
   // Ternary selection for background color based on selection status.
   const selectedStyle = selected ? customColor.apply : buttonStyles.whiteBackground;
@@ -56,6 +56,6 @@ const GenreSelectionButton = ({ text, color, toggleSelf }) => {
       <Text style={buttonStyles.text}>{text}</Text>
     </Button>
   );
-}
+};
 
 export default GenreSelectionButton;
