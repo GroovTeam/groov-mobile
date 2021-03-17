@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Styles from '../components/Styles';
-import InputStyles from '../components/InputStyles'
+import InputStyles from '../components/InputStyles';
 import SwipeConfig from '../components/SwipeConfig';
 
 /**
@@ -28,14 +28,14 @@ const Handle = ({ route, navigation }) => {
     navigation.navigate('Like', {
       profileData: profileData,
     });
-  }
+  };
 
   return (
     <GestureRecognizer
-    onSwipeLeft={proceed}
-    onSwipeRight={() => navigation.navigate('Name')}
-    config={SwipeConfig}
-    style={Styles.container}
+      onSwipeLeft={proceed}
+      onSwipeRight={() => navigation.navigate('Name')}
+      config={SwipeConfig}
+      style={Styles.container}
     >
       <Text style={[Styles.text, Styles.headerText]}>
         What should we&nbsp;
@@ -53,6 +53,6 @@ const Handle = ({ route, navigation }) => {
       </View>
     </GestureRecognizer>
   );
-}
+};
  
 export default Handle;

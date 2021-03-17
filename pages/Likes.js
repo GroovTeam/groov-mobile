@@ -34,7 +34,7 @@ const Likes = ({ route, navigation }) => {
     const curGenres = genres;
     curGenres[key] = !curGenres[key];
     setGenres(curGenres);
-  }
+  };
 
   // Proceed to the next step in registration.
   const proceed = () => {
@@ -56,15 +56,14 @@ const Likes = ({ route, navigation }) => {
       genres: remainingGenres,
       profileData: profileData,
     });
-  }
- 
-const Greeting = ({ navigation }) => {
+  };
+
   return (
     <GestureRecognizer
-    onSwipeRight={() => navigation.navigate('Greet')}
-    onSwipeLeft={proceed}
-    config={SwipeConfig}
-    style={Styles.container}
+      onSwipeRight={() => navigation.navigate('Greet')}
+      onSwipeLeft={proceed}
+      config={SwipeConfig}
+      style={Styles.container}
     >
       <Text style={[Styles.text, Styles.headerText]}>
         What do you&nbsp;
@@ -79,6 +78,6 @@ const Greeting = ({ navigation }) => {
       />
     </GestureRecognizer>
   );
-}
+};
  
 export default Likes;

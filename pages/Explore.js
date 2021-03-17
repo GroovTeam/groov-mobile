@@ -7,7 +7,7 @@ import Styles from '../components/Styles';
  * 
  * @param {Navigator} navigation 
  */
-const Explore = ({ navigation }) => {
+const Explore = () => {
   return (
     <View style={Styles.container}>
       <Text style={Styles.text}>
@@ -15,6 +15,6 @@ const Explore = ({ navigation }) => {
       </Text>
     </View>
   );
-}
+};
  
 export default Explore;

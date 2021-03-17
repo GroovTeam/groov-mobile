@@ -13,7 +13,7 @@ const DevMessage = () => {
       </Text>
     </View>
   );
-}
+};
 
 // Create a stack to manage the user's open pages.
 const Drawer = createDrawerNavigator();
@@ -30,6 +30,6 @@ const DevTools = () => {
       </Drawer.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default DevTools;

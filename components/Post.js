@@ -1,9 +1,10 @@
 import React from 'react';
 import { Text, View, Image, Dimensions, StyleSheet } from 'react-native';
 import Interactions from './Interactions';
+import favicon from '../assets/favicon.png';
 
-const window = Dimensions.get("window");
-const [ windowWidth, windowHeight ] = [ window.width, window.height ];
+const window = Dimensions.get('window');
+const windowWidth = window.width;
 
 // Styles useful for posts. (probably move to independent file soon?)
 const PostStyles = StyleSheet.create ({
@@ -69,27 +70,32 @@ const Post = ({ data }) => {
 
   // Otherwise return post container.
   return (
-    <View style={[    PostStyles.container,
-                      PostStyles.flexVert,
-                      PostStyles.topBorder,  ]}>
-      <View style={[  PostStyles.container,
-                      PostStyles.flexHori,
-                      PostStyles.padded,  ]}>
+    <View style={[
+      PostStyles.container,
+      PostStyles.flexVert,
+      PostStyles.topBorder,
+    ]}>
+      <View style={[
+        PostStyles.container,
+        PostStyles.flexHori,
+        PostStyles.padded,
+      ]}>
         <Image
           style={PostStyles.image}
-          source={require('../assets/favicon.png')}
+          source={favicon}
         />
         <View style={PostStyles.text}>
           <Text style={PostStyles.user}>{data.user}</Text>
           <Text style={PostStyles.body}>{data.body}</Text>
         </View>
       </View>
-      <Interactions style={[ PostStyles.container,
-                      PostStyles.flexHori,
-                      PostStyles.negativeMargin,  ]}
-      />
+      <Interactions style={[
+        PostStyles.container,
+        PostStyles.flexHori,
+        PostStyles.negativeMargin,
+      ]}/>
     </View>
   );
-}
+};
 
 export default Post;

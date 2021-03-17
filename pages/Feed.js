@@ -87,10 +87,8 @@ const POSTS = [
 
 /**
  * Holds a user's feed.
- * 
- * @param {Navigator} navigation 
  */
-const Feed = ({ navigation }) => {
+const Feed = () => {
 
   const renderItem = ({ item }) => (
     <Post data={item} />
@@ -104,6 +102,6 @@ const Feed = ({ navigation }) => {
       />
     </SafeAreaView>
   );
-}
- 
+};
+
 export default Feed;

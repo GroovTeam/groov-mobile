@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Greeting from './Greeting';
 import Name from './Name';
-import Handle from './Handle'
+import Handle from './Handle';
 import Likes from './Likes';
 import Dislikes from './Dislikes';
 import Neutrals from './Neutrals';
@@ -29,6 +29,6 @@ const DevTools = () => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 
 export default DevTools;

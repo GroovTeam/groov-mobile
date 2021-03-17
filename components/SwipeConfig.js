@@ -1,4 +1,4 @@
 export const config = {
-    velocityThreshold: 0.1,
-    directionalOffsetThreshold: 80
+  velocityThreshold: 0.1,
+  directionalOffsetThreshold: 80
 };

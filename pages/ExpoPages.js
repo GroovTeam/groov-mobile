@@ -4,8 +4,8 @@ import Explore from './Explore';
 import Profile from './Profile';
 
 export {
-    DevTools,
-    Feed,
-    Explore,
-    Profile,
+  DevTools,
+  Feed,
+  Explore,
+  Profile,
 };

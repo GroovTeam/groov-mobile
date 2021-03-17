@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 import GenreSelectionButton from './GenreSelectionButton';
 
-const window = Dimensions.get("window");
+const window = Dimensions.get('window');
 const [ windowWidth, windowHeight ] = [ window.width, window.height ];
 
 // Styles for organizing the buttons.
@@ -31,24 +31,24 @@ const containerStyles = StyleSheet.create({
  */
 const GenreSelections = ({ data, color, updateButtons }) => {
 
-  const items = []
+  const items = [];
 
   const toggleButton = (key) => {
     updateButtons(key);
-  }
+  };
 
-  for (const [key, value] of Object.entries(data)) {
+  for (const key of Object.keys(data)) {
     items.push(
-    <View
-      key={key}
-      style={containerStyles.smallPadding}
-    >
-      <GenreSelectionButton
-        text={key}
-        color={color}
-        toggleSelf={toggleButton}
+      <View
+        key={key}
+        style={containerStyles.smallPadding}
+      >
+        <GenreSelectionButton
+          text={key}
+          color={color}
+          toggleSelf={toggleButton}
         />
-    </View>
+      </View>
     );
   }
 
@@ -57,6 +57,6 @@ const GenreSelections = ({ data, color, updateButtons }) => {
       {items}
     </View>
   );
-}  
+};
 
 export default GenreSelections;
