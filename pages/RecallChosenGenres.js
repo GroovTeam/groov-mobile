@@ -15,6 +15,7 @@ const Profile = ({ route }) => {
     firstName: null,
     lastName: null,
     handle: null,
+    email: null,
     liked: [],
     disliked: [],
     neutral: [],
@@ -28,7 +29,7 @@ const Profile = ({ route }) => {
         renderableProfileData[key].push(
           <Text
             key={e}
-            style={Styles.text}
+            style={Styles.smallText}
           >
             {e},
           </Text>
@@ -38,38 +39,28 @@ const Profile = ({ route }) => {
       renderableProfileData[key] = 
           <Text
             key={key}
-            style={Styles.text}
+            style={Styles.smallText}
           >
             {value},
           </Text>;
   }
 
+  const finalRender = [];
+
+  for (const [key, value] of Object.entries(renderableProfileData)) {
+    finalRender.push(
+      <View key={key}>
+        <Text style={[Styles.text, Styles.blueAccentText]}>
+          {key}
+        </Text>
+        {value}
+      </View>
+    );
+  }
+
   return (
     <View style={Styles.container}>
-      <Text style={Styles.headerText}>
-        FirstName:
-      </Text>
-      {renderableProfileData.firstName}
-      <Text style={Styles.headerText}>
-        LastName:
-      </Text>
-      {renderableProfileData.lastName}
-      <Text style={Styles.headerText}>
-        Handle:
-      </Text>
-      {renderableProfileData.handle}
-      <Text style={Styles.headerText}>
-        Likes:
-      </Text>
-      {renderableProfileData.liked}
-      <Text style={[Styles.headerText, {marginTop: 15}]}>
-        Dislikes:
-      </Text>
-      {renderableProfileData.disliked}
-      <Text style={[Styles.headerText, {marginTop: 15}]}>
-        Neutrals:
-      </Text>
-      {renderableProfileData.neutral}
+      {finalRender}
     </View>
   );
 };

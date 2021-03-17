@@ -13,24 +13,19 @@ import SwipeConfig from '../components/SwipeConfig';
  */
 const Handle = ({ route, navigation }) => {
   // Names are stateful
-  const [handle, setHandle] = useState('');
-
-  const updateHandle = (text) => {
-    const handleWithoutAt = text.substr(1);
-    setHandle(handleWithoutAt);
-  };
+  const [email, setEmail] = useState('');
 
   // Proceed to the next step in registration.
   const proceed = () => {
     // Create profileData to be passed along.
     const profileData = route.params.profileData;
 
-    if (handle == '') return;
+    if (email == '') return;
 
-    profileData.handle = handle;
+    profileData.email = email;
 
     // Navigate with new items.
-    navigation.navigate('Email', {
+    navigation.navigate('Like', {
       profileData: profileData,
     });
   };
@@ -38,22 +33,22 @@ const Handle = ({ route, navigation }) => {
   return (
     <GestureRecognizer
       onSwipeLeft={proceed}
-      onSwipeRight={() => navigation.navigate('Name')}
+      onSwipeRight={() => navigation.navigate('Handle')}
       config={SwipeConfig}
       style={Styles.container}
     >
       <Text style={[Styles.text, Styles.headerText]}>
-        What should we&nbsp;
+        How should we&nbsp;
         <Text style={Styles.blueAccentText}>
-        call&nbsp;
+        reach&nbsp;
         </Text>
         you?
       </Text>
       <View style={{marginTop: 15}}>
         <TextInput 
           style={InputStyles.textInput}
-          onChangeText={text => updateHandle(text)}
-          value={'@' + handle}
+          placeholder='wevibe@gmail.com'
+          onChangeText={text => setEmail(text)}
         />
       </View>
     </GestureRecognizer>

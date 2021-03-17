@@ -49,12 +49,12 @@ const Name = ({ route, navigation }) => {
       <View style={{marginTop: 15}}>
         <TextInput 
           style={InputStyles.textInput}
-          placeholder='First Name'
+          placeholder='john'
           onChangeText={text => setFirstName(text)}
         />
         <TextInput 
           style={InputStyles.textInput}
-          placeholder='Last Name'
+          placeholder='smith'
           onChangeText={text => setLastName(text)}
         />
       </View>
