@@ -8,9 +8,10 @@ import GenreSelections from '../components/GenreSelections';
 /**
  * Selection menu for a user's likes.
  * 
+ * @param {Route} route 
  * @param {Navigator} navigation 
  */
-const Likes = ({ navigation }) => {
+const Likes = ({ route, navigation }) => {
 
   // Genres are stateful.
   // TODO: Retrieve genres from API.
@@ -38,12 +39,10 @@ const Likes = ({ navigation }) => {
   // Proceed to the next step in registration.
   const proceed = () => {
     // Create profileData to be passed along.
-    const profileData = {
-      liked: [],
-      disliked: [],
-      neutral: [],
-    };
+    const profileData = route.params.profileData;
     const remainingGenres = {};
+
+    profileData.liked = [];
 
     // Add selected values to profileData, and push the rest to next step.
     for (const [key, value] of Object.entries(genres))

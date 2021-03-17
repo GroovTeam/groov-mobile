@@ -12,20 +12,52 @@ const Profile = ({ route, navigation }) => {
 
   const profileData = route.params.profileData;
   const renderableProfileData = {
+    firstName: null,
+    lastName: null,
+    handle: null,
     liked: [],
     disliked: [],
     neutral: [],
   };
   
   // Push all data from profile data into a renderable list.
-  for (const [key, value] of Object.entries(profileData))
-    for (const e of value)
-      renderableProfileData[key].push(
-        <Text style={Styles.text}>{e}, </Text>
-      );
+  for (const [key, value] of Object.entries(profileData)) {
+
+    if (Array.isArray(value)) {
+      for (const e of value)
+        renderableProfileData[key].push(
+          <Text
+            key={e}
+            style={Styles.text}
+          >
+              {e},
+          </Text>
+        );
+    }
+    else
+      renderableProfileData[key] = 
+          <Text
+            key={key}
+            style={Styles.text}
+          >
+              {value},
+          </Text>
+  }
 
   return (
     <View style={Styles.container}>
+      <Text style={Styles.headerText}>
+        FirstName:
+      </Text>
+      {renderableProfileData.firstName}
+      <Text style={Styles.headerText}>
+        LastName:
+      </Text>
+      {renderableProfileData.lastName}
+      <Text style={Styles.headerText}>
+        Handle:
+      </Text>
+      {renderableProfileData.handle}
       <Text style={Styles.headerText}>
         Likes:
       </Text>
