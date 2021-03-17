@@ -4,6 +4,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import Styles from '../components/Styles';
 import Post from '../components/Post';
 
+// All posts to be displayed.
+// TODO: Load these from the database.
 const POSTS = [
   {
     id: '0',
@@ -83,6 +85,11 @@ const POSTS = [
   },
 ];
 
+/**
+ * Holds a user's feed.
+ * 
+ * @param {Navigator} navigation 
+ */
 const Feed = ({ navigation }) => {
 
   const renderItem = ({ item }) => (

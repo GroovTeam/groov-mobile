@@ -4,15 +4,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DevTools, Feed, Explore, Profile } from './pages/ExpoPages';
 
-// Create a stack to manage the user's open pages.
+// Create a bottom tab navigator to manage pages.
 const BottomTabs = createBottomTabNavigator();
 
 /**
- * Main application
+ * Main application.
  */
 const App = () => {
   return (
     <NavigationContainer>
+      {/* Dev Tab */}
       <BottomTabs.Navigator>
         <BottomTabs.Screen
           name='Dev'
@@ -24,6 +25,7 @@ const App = () => {
             ),
           }}
         />
+        {/* Feed Tab */}
         <BottomTabs.Screen
           name='Feed'
           component={Feed}
@@ -34,6 +36,7 @@ const App = () => {
             ),
           }}
         />
+        {/* Explore Tab */}
         <BottomTabs.Screen
           name='Explore'
           component={Explore}
@@ -44,6 +47,7 @@ const App = () => {
             ),
           }}
         />
+        {/* Profile Tab */}
         <BottomTabs.Screen
           name='Profile'
           component={Profile}

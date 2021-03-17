@@ -2,7 +2,12 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import Styles from '../components/Styles';
  
-const Profile = ({ navigation }) => {
+/**
+ * Explore page.
+ * 
+ * @param {Navigator} navigation 
+ */
+const Explore = ({ navigation }) => {
   return (
     <View style={Styles.container}>
       <Text style={Styles.text}>
@@ -12,4 +17,4 @@ const Profile = ({ navigation }) => {
   );
 }
  
-export default Profile;
+export default Explore;

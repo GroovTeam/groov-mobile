@@ -3,7 +3,12 @@ import { Text } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Styles from '../components/Styles';
 import SwipeConfig from '../components/SwipeConfig';
- 
+
+/**
+ * Greets the user in registration.
+ * 
+ * @param {Navigator} navigation 
+ */
 const Greeting = ({ navigation }) => {
   return (
     <GestureRecognizer
@@ -12,14 +17,14 @@ const Greeting = ({ navigation }) => {
     config={SwipeConfig}
     style={Styles.container}
     >
-      <Text style={Styles.text}>
+      <Text style={[Styles.text, Styles.headerText]}>
         Hi, nice to&nbsp;
         <Text style={Styles.blueAccentText}>
         meet&nbsp;
         </Text>
         you
       </Text>
-      <Text style={Styles.text}>
+      <Text style={[Styles.text, Styles.headerText]}>
         Let's get to&nbsp;
         <Text style={Styles.blueAccentText}>
         know&nbsp;

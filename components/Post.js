@@ -5,6 +5,7 @@ import Interactions from './Interactions';
 const window = Dimensions.get("window");
 const [ windowWidth, windowHeight ] = [ window.width, window.height ];
 
+// Styles useful for posts. (probably move to independent file soon?)
 const PostStyles = StyleSheet.create ({
   container: {
     color: 'rgb(255,255,255)',
@@ -57,6 +58,7 @@ const PostStyles = StyleSheet.create ({
 
 const Post = ({ data }) => {
 
+  // Render title if necessary.
   if ('title' in data) {
     return (
       <View style={PostStyles.header}>
@@ -65,6 +67,7 @@ const Post = ({ data }) => {
     );  
   }
 
+  // Otherwise return post container.
   return (
     <View style={[    PostStyles.container,
                       PostStyles.flexVert,
