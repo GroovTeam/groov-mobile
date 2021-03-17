@@ -58,7 +58,8 @@ const Likes = ({ navigation }) => {
       profileData: profileData,
     });
   }
-
+ 
+const Greeting = ({ navigation }) => {
   return (
     <GestureRecognizer
     onSwipeRight={() => navigation.navigate('Greet')}
