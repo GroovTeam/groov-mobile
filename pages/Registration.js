@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Greeting from './Greeting';
 import Name from './Name';
 import Handle from './Handle';
+import Email from './Email';
 import Likes from './Likes';
 import Dislikes from './Dislikes';
 import Neutrals from './Neutrals';
@@ -22,6 +23,7 @@ const DevTools = () => {
         <Stack.Screen name='Greet'    component={Greeting} />
         <Stack.Screen name='Name'     component={Name} />
         <Stack.Screen name='Handle'   component={Handle} />
+        <Stack.Screen name='Email'    component={Email} />
         <Stack.Screen name='Like'     component={Likes} />
         <Stack.Screen name='Dislike'  component={Dislikes} />
         <Stack.Screen name='Neutral'  component={Neutrals} />

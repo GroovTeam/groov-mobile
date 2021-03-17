@@ -20,6 +20,10 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: '200',
   },
+  smallText: {
+    fontSize: 15,
+    fontWeight: '100',
+  },
   blueAccentText: {
     color: 'rgb(59,108,212)',
   },

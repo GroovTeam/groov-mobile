@@ -15,6 +15,13 @@ const Handle = ({ route, navigation }) => {
   // Names are stateful
   const [handle, setHandle] = useState('');
 
+  const updateHandle = (text) => {
+    let handleWithoutAt = text;
+    if (text.charAt(0) == '@')
+      handleWithoutAt = handleWithoutAt.substr(1);
+    setHandle(handleWithoutAt);
+  };
+
   // Proceed to the next step in registration.
   const proceed = () => {
     // Create profileData to be passed along.
@@ -25,7 +32,7 @@ const Handle = ({ route, navigation }) => {
     profileData.handle = handle;
 
     // Navigate with new items.
-    navigation.navigate('Like', {
+    navigation.navigate('Email', {
       profileData: profileData,
     });
   };
@@ -44,13 +51,13 @@ const Handle = ({ route, navigation }) => {
         </Text>
         you?
       </Text>
-      <View style={{marginTop: 15}}>
-        <TextInput 
-          style={InputStyles.textInput}
-          placeholder='Username'
-          onChangeText={text => setHandle(text)}
-        />
-      </View>
+      <View style={{marginTop: 15}}/>
+      <TextInput 
+        style={InputStyles.textInput}
+        placeholder={'@handle'}
+        onChangeText={text => updateHandle(text)}
+        value={handle !== '' ? '@' + handle : null}
+      />
     </GestureRecognizer>
   );
 };

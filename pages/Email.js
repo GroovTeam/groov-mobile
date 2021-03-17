@@ -11,24 +11,23 @@ import SwipeConfig from '../components/SwipeConfig';
  * @param {Route} route
  * @param {Navigator} navigation 
  */
-const Name = ({ route, navigation }) => {
-  // Names are stateful
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+const Handle = ({ route, navigation }) => {
+  // Email and Password are stateful
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   // Proceed to the next step in registration.
   const proceed = () => {
     // Create profileData to be passed along.
     const profileData = route.params.profileData;
 
-    if (firstName == '' || lastName == '')
-      return;
+    if (email == '' || password == '') return;
 
-    profileData.firstName = firstName;
-    profileData.lastName = lastName;
+    profileData.email = email;
+    profileData.password = password;
 
     // Navigate with new items.
-    navigation.navigate('Handle', {
+    navigation.navigate('Like', {
       profileData: profileData,
     });
   };
@@ -36,29 +35,30 @@ const Name = ({ route, navigation }) => {
   return (
     <GestureRecognizer
       onSwipeLeft={proceed}
-      onSwipeRight={() => navigation.navigate('Greet')}
+      onSwipeRight={() => navigation.navigate('Handle')}
       config={SwipeConfig}
       style={Styles.container}
     >
       <Text style={[Styles.text, Styles.headerText]}>
-        What is your&nbsp;
+        How do you want to&nbsp;
         <Text style={Styles.blueAccentText}>
-        name?
+        login?
         </Text>
       </Text>
-      <View style={{marginTop: 15}}/>
+      <View style={{marginTop: 15}} />
       <TextInput 
         style={InputStyles.textInput}
-        placeholder='john'
-        onChangeText={text => setFirstName(text)}
+        placeholder='wevibe@gmail.com'
+        onChangeText={text => setEmail(text)}
       />
-      <TextInput 
+      <TextInput
+        secureTextEntry={true}
         style={InputStyles.textInput}
-        placeholder='smith'
-        onChangeText={text => setLastName(text)}
+        placeholder={'password'}
+        onChangeText={text => setPassword(text)}
       />
     </GestureRecognizer>
   );
 };
  
-export default Name;
+export default Handle;
