@@ -1,13 +1,24 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import GenreSelections from '../components/GenreSelections';
-import Styles from '../components/Styles';
 import favicon from '../assets/favicon.png';
 
 const ProfileHeaderStyles = StyleSheet.create ({
   container: {
     alignItems: 'center',
     marginVertical: 10,
+  },
+  nameText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  userText: {
+    fontSize: 18,
+  },
+  bioText: {
+    fontSize: 15,
+    margin: 5,
+    textAlign: 'center',
   },
   image: {
     width: 100,
@@ -24,12 +35,13 @@ const ProfileHeader = ({data}) => {
         style={ProfileHeaderStyles.image}
         source={favicon}
       />
-      <Text style={Styles.text}>{data.user}</Text>
+      <Text style={ProfileHeaderStyles.nameText}>{data.name}</Text>
+      <Text style={ProfileHeaderStyles.userText}>{data.user}</Text>
       <GenreSelections
         data={data.genres}
         isStatic='true'
-        style={ProfileHeaderStyles.container}
       />
+      <Text style={ProfileHeaderStyles.bioText}>{data.bio}</Text>
     </View>
   );
 };
