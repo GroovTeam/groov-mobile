@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import GenreSelections from '../components/GenreSelections';
 import Styles from '../components/Styles';
 import favicon from '../assets/favicon.png';
 
@@ -24,6 +25,11 @@ const ProfileHeader = ({data}) => {
         source={favicon}
       />
       <Text style={Styles.text}>{data.user}</Text>
+      <GenreSelections
+        data={data.genres}
+        isStatic='true'
+        style={ProfileHeaderStyles.container}
+      />
     </View>
   );
 };

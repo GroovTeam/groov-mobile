@@ -4,7 +4,8 @@ import Styles from '../components/Styles';
 import ProfileHeader from '../components/ProfileHeader';
 
 const testUser = {
-  user: 'Jacob Franz'
+  user: 'Jacob Franz',
+  genres: ['Rap', 'Rock', 'Alternative', 'Opera', 'Musical Theater', 'Hip-Hop'],
 };
 
 const ProfileStyles = StyleSheet.create ({
