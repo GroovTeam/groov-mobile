@@ -5,7 +5,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { DevTools, Feed, Explore, Profile } from './pages/ExpoPages';
 import LoginSplash from './pages/LoginSplash';
 import recoverSession from './components/LoginUtils';
-import AnimatedLoader from 'react-native-animated-loader';
 
 /**
  * Main application.
@@ -25,7 +24,7 @@ const App = () => {
   const BottomTabs = createBottomTabNavigator();
 
   if (session === undefined)
-    return <AnimatedLoader />;
+    return <LoginSplash />;
       
   if (session === null)
     return <LoginSplash />;
