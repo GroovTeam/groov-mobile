@@ -11,7 +11,7 @@ import SwipeConfig from '../components/SwipeConfig';
  * @param {Route} route
  * @param {Navigator} navigation 
  */
-const Handle = ({ route, navigation }) => {
+const Email = ({ route, navigation }) => {
   // Email and Password are stateful
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -61,4 +61,4 @@ const Handle = ({ route, navigation }) => {
   );
 };
  
-export default Handle;
+export default Email;
