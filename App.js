@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DevTools, Feed, Explore, Profile } from './pages/ExpoPages';
-
-// Create a bottom tab navigator to manage pages.
-const BottomTabs = createBottomTabNavigator();
+import LoginSplash from './pages/LoginSplash';
+import recoverSession from './components/LoginUtils';
+import AnimatedLoader from 'react-native-animated-loader';
 
 /**
  * Main application.
  */
 const App = () => {
+
+  // Our login is stateful.
+  const [session, setSession] = useState(undefined);
+
+  recoverSession()
+    .then(session => {
+      console.log(session);
+      setSession(session);
+    });
+  
+  // Create a bottom tab navigator to manage pages.
+  const BottomTabs = createBottomTabNavigator();
+
+  if (session === undefined)
+    return <AnimatedLoader />;
+      
+  if (session === null)
+    return <LoginSplash />;
+
   return (
     <NavigationContainer>
       {/* Dev Tab */}
