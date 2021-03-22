@@ -51,7 +51,7 @@ const GenreSelections = ({ data, color, updateButtons, isStatic }) => {
   if (isStatic) {
     for (const key in data) {
       items.push(
-        <View style={containerStyles.smallPadding}>
+        <View style={containerStyles.smallPadding} key={data[key]}>
           <GenreButton text={data[key]}/>
         </View>
       );
