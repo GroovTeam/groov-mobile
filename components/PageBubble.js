@@ -39,9 +39,7 @@ const PageBubble = ({numBubbles, index}) => {
       />
     );
   }
-
-  console.log(bubbles);
-
+  
   return (
     <View style={BubbleStyles.container}>
       {bubbles}

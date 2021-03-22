@@ -11,7 +11,7 @@ import GenreSelections from '../components/GenreSelections';
  * @param {Route} route
  * @param {Navigator} navigation 
  */
-const Dislikes = ({ route, navigation }) => {
+const Dislikes = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
   // Genres are stateful and inhereted from previous selections.
   const [ genres, setGenres ] = useState(route.params.genres);
 
@@ -24,7 +24,7 @@ const Dislikes = ({ route, navigation }) => {
 
   // Proceed to the next step in registration.
   const proceed = () => {
-    const profileData = route.params.profileData;
+    const profileData = userData;
     const remainingGenres = {};
 
     profileData.disliked = [];
@@ -36,16 +36,29 @@ const Dislikes = ({ route, navigation }) => {
       else
         remainingGenres[key] = value;
 
-    // Navigate with new items.
-    navigation.navigate('Neutral', {
+    // Apply the new changes.
+    applyUserData(profileData);
+
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex + 1);
+    navigation.navigate('Neutrals', {
+      pageIndex: route.params.pageIndex + 1,
       genres: remainingGenres,
-      profileData: profileData,
+    });
+  };
+
+  // Return to the previous step in registration.
+  const backtrack = () => {
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex - 1);
+    navigation.navigate('Likes', {
+      pageIndex: route.params.pageIndex - 1,
     });
   };
 
   return (
     <GestureRecognizer
-      onSwipeRight={() => navigation.navigate('Like')}
+      onSwipeRight={backtrack}
       onSwipeLeft={proceed}
       config={SwipeConfig}
       style={Styles.container}

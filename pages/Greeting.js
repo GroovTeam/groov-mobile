@@ -10,22 +10,23 @@ import SwipeConfig from '../components/SwipeConfig';
  * @param {Route} route
  * @param {Navigator} navigation 
  * @param {Callback} updateCurPage
+ * @param {Callback} cancelRegistration
  */
-const Greeting = ({ route, navigation, updateCurPage }) => {
+const Greeting = ({ route, navigation, updateCurPage, cancelRegistration }) => {
   // Proceed to the next step in registration.
   const proceed = () => {
-    // Create profileData to be passed along.
-    const profileData = {};
+    // Update the page indicator.
+    updateCurPage(route.params.pageIndex + 1);
 
     // Navigate with new items.
     navigation.navigate('Name', {
-      profileData: profileData,
-      curPage: route.params.curPage + 1,
+      pageIndex: route.params.pageIndex + 1,
     });
   };
 
   return (
     <GestureRecognizer
+      onSwipeRight={cancelRegistration}
       onSwipeLeft={proceed}
       config={SwipeConfig}
       style={Styles.container}

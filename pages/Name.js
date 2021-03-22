@@ -10,35 +10,43 @@ import SwipeConfig from '../components/SwipeConfig';
  * 
  * @param {Route} route
  * @param {Navigator} navigation
+ * @param {Object} userData
+ * @param {Callback} applyUserData
  * @param {Callback} updateCurPage
  */
-const Name = ({ route, navigation, updateCurPage }) => {
+const Name = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
   // Names are stateful
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
   // Proceed to the next step in registration.
   const proceed = () => {
-    // Create profileData to be passed along.
-    const profileData = route.params.profileData;
-
+    // Don't allow the user to continue if empty fields.
     if (firstName == '' || lastName == '')
       return;
 
+    // Grab and update the data.
+    const profileData = userData;
+    
     profileData.firstName = firstName;
     profileData.lastName = lastName;
 
-    // Navigate with new items.
+    // Apply the new changes.
+    applyUserData(profileData);
+
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex + 1);
     navigation.navigate('Handle', {
-      profileData: profileData,
-      curPage: route.params.curPage + 1,
+      pageIndex: route.params.pageIndex + 1,
     });
   };
 
+  // Return to the previous step in registration.
   const backtrack = () => {
-    updateCurPage(route.params.curPage - 1);
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex - 1);
     navigation.navigate('Greet', {
-      curPage: route.params.curPage - 1,
+      pageIndex: route.params.pageIndex - 1,
     });
   };
 
