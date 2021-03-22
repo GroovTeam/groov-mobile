@@ -7,22 +7,13 @@ import { Button } from 'react-native-material-ui';
 /**
  * Logs a user in.
  */
-const LoginSplash = () => {
+const Login = ({ login, startRegister }) => {
   // Email and Password are stateful
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const login = () => {
-    // TODO
-    // Make API call.
-    // Store the session in Async storage.
-
-    /*
-    const user = `{"email": ${email}, "password": ${password}}`
-    const result = api call with user
-    if (result !== null)
-      createSession(result)
-    */
+  const prepareLogin = () => {
+    login(email, password);
   };
 
   return (
@@ -50,15 +41,16 @@ const LoginSplash = () => {
         raised
         primary
         text="Login"
-        onPress={login}
+        onPress={prepareLogin}
       />
       <View style={{marginTop: 15}} />
       <Button
         raised
         text="Register"
+        onPress={startRegister}
       />
     </View>
   );
 };
  
-export default LoginSplash;
+export default Login;

@@ -3,35 +3,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { DevTools, Feed, Explore, Profile } from './pages/ExpoPages';
-import LoginSplash from './pages/LoginSplash';
-import { recoverSession, createSession, deleteSession } from './components/LoginUtils';
+import LoginOrRegister from './pages/LoginOrRegister';
+
 /**
  * Main application.
  */
 const App = () => {
 
-  const testSession = JSON.parse('{"name":"John"}');
-  //deleteSession();
-  //createSession(testSession);
-
   // Our login is stateful.
   const [session, setSession] = useState(undefined);
-
-  
-  recoverSession()
-    .then(session => {
-      setSession(session);
-    });
   
   
   // Create a bottom tab navigator to manage pages.
   const BottomTabs = createBottomTabNavigator();
 
+  // TODO: Make this screen display a loading icon
   if (session === undefined)
-    return <LoginSplash />;
+    return <LoginOrRegister updateSession={setSession}/>;
       
   if (session === null)
-    return <LoginSplash />;
+    return <LoginOrRegister updateSession={setSession}/>;
 
   return (
     <NavigationContainer>

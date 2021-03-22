@@ -7,10 +7,11 @@ import SwipeConfig from '../components/SwipeConfig';
 /**
  * Greets the user in registration.
  * 
+ * @param {Route} route
  * @param {Navigator} navigation 
+ * @param {Callback} updateCurPage
  */
-const Greeting = ({ navigation }) => {
-
+const Greeting = ({ route, navigation, updateCurPage }) => {
   // Proceed to the next step in registration.
   const proceed = () => {
     // Create profileData to be passed along.
@@ -19,6 +20,7 @@ const Greeting = ({ navigation }) => {
     // Navigate with new items.
     navigation.navigate('Name', {
       profileData: profileData,
+      curPage: route.params.curPage + 1,
     });
   };
 
@@ -42,7 +44,7 @@ const Greeting = ({ navigation }) => {
         </Text>
         each other
       </Text>
-    </GestureRecognizer>
+    </GestureRecognizer>    
   );
 };
  

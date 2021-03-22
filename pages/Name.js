@@ -9,9 +9,10 @@ import SwipeConfig from '../components/SwipeConfig';
  * Greets the user in registration.
  * 
  * @param {Route} route
- * @param {Navigator} navigation 
+ * @param {Navigator} navigation
+ * @param {Callback} updateCurPage
  */
-const Name = ({ route, navigation }) => {
+const Name = ({ route, navigation, updateCurPage }) => {
   // Names are stateful
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -30,13 +31,21 @@ const Name = ({ route, navigation }) => {
     // Navigate with new items.
     navigation.navigate('Handle', {
       profileData: profileData,
+      curPage: route.params.curPage + 1,
+    });
+  };
+
+  const backtrack = () => {
+    updateCurPage(route.params.curPage - 1);
+    navigation.navigate('Greet', {
+      curPage: route.params.curPage - 1,
     });
   };
 
   return (
     <GestureRecognizer
       onSwipeLeft={proceed}
-      onSwipeRight={() => navigation.navigate('Greet')}
+      onSwipeRight={backtrack}
       config={SwipeConfig}
       style={Styles.container}
     >
