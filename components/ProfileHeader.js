@@ -6,7 +6,7 @@ import favicon from '../assets/favicon.png';
 const ProfileHeaderStyles = StyleSheet.create ({
   container: {
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 5,
   },
   nameText: {
     fontSize: 30,
@@ -17,7 +17,7 @@ const ProfileHeaderStyles = StyleSheet.create ({
   },
   bioText: {
     fontSize: 15,
-    margin: 5,
+    marginTop: 5,
     textAlign: 'center',
   },
   image: {

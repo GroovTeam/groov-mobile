@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/ProfileHeader';
 import ProfileBody from '../components/ProfileBody';
@@ -12,23 +12,18 @@ const testUser = {
 };
 
 const ProfileStyles = StyleSheet.create ({
-  headerContainer: {
-    flex: 2,
-  },
-  bodyContainer: {
-    flex: 3,
+  profileContainer: {
+    flex: 1,
   },
 });
 
 const Profile = () => {
   return (
     <SafeAreaView style={Styles.container}>
-      <View style={ProfileStyles.headerContainer}>
+      <ScrollView style={ProfileStyles.profileContainer}>
         <ProfileHeader data={testUser}/>
-      </View>
-      <View style={ProfileStyles.bodyContainer}>
         <ProfileBody/>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

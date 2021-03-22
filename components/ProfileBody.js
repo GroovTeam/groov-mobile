@@ -41,7 +41,7 @@ export default class ProfileBody extends React.Component {
           onPress={this.updateIndex}
           selectedIndex={selectedIndex}
           buttons={buttons}
-          containerStyle={{width: width, height: 35}}
+          containerStyle={{width: width - 20, height: 35}}
         />
         <Feed selectedIndex={selectedIndex}/>
       </View>
