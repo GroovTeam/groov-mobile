@@ -1,7 +1,8 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/ProfileHeader';
+import ProfileBody from '../components/ProfileBody';
 
 const testUser = {
   name: 'Jacob Franz',
@@ -16,22 +17,17 @@ const ProfileStyles = StyleSheet.create ({
   },
   bodyContainer: {
     flex: 3,
-  }
+  },
 });
 
 const Profile = () => {
   return (
     <SafeAreaView style={Styles.container}>
       <View style={ProfileStyles.headerContainer}>
-        <ProfileHeader 
-          data={testUser}
-          style={ProfileStyles.headerContainer}
-        />
+        <ProfileHeader data={testUser}/>
       </View>
       <View style={ProfileStyles.bodyContainer}>
-        <Text style={Styles.text}>
-          Profile in Progress! :)
-        </Text>
+        <ProfileBody/>
       </View>
     </SafeAreaView>
   );
