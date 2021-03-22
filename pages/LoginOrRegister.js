@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import Login from './Login';
 import Register from './Registration';
+import axios from 'axios';
 
 const LoginOrRegister = ({ updateSession }) => {
   // Register session and userData are stateful.
@@ -33,8 +34,9 @@ const LoginOrRegister = ({ updateSession }) => {
 
   const registerAndLogin = () => {
     console.log(userData);
-    // TODO
-    // Make API call for registration
+    
+    // send userData to server.
+    
 
     login(userData.email, userData.password);
 
