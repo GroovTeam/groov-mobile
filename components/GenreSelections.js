@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
+import GenreButton from './GenreButton';
 import GenreSelectionButton from './GenreSelectionButton';
 
 const window = Dimensions.get('window');
@@ -20,6 +21,15 @@ const containerStyles = StyleSheet.create({
     flexWrap: 'wrap',
     overflow: 'hidden',
   },
+  staticContainer: {
+    marginTop: 10,
+    display: 'flex',
+    width: windowWidth - 10,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    overflow: 'hidden',
+  }
 });
 
 /**
@@ -27,15 +37,32 @@ const containerStyles = StyleSheet.create({
  * @param {Object} data the data to render onto the buttons.
  * @param {String} color the color to render for selections.
  * @param {Callback} updateButtons update a button's status by key.
+ * @param {Boolean} isStatic whether the buttons are a static list.
  * @returns 
  */
-const GenreSelections = ({ data, color, updateButtons }) => {
-
+const GenreSelections = ({ data, color, updateButtons, isStatic }) => {
+  
   const items = [];
 
   const toggleButton = (key) => {
     updateButtons(key);
   };
+
+  if (isStatic) {
+    for (const key in data) {
+      items.push(
+        <View style={containerStyles.smallPadding} key={data[key]}>
+          <GenreButton text={data[key]}/>
+        </View>
+      );
+    }
+
+    return (
+      <View style={containerStyles.staticContainer}>
+        {items}
+      </View>
+    );
+  }
 
   for (const key of Object.keys(data)) {
     items.push(
