@@ -1,34 +1,29 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { View } from 'react-native';
 import Styles from '../components/Styles';
-import Registration from './Registration';
-
-const DevMessage = () => {
-  return (
-    <View style={Styles.container}>
-      <Text style={Styles.text}>
-        Swipe from the left to access dev menu.
-      </Text>
-    </View>
-  );
-};
-
-// Create a stack to manage the user's open pages.
-const Drawer = createDrawerNavigator();
+import { Button } from 'react-native-material-ui';
 
 /**
  * Holds a suite of buttons to test various development tools
  */
-const DevTools = () => {
+const DevTools = ({ navigation, deleteSession }) => {
+
+  const deleteAndReset = () => {
+    deleteSession();
+    navigation.navigate('Main', {
+      resetSession: true,
+    });
+  };
+
   return (
-    <NavigationContainer independent={true}>
-      <Drawer.Navigator>
-        <Drawer.Screen name='Dev' component={DevMessage} />
-        <Drawer.Screen name='Reg' component={Registration} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <View style={Styles.container}>
+      <Button
+        raised
+        primary
+        text='Delete Session'
+        onPress={deleteAndReset}
+      />
+    </View>
   );
 };
 

@@ -9,7 +9,7 @@ import { recoverSession } from '../components/LoginUtils';
 /**
  * Main application.
  */
-const Main = () => {
+const Main = ({ route }) => {
 
   // Our login is stateful.
   const [session, setSession] = useState(undefined);
@@ -21,7 +21,8 @@ const Main = () => {
       });
   };
 
-  attemptLogin();
+  if (route.params.resetSession)
+    attemptLogin();
 
   // TODO: Make this screen display a loading icon
   if (session === undefined)
@@ -34,7 +35,7 @@ const Main = () => {
   const BottomTabs = createBottomTabNavigator();
 
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       {/* Dev Tab */}
       <BottomTabs.Navigator>
         {/* Feed Tab */}
