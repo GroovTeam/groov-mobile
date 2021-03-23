@@ -42,7 +42,7 @@ const Email = ({ route, navigation, userData, applyUserData, updateCurPage }) =>
   const backtrack = () => {
     // Update current page, and navigate.
     updateCurPage(route.params.pageIndex - 1);
-    navigation.navigate('Handle', {
+    navigation.navigate('Username', {
       pageIndex: route.params.pageIndex - 1,
     });
   };

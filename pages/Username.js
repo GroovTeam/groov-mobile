@@ -13,25 +13,25 @@ import SwipeConfig from '../components/SwipeConfig';
  */
 const Handle = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
   // Names are stateful
-  const [handle, setHandle] = useState('');
+  const [username, setUsername] = useState('');
 
   const updateHandle = (text) => {
-    let handleWithoutAt = text;
+    let usernameMinusAt = text;
     if (text.charAt(0) == '@')
-      handleWithoutAt = handleWithoutAt.substr(1);
-    setHandle(handleWithoutAt);
+      usernameMinusAt = usernameMinusAt.substr(1);
+    setUsername(usernameMinusAt);
   };
 
   // Proceed to the next step in registration.
   const proceed = () => {
     // Don't allow the user to continue if empty fields.
-    if (handle == '')
+    if (username == '')
       return;
 
     // Grab and update the data.
     const profileData = userData;
     
-    profileData.handle = handle;
+    profileData.username = username;
 
     // Apply the new changes.
     applyUserData(profileData);
@@ -71,7 +71,7 @@ const Handle = ({ route, navigation, userData, applyUserData, updateCurPage }) =
         style={InputStyles.textInput}
         placeholder={'@handle'}
         onChangeText={text => updateHandle(text)}
-        value={handle !== '' ? '@' + handle : null}
+        value={username !== '' ? '@' + username : null}
       />
     </GestureRecognizer>
   );

@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Greeting from './Greeting';
 import Name from './Name';
-import Handle from './Handle';
+import Username from './Username';
 import Email from './Email';
 import Likes from './Likes';
 import Dislikes from './Dislikes';
@@ -55,8 +55,8 @@ const Registration = ({userData, updateUserData, applyRegistration, cancelRegist
           />}
         </Stack.Screen>
 
-        <Stack.Screen name='Handle'>
-          {props => <Handle {...props}
+        <Stack.Screen name='Username'>
+          {props => <Username {...props}
             userData={userData}
             applyUserData={updateUserData}
             updateCurPage={updateCurPage}
