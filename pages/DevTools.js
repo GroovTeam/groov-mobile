@@ -1,34 +1,64 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Styles from '../components/Styles';
-import Registration from './Registration';
+import { View, Alert, StyleSheet } from 'react-native';
+import { Button } from 'react-native-material-ui';
+import { recoverSession } from '../components/LoginUtils';
 
-const DevMessage = () => {
-  return (
-    <View style={Styles.container}>
-      <Text style={Styles.text}>
-        Swipe from the left to access dev menu.
-      </Text>
-    </View>
-  );
-};
-
-// Create a stack to manage the user's open pages.
-const Drawer = createDrawerNavigator();
+const DevStyles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+  button: {
+    margin: 10,
+  },
+});
 
 /**
  * Holds a suite of buttons to test various development tools
  */
-const DevTools = () => {
+const DevTools = ({ navigation, deleteSession }) => {
+
+  const deleteAndReset = () => {
+    deleteSession();
+    navigation.navigate('Main', {
+      resetSession: true,
+    });
+  };
+
+  const showSession = () => {
+    recoverSession()
+      .then(session => {
+        Alert.alert(
+          'Session Key:',
+          session,
+        );
+      });
+  };
+
   return (
-    <NavigationContainer independent={true}>
-      <Drawer.Navigator>
-        <Drawer.Screen name='Dev' component={DevMessage} />
-        <Drawer.Screen name='Reg' component={Registration} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <View style={DevStyles.container}>
+      <View style={DevStyles.button}>
+        <Button
+          style={DevStyles.button}
+          raised
+          primary
+          text='Delete Session'
+          onPress={deleteAndReset}
+        />
+      </View>
+      <View style={DevStyles.button}>
+        <Button
+          style={DevStyles.button}
+          raised
+          primary
+          text='Recover Session'
+          onPress={showSession}
+        />
+      </View>
+    </View>
   );
 };
 

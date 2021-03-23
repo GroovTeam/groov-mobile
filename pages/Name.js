@@ -9,34 +9,51 @@ import SwipeConfig from '../components/SwipeConfig';
  * Greets the user in registration.
  * 
  * @param {Route} route
- * @param {Navigator} navigation 
+ * @param {Navigator} navigation
+ * @param {Object} userData
+ * @param {Callback} applyUserData
+ * @param {Callback} updateCurPage
  */
-const Name = ({ route, navigation }) => {
+const Name = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
   // Names are stateful
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
   // Proceed to the next step in registration.
   const proceed = () => {
-    // Create profileData to be passed along.
-    const profileData = route.params.profileData;
-
+    // Don't allow the user to continue if empty fields.
     if (firstName == '' || lastName == '')
       return;
 
+    // Grab and update the data.
+    const profileData = userData;
+    
     profileData.firstName = firstName;
     profileData.lastName = lastName;
 
-    // Navigate with new items.
-    navigation.navigate('Handle', {
-      profileData: profileData,
+    // Apply the new changes.
+    applyUserData(profileData);
+
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex + 1);
+    navigation.navigate('Username', {
+      pageIndex: route.params.pageIndex + 1,
+    });
+  };
+
+  // Return to the previous step in registration.
+  const backtrack = () => {
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex - 1);
+    navigation.navigate('Greet', {
+      pageIndex: route.params.pageIndex - 1,
     });
   };
 
   return (
     <GestureRecognizer
       onSwipeLeft={proceed}
-      onSwipeRight={() => navigation.navigate('Greet')}
+      onSwipeRight={backtrack}
       config={SwipeConfig}
       style={Styles.container}
     >

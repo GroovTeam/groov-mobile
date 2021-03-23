@@ -1,64 +1,30 @@
 import React from 'react';
+import Main from './pages/Main';
+import DevTools from './pages/DevTools';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { DevTools, Feed, Explore, Profile } from './pages/ExpoPages';
-
-// Create a bottom tab navigator to manage pages.
-const BottomTabs = createBottomTabNavigator();
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { deleteSession } from './components/LoginUtils';
 
 /**
  * Main application.
  */
 const App = () => {
-  return (
+  // Create a drawer for dev purposes.
+  const Drawer = createDrawerNavigator();
+  return(
     <NavigationContainer>
-      {/* Dev Tab */}
-      <BottomTabs.Navigator>
-        <BottomTabs.Screen
-          name='Dev'
-          component={DevTools}
-          options={{
-            tabBarLabel: 'Dev',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='cog' color={color} size={size} />
-            ),
-          }}
+      <Drawer.Navigator>
+        <Drawer.Screen
+          name='Main'
+          component={Main}
+          initialParams={{ resetSession: true }}
         />
-        {/* Feed Tab */}
-        <BottomTabs.Screen
-          name='Feed'
-          component={Feed}
-          options={{
-            tabBarLabel: 'Feed',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='home' color={color} size={size} />
-            ),
-          }}
-        />
-        {/* Explore Tab */}
-        <BottomTabs.Screen
-          name='Explore'
-          component={Explore}
-          options={{
-            tabBarLabel: 'Explore',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='magnify' color={color} size={size} />
-            ),
-          }}
-        />
-        {/* Profile Tab */}
-        <BottomTabs.Screen
-          name='Profile'
-          component={Profile}
-          options={{
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name='account' color={color} size={size} />
-            ),
-          }}
-        />
-      </BottomTabs.Navigator>
+        <Drawer.Screen name='Dev'>
+          {props => <DevTools {...props}
+            deleteSession={deleteSession}
+          />}
+        </Drawer.Screen>
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 };

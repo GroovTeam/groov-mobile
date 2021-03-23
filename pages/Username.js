@@ -11,36 +11,51 @@ import SwipeConfig from '../components/SwipeConfig';
  * @param {Route} route
  * @param {Navigator} navigation 
  */
-const Handle = ({ route, navigation }) => {
+const Handle = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
   // Names are stateful
-  const [handle, setHandle] = useState('');
+  const [username, setUsername] = useState('');
 
   const updateHandle = (text) => {
-    let handleWithoutAt = text;
+    let usernameMinusAt = text;
     if (text.charAt(0) == '@')
-      handleWithoutAt = handleWithoutAt.substr(1);
-    setHandle(handleWithoutAt);
+      usernameMinusAt = usernameMinusAt.substr(1);
+    setUsername(usernameMinusAt);
   };
 
   // Proceed to the next step in registration.
   const proceed = () => {
-    // Create profileData to be passed along.
-    const profileData = route.params.profileData;
+    // Don't allow the user to continue if empty fields.
+    if (username == '')
+      return;
 
-    if (handle == '') return;
+    // Grab and update the data.
+    const profileData = userData;
+    
+    profileData.username = username;
 
-    profileData.handle = handle;
+    // Apply the new changes.
+    applyUserData(profileData);
 
-    // Navigate with new items.
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex + 1);
     navigation.navigate('Email', {
-      profileData: profileData,
+      pageIndex: route.params.pageIndex + 1,
+    });
+  };
+
+  // Return to the previous step in registration.
+  const backtrack = () => {
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex - 1);
+    navigation.navigate('Name', {
+      pageIndex: route.params.pageIndex - 1,
     });
   };
 
   return (
     <GestureRecognizer
       onSwipeLeft={proceed}
-      onSwipeRight={() => navigation.navigate('Name')}
+      onSwipeRight={backtrack}
       config={SwipeConfig}
       style={Styles.container}
     >
@@ -56,7 +71,7 @@ const Handle = ({ route, navigation }) => {
         style={InputStyles.textInput}
         placeholder={'@handle'}
         onChangeText={text => updateHandle(text)}
-        value={handle !== '' ? '@' + handle : null}
+        value={username !== '' ? '@' + username : null}
       />
     </GestureRecognizer>
   );
