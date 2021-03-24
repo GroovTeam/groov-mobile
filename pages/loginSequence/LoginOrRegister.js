@@ -1,84 +1,49 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-native';
 import Login from './Login';
 import Register from './Registration';
-import axios from 'axios';
-import ApiConfig from '../../utils/ApiConfig';
-import { createSession, deleteSession } from '../../utils/LoginUtils';
+import { createSession, deleteSession, register } from '../../utils/LoginUtils';
 
-const LoginOrRegister = ({ alertLogin }) => {
+const LoginOrRegister = ({ attemptLogin }) => {
   // Register session and userData are stateful.
-  const [register, setRegister] = useState(false);
+  const [registering, setRegistering] = useState(false);
   const [userData, setUserData] = useState({});
   
-  const login = (email, password) => {
-    // Field verification
-    if (email == '' || password == '') {
-      Alert.alert(
-        'Empty Fields',
-        'Please provide a login and password'
-      );
-      return;
-    }
-
-    // Construct JSON for request.
-    const loginObject = {
+  const saveSessionAndLogin = (email, password) => {
+    const session = {
       email: email,
-      password: password
+      password: password,
     };
-
-    // Send POST request
-    axios.post(ApiConfig.login, loginObject)
-      .then(response => {
-        const token = response.data.token;
-        deleteSession();
-        createSession(token);
-        alertLogin();
-      })
-      .catch(error => {
-        if (error.response) {
-          console.error(error.response.data);
-          Alert.alert(
-            'Login failed',
-            'Invalid login credentials.',
-          );
-        }
-      });
+    deleteSession();
+    createSession(session);
+    attemptLogin();
   };
 
   const registerAndLogin = () => {
     // Stop registration process.
-    setRegister(false);
-    
-    // Send POST request
-    axios.post(ApiConfig.register, userData)
+    setRegistering(false);
+
+    register(userData)
       .then(response => {
         console.log(response);
-        login(userData.email, userData.password);
+        saveSessionAndLogin(userData.email, userData.password);
       })
       .catch(error => {
-        if (error.response) {
-          console.error(error.response.data);
-          Alert.alert(
-            'Registration Failed',
-            'An error caused your registration to fail, we are looking into it.',
-          );
-        }
+        console.error(error);
       });
   };
 
-  if (register)
+  if (registering)
     return <Register
       userData={userData}
       updateUserData={setUserData}
       applyRegistration={registerAndLogin}
-      cancelRegistration={() => setRegister(false)}
+      cancelRegistration={() => setRegistering(false)}
     />;
   else
     return (
       <Login
-        login={login}
-        startRegister={() => setRegister(true)}
+        login={saveSessionAndLogin}
+        startRegister={() => setRegistering(true)}
       />
     );
 };

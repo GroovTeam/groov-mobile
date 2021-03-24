@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { Feed, Explore, Profile } from './ExpoPages';
 import LoginOrRegister from './loginSequence/LoginOrRegister';
 import { recoverSession } from '../utils/LoginUtils';
+import { login } from '../utils/LoginUtils';
 
 /**
  * Main application.
@@ -17,8 +18,27 @@ const Main = ({ route }) => {
   const attemptLogin = () => {
     recoverSession()
       .then(session => {
-        setSession(session);
+
+        if (session === null)
+          return;
+
+        login(session.email, session.password)
+          .then(response => {
+            console.log(response);
+            setSession(response);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      })
+      .catch(error => {
+        console.error(error);
       });
+  };
+
+  const updateSession = (session) => {
+    setSession(session);
   };
 
   if (route.params.resetSession)
@@ -26,10 +46,16 @@ const Main = ({ route }) => {
 
   // TODO: Make this screen display a loading icon
   if (session === undefined)
-    return <LoginOrRegister alertLogin={attemptLogin}/>;
+    return <LoginOrRegister
+      attemptLogin={attemptLogin}
+      updateSession={updateSession}
+    />;
       
   if (session === null)
-    return <LoginOrRegister alertLogin={attemptLogin}/>;
+    return <LoginOrRegister
+      attemptLogin={attemptLogin}
+      updateSession={updateSession}
+    />;
 
   // Create a bottom tab navigator to manage pages.
   const BottomTabs = createBottomTabNavigator();
