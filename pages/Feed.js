@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Styles from '../components/Styles';
-import Post from '../components/Post';
+import Post from '../components/posts/Post';
 
 // All posts to be displayed.
 // TODO: Load these from the database.

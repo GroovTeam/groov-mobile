@@ -1,8 +1,8 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import Styles from '../components/Styles';
-import ProfileHeader from '../components/ProfileHeader';
-import ProfileBody from '../components/ProfileBody';
+import ProfileHeader from '../components/profile/ProfileHeader';
+import ProfileBody from '../components/profile/ProfileBody';
 
 const testUser = {
   name: 'Jacob Franz',

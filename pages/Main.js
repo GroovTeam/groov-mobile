@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Feed, Explore, Profile } from './ExpoPages';
-import LoginOrRegister from './LoginOrRegister';
-import { recoverSession } from '../components/LoginUtils';
+import LoginOrRegister from './loginSequence/LoginOrRegister';
+import { recoverSession } from '../utils/LoginUtils';
 
 /**
  * Main application.

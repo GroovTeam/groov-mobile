@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import Styles from '../components/Styles';
-import SwipeConfig from '../components/SwipeConfig';
+import Styles from '../../components/Styles';
+import SwipeConfig from '../../utils/SwipeConfig';
 
 /**
  * Greets the user in registration.

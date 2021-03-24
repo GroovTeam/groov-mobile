@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Text } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import Styles from '../components/Styles';
-import SwipeConfig from '../components/SwipeConfig';
-import GenreSelections from '../components/GenreSelections';
+import Styles from '../../components/Styles';
+import SwipeConfig from '../../utils/SwipeConfig';
+import GenreSelections from '../../components/genreButtons/GenreSelections';
 
 /**
- * Selection menu for a user's 'learn more's.
+ * Selection menu for a user's dislikes.
  * 
  * @param {Route} route
  * @param {Navigator} navigation 
  */
-const Neutrals = ({ route, navigation, userData, applyUserData, updateCurPage, applyRegistration }) => {
+const Dislikes = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
   // Genres are stateful and inhereted from previous selections.
   const [ genres, setGenres ] = useState(route.params.genres);
 
   // Update a dislike by key.
-  const updateNeutrals = (key) => {
+  const updateDisliked = (key) => {
     const curGenres = genres;
     curGenres[key] = !curGenres[key];
     setGenres(curGenres);
@@ -27,31 +27,35 @@ const Neutrals = ({ route, navigation, userData, applyUserData, updateCurPage, a
     const profileData = userData;
     const remainingGenres = {};
 
-    profileData.neutrals = [];
+    profileData.disliked = [];
 
     // Add selected values to profileData, and push the rest to next step.
     for (const [key, value] of Object.entries(genres))
       if (value)
-        profileData.neutrals.push(key);
+        profileData.disliked.push(key);
       else
         remainingGenres[key] = value;
 
     // Apply the new changes.
     applyUserData(profileData);
 
-    // Finish the process.
-    applyRegistration();
+    // Update current page, and navigate.
+    updateCurPage(route.params.pageIndex + 1);
+    navigation.navigate('Neutrals', {
+      pageIndex: route.params.pageIndex + 1,
+      genres: remainingGenres,
+    });
   };
 
   // Return to the previous step in registration.
   const backtrack = () => {
     // Update current page, and navigate.
     updateCurPage(route.params.pageIndex - 1);
-    navigation.navigate('Dislikes', {
+    navigation.navigate('Likes', {
       pageIndex: route.params.pageIndex - 1,
     });
   };
- 
+
   return (
     <GestureRecognizer
       onSwipeRight={backtrack}
@@ -60,19 +64,18 @@ const Neutrals = ({ route, navigation, userData, applyUserData, updateCurPage, a
       style={Styles.container}
     >
       <Text style={Styles.headerText}>
-      What are you&nbsp;
-        <Text style={Styles.blueAccentText}>
-        open&nbsp;
+        What do you&nbsp;
+        <Text style={Styles.redAccentText}>
+        dislike?
         </Text>
-      to?
       </Text>
       <GenreSelections
         data={genres}
-        color={'#0000FF44'}
-        updateButtons={updateNeutrals}
+        color={'#FF000044'}
+        updateButtons={updateDisliked}
       />
     </GestureRecognizer>
   );
 };
  
-export default Neutrals;
+export default Dislikes;

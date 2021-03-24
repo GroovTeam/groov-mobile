@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
 import { Text } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import Styles from '../components/Styles';
-import SwipeConfig from '../components/SwipeConfig';
-import GenreSelections from '../components/GenreSelections';
+import Styles from '../../components/Styles';
+import SwipeConfig from '../../utils/SwipeConfig';
+import GenreSelections from '../../components/genreButtons/GenreSelections';
 
 /**
- * Selection menu for a user's dislikes.
+ * Selection menu for a user's likes.
  * 
- * @param {Route} route
+ * @param {Route} route 
  * @param {Navigator} navigation 
  */
-const Dislikes = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
-  // Genres are stateful and inhereted from previous selections.
-  const [ genres, setGenres ] = useState(route.params.genres);
+const Likes = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
 
-  // Update a dislike by key.
-  const updateDisliked = (key) => {
+  // Genres are stateful.
+  // TODO: Retrieve genres from API.
+  const [ genres, setGenres ] = useState({
+    'Rap': false,
+    'Opera': false,
+    'Country': false,
+    'Pop': false,
+    'Latin': false,
+    'Musical-Theatre': false,
+    'Rock': false,
+    'Alternative': false,
+    'Hip-Hop': false,
+    'K-Pop': false,
+    'Samba': false,
+  });
+
+  // Update a like by key.
+  const updateLiked = (key) => {
     const curGenres = genres;
     curGenres[key] = !curGenres[key];
     setGenres(curGenres);
@@ -24,15 +38,16 @@ const Dislikes = ({ route, navigation, userData, applyUserData, updateCurPage })
 
   // Proceed to the next step in registration.
   const proceed = () => {
+    // Create profileData to be passed along.
     const profileData = userData;
     const remainingGenres = {};
 
-    profileData.disliked = [];
+    profileData.liked = [];
 
     // Add selected values to profileData, and push the rest to next step.
     for (const [key, value] of Object.entries(genres))
       if (value)
-        profileData.disliked.push(key);
+        profileData.liked.push(key);
       else
         remainingGenres[key] = value;
 
@@ -41,7 +56,7 @@ const Dislikes = ({ route, navigation, userData, applyUserData, updateCurPage })
 
     // Update current page, and navigate.
     updateCurPage(route.params.pageIndex + 1);
-    navigation.navigate('Neutrals', {
+    navigation.navigate('Dislikes', {
       pageIndex: route.params.pageIndex + 1,
       genres: remainingGenres,
     });
@@ -51,7 +66,7 @@ const Dislikes = ({ route, navigation, userData, applyUserData, updateCurPage })
   const backtrack = () => {
     // Update current page, and navigate.
     updateCurPage(route.params.pageIndex - 1);
-    navigation.navigate('Likes', {
+    navigation.navigate('Email', {
       pageIndex: route.params.pageIndex - 1,
     });
   };
@@ -63,19 +78,19 @@ const Dislikes = ({ route, navigation, userData, applyUserData, updateCurPage })
       config={SwipeConfig}
       style={Styles.container}
     >
-      <Text style={Styles.headerText}>
+      <Text style={[Styles.text, Styles.headerText]}>
         What do you&nbsp;
-        <Text style={Styles.redAccentText}>
-        dislike?
+        <Text style={Styles.greenAccentText}>
+        like?
         </Text>
       </Text>
       <GenreSelections
         data={genres}
-        color={'#FF000044'}
-        updateButtons={updateDisliked}
+        color={'#00FF0044'}
+        updateButtons={updateLiked}
       />
     </GestureRecognizer>
   );
 };
  
-export default Dislikes;
+export default Likes;
