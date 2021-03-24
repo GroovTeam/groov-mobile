@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
-import Styles from '../components/Styles';
-import InputStyles from '../components/InputStyles';
+import Styles from '../../components/Styles';
+import InputStyles from '../../components/InputStyles';
 import { Button } from 'react-native-material-ui';
 
 /**

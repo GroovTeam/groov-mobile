@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Image, Dimensions, StyleSheet } from 'react-native';
 import Interactions from './Interactions';
-import favicon from '../assets/favicon.png';
+import favicon from '../../assets/favicon.png';
 
 const window = Dimensions.get('window');
 const windowWidth = window.width;

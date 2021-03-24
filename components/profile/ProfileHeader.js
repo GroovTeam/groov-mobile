@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
-import GenreSelections from '../components/GenreSelections';
-import favicon from '../assets/favicon.png';
+import GenreSelections from '../genreButtons/GenreSelections';
+import favicon from '../../assets/favicon.png';
 
 const ProfileHeaderStyles = StyleSheet.create ({
   container: {

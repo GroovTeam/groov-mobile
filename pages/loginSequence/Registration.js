@@ -8,7 +8,7 @@ import Email from './Email';
 import Likes from './Likes';
 import Dislikes from './Dislikes';
 import Neutrals from './Neutrals';
-import PageBubble from '../components/PageBubble';
+import PageBubble from '../../components/pageBubbles/PageBubble';
 
 // Create a stack to manage the user's open pages.
 const Stack = createStackNavigator();

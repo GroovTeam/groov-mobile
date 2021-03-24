@@ -3,8 +3,8 @@ import { Alert } from 'react-native';
 import Login from './Login';
 import Register from './Registration';
 import axios from 'axios';
-import ApiConfig from '../components/ApiConfig';
-import { createSession, deleteSession } from '../components/LoginUtils';
+import ApiConfig from '../../utils/ApiConfig';
+import { createSession, deleteSession } from '../../utils/LoginUtils';
 
 const LoginOrRegister = ({ alertLogin }) => {
   // Register session and userData are stateful.

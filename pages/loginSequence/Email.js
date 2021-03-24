@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import Styles from '../components/Styles';
-import InputStyles from '../components/InputStyles';
-import SwipeConfig from '../components/SwipeConfig';
+import InputStyles from '../../components/InputStyles';
+import Styles from '../../components/Styles';
+import SwipeConfig from '../../utils/SwipeConfig';
 
 /**
  * Greets the user in registration.

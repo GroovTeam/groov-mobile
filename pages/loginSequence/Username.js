@@ -1,42 +1,44 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import Styles from '../components/Styles';
-import InputStyles from '../components/InputStyles';
-import SwipeConfig from '../components/SwipeConfig';
+import Styles from '../../components/Styles';
+import InputStyles from '../../components/InputStyles';
+import SwipeConfig from '../../utils/SwipeConfig';
 
 /**
  * Greets the user in registration.
  * 
  * @param {Route} route
- * @param {Navigator} navigation
- * @param {Object} userData
- * @param {Callback} applyUserData
- * @param {Callback} updateCurPage
+ * @param {Navigator} navigation 
  */
-const Name = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
+const Handle = ({ route, navigation, userData, applyUserData, updateCurPage }) => {
   // Names are stateful
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+
+  const updateHandle = (text) => {
+    let usernameMinusAt = text;
+    if (text.charAt(0) == '@')
+      usernameMinusAt = usernameMinusAt.substr(1);
+    setUsername(usernameMinusAt);
+  };
 
   // Proceed to the next step in registration.
   const proceed = () => {
     // Don't allow the user to continue if empty fields.
-    if (firstName == '' || lastName == '')
+    if (username == '')
       return;
 
     // Grab and update the data.
     const profileData = userData;
     
-    profileData.firstName = firstName;
-    profileData.lastName = lastName;
+    profileData.username = username;
 
     // Apply the new changes.
     applyUserData(profileData);
 
     // Update current page, and navigate.
     updateCurPage(route.params.pageIndex + 1);
-    navigation.navigate('Username', {
+    navigation.navigate('Email', {
       pageIndex: route.params.pageIndex + 1,
     });
   };
@@ -45,7 +47,7 @@ const Name = ({ route, navigation, userData, applyUserData, updateCurPage }) => 
   const backtrack = () => {
     // Update current page, and navigate.
     updateCurPage(route.params.pageIndex - 1);
-    navigation.navigate('Greet', {
+    navigation.navigate('Name', {
       pageIndex: route.params.pageIndex - 1,
     });
   };
@@ -58,24 +60,21 @@ const Name = ({ route, navigation, userData, applyUserData, updateCurPage }) => 
       style={Styles.container}
     >
       <Text style={[Styles.text, Styles.headerText]}>
-        What is your&nbsp;
+        What should we&nbsp;
         <Text style={Styles.blueAccentText}>
-        name?
+        call&nbsp;
         </Text>
+        you?
       </Text>
       <View style={{marginTop: 15}}/>
       <TextInput 
         style={InputStyles.textInput}
-        placeholder='john'
-        onChangeText={text => setFirstName(text)}
-      />
-      <TextInput 
-        style={InputStyles.textInput}
-        placeholder='smith'
-        onChangeText={text => setLastName(text)}
+        placeholder={'@handle'}
+        onChangeText={text => updateHandle(text)}
+        value={username !== '' ? '@' + username : null}
       />
     </GestureRecognizer>
   );
 };
  
-export default Name;
+export default Handle;

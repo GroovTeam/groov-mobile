@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Alert, StyleSheet } from 'react-native';
 import { Button } from 'react-native-material-ui';
-import { recoverSession } from '../components/LoginUtils';
+import { recoverSession } from '../utils/LoginUtils';
 
 const DevStyles = StyleSheet.create({
   container: {
