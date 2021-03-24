@@ -77,14 +77,13 @@ const login = async (email, password) => {
 
   // Attempt to login
   try {
-    const url = constructURL(ApiConfig.login, loginObject);
-    const response = await axios.get(url);
+    const response = await axios.post(ApiConfig.login, loginObject);
     return response;
   }
   catch (error) {
     if (error.response)
       throw Error(JSON.stringify(error.response.data));
-    throw Error('Unknown Registration Error');
+    throw Error('Unknown Login Error');
   }
 };
 
