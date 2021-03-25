@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import Register from './Registration';
 import { createSession, deleteSession, register } from '../../utils/APIUtils';
 
+
+
 const LoginOrRegister = ({ attemptLogin }) => {
+
+  useEffect(() => {
+    attemptLogin();
+  });
+
   // Register session and userData are stateful.
   const [registering, setRegistering] = useState(false);
   const [userData, setUserData] = useState({});

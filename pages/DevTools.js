@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Alert, StyleSheet } from 'react-native';
 import { Button } from 'react-native-material-ui';
-import { recoverSession } from '../utils/LoginUtils';
+import { recoverSession } from '../utils/APIUtils';
 
 const DevStyles = StyleSheet.create({
   container: {
@@ -33,14 +33,14 @@ const DevTools = ({ navigation, deleteSession }) => {
       .then(session => {
         Alert.alert(
           'Session Key:',
-          session,
+          JSON.stringify(session),
         );
       });
   };
 
   return (
     <View style={DevStyles.container}>
-      <View style={DevStyles.button}>
+      {/* <View style={DevStyles.button}>
         <Button
           style={DevStyles.button}
           raised
@@ -48,7 +48,7 @@ const DevTools = ({ navigation, deleteSession }) => {
           text='Delete Session'
           onPress={deleteAndReset}
         />
-      </View>
+      </View> */}
       <View style={DevStyles.button}>
         <Button
           style={DevStyles.button}

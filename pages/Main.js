@@ -4,12 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Feed, Explore, Profile } from './ExpoPages';
 import LoginOrRegister from './loginSequence/LoginOrRegister';
-import { recoverSession, login } from '../utils/LoginUtils';
+import { recoverSession, login } from '../utils/APIUtils';
 
 /**
  * Main application.
  */
-const Main = ({ route }) => {
+const Main = () => {
 
   // Our login is stateful.
   const [session, setSession] = useState(undefined);
@@ -41,16 +41,13 @@ const Main = ({ route }) => {
     setSession(session);
   };
 
-  if (route.params.resetSession)
-    attemptLogin();
-
   // TODO: Make this screen display a loading icon
   if (session === undefined)
     return <LoginOrRegister
       attemptLogin={attemptLogin}
       updateSession={updateSession}
     />;
-      
+
   if (session === null)
     return <LoginOrRegister
       attemptLogin={attemptLogin}
