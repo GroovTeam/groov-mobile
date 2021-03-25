@@ -14,6 +14,7 @@ const Main = ({ route }) => {
   // Our login is stateful.
   const [session, setSession] = useState(undefined);
 
+  // Attempts to recover a session and log a user in.
   const attemptLogin = () => {
     recoverSession()
       .then(session => {
