@@ -1,41 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Login from './Login';
 import Register from './Registration';
-import { createSession, deleteSession, register } from '../../utils/APIUtils';
+import login from '../../utils/login';
+import register from '../../utils/register';
 
-
-
-const LoginOrRegister = ({ attemptLogin }) => {
-
-  useEffect(() => {
-    attemptLogin();
-  });
+const LoginOrRegister = () => {
 
   // Register session and userData are stateful.
   const [registering, setRegistering] = useState(false);
   const [userData, setUserData] = useState({});
-  
-  const saveSessionAndLogin = (email, password) => {
-    const session = {
-      email: email,
-      password: password,
-    };
-    deleteSession();
-    createSession(session);
-    attemptLogin();
-  };
 
-  const registerAndLogin = () => {
-    // Stop registration process.
-    setRegistering(false);
-
-    register(userData)
+  // Register a new user.
+  const registerUser = () => {
+    register(userData.email,
+      userData.password,
+      userData.username,
+      userData.firstName,
+      userData.lastName)
       .then(response => {
         console.log(response);
-        saveSessionAndLogin(userData.email, userData.password);
       })
-      .catch(error => {
-        console.error(error);
+      .catch(err => {
+        console.error(err);
+      });
+  };
+
+  // Attempt to login an existing user.
+  const loginUser = (email, password) => {
+    login(email, password)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.error(err);
       });
   };
 
@@ -43,13 +40,13 @@ const LoginOrRegister = ({ attemptLogin }) => {
     return <Register
       userData={userData}
       updateUserData={setUserData}
-      applyRegistration={registerAndLogin}
+      applyRegistration={registerUser}
       cancelRegistration={() => setRegistering(false)}
     />;
   else
     return (
       <Login
-        login={saveSessionAndLogin}
+        login={loginUser}
         startRegister={() => setRegistering(true)}
       />
     );

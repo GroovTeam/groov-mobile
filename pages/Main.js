@@ -1,58 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Feed, Explore, Profile } from './ExpoPages';
 import LoginOrRegister from './loginSequence/LoginOrRegister';
-import { recoverSession, login } from '../utils/APIUtils';
+import firebase from '../utils/Firebase';
 
 /**
  * Main application.
  */
 const Main = () => {
 
-  // Our login is stateful.
-  const [session, setSession] = useState(undefined);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState(undefined);
 
-  // Attempts to recover a session and log a user in.
-  const attemptLogin = () => {
-    recoverSession()
-      .then(session => {
-
-        if (session === null)
-          return;
-
-        login(session.email, session.password)
-          .then(response => {
-            console.log(response);
-            setSession(response);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  const onAuthStateChanged = (user) => {
+    setUser(user);
+    if (initializing)
+      setInitializing(false);
   };
 
-  const updateSession = (session) => {
-    setSession(session);
-  };
+  useEffect(() => {    
+    const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if (initializing)
+    return null;
 
   // TODO: Make this screen display a loading icon
-  if (session === undefined)
-    return <LoginOrRegister
-      attemptLogin={attemptLogin}
-      updateSession={updateSession}
-    />;
-
-  if (session === null)
-    return <LoginOrRegister
-      attemptLogin={attemptLogin}
-      updateSession={updateSession}
-    />;
+  if (!user)
+    return <LoginOrRegister/>;
 
   // Create a bottom tab navigator to manage pages.
   const BottomTabs = createBottomTabNavigator();
