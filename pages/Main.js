@@ -1,35 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Feed, Explore, Profile } from './ExpoPages';
 import LoginOrRegister from './loginSequence/LoginOrRegister';
-import { recoverSession } from '../utils/LoginUtils';
+import firebase from '../utils/Firebase';
 
 /**
  * Main application.
  */
-const Main = ({ route }) => {
+const Main = () => {
 
-  // Our login is stateful.
-  const [session, setSession] = useState(undefined);
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState(undefined);
 
-  const attemptLogin = () => {
-    recoverSession()
-      .then(session => {
-        setSession(session);
-      });
+  const onAuthStateChanged = (user) => {
+    setUser(user);
+    if (initializing)
+      setInitializing(false);
   };
 
-  if (route.params.resetSession)
-    attemptLogin();
+  useEffect(() => {    
+    const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if (initializing)
+    return null;
 
   // TODO: Make this screen display a loading icon
-  if (session === undefined)
-    return <LoginOrRegister alertLogin={attemptLogin}/>;
-      
-  if (session === null)
-    return <LoginOrRegister alertLogin={attemptLogin}/>;
+  if (!user)
+    return <LoginOrRegister/>;
 
   // Create a bottom tab navigator to manage pages.
   const BottomTabs = createBottomTabNavigator();

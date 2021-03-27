@@ -3,8 +3,6 @@ import Main from './pages/Main';
 import DevTools from './pages/DevTools';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { deleteSession } from './utils/LoginUtils';
-
 /**
  * Main application.
  */
@@ -19,11 +17,7 @@ const App = () => {
           component={Main}
           initialParams={{ resetSession: true }}
         />
-        <Drawer.Screen name='Dev'>
-          {props => <DevTools {...props}
-            deleteSession={deleteSession}
-          />}
-        </Drawer.Screen>
+        <Drawer.Screen name='Dev' component={DevTools} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
