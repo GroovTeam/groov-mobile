@@ -93,8 +93,8 @@ const Post = ({ data }) => {
           source={{uri: profilePhoto}}
         />
         <View style={PostStyles.text}>
-          <Text style={PostStyles.user}>{'@' + data.user}</Text>
-          <Text style={PostStyles.body}>{data.body}</Text>
+          <Text style={PostStyles.user}>{'@' + data.username}</Text>
+          <Text style={PostStyles.body}>{data.content}</Text>
         </View>
       </View>
       <Interactions style={[
