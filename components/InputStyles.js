@@ -11,6 +11,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginTop: 10,
+  },
+  multiLineTextInput: {
+    borderWidth: 1,
+    width: '75%',
+    marginLeft: '12.5%',
   }
 });
 

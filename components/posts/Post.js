@@ -58,15 +58,6 @@ const PostStyles = StyleSheet.create ({
 });
 
 const Post = ({ data }) => {
-  // Render title if necessary.
-  if ('title' in data) {
-    return (
-      <View style={PostStyles.header}>
-        <Text style={PostStyles.text}>The Soundwave</Text>
-      </View>
-    );  
-  }
-
   const [profilePhoto, setProfilePhoto] = useState(undefined);
 
   useEffect(() => {
