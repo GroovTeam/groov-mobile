@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileBody from '../components/profile/ProfileBody';
@@ -11,19 +11,33 @@ const testUser = {
   bio: 'Just a developer trying to make a cool app! More testing flavor text here...'
 };
 
-const ProfileStyles = StyleSheet.create ({
-  profileContainer: {
-    flex: 1,
+const DATA = [
+  {
+    id: '11',
+    type: 'header',
+    data: testUser,
   },
-});
+  {
+    id: '12',
+    type: 'body',
+  },
+];
+
+const profileItem = ({ item }) => {
+  if (item.type === 'header')
+    return <ProfileHeader data={item.data} />;
+  else
+    return <ProfileBody />;
+};
 
 const Profile = () => {
   return (
     <SafeAreaView style={Styles.container}>
-      <ScrollView style={ProfileStyles.profileContainer}>
-        <ProfileHeader data={testUser}/>
-        <ProfileBody/>
-      </ScrollView>
+      <FlatList
+        data={DATA}
+        renderItem={profileItem}
+        stickyHeaderIndices={[1]}
+      />
     </SafeAreaView>
   );
 };
