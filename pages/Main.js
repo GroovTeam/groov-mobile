@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Feed, Explore, Profile } from './ExpoPages';
 import LoginOrRegister from './loginSequence/LoginOrRegister';
+import VerifyEmail from './loginSequence/VerifyEmail';
 import firebase from '../utils/Firebase';
 
 /**
@@ -12,25 +13,39 @@ import firebase from '../utils/Firebase';
 const Main = () => {
 
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState(undefined);
+  const [signedIn, setSignedIn] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
 
   const onAuthStateChanged = (user) => {
-    setUser(user);
+
+    // Check if the user has verified their email.
+    if (user) {
+      setSignedIn(true);
+      setEmailVerified(user.emailVerified);
+    }
+
     if (initializing)
       setInitializing(false);
   };
 
+  // Listen for auth state changes
   useEffect(() => {    
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
 
+  // Don't return anything if the app is initializing.
+  // TODO: Loading screen.
   if (initializing)
     return null;
 
-  // TODO: Make this screen display a loading icon
-  if (!user)
+  // Allow the user to sign in.
+  if (!signedIn)
     return <LoginOrRegister/>;
+
+  // Check if the user's email is verified.
+  if (!emailVerified)
+    return <VerifyEmail setEmailVerified={setEmailVerified}/>;
 
   // Create a bottom tab navigator to manage pages.
   const BottomTabs = createBottomTabNavigator();

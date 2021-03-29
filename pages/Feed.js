@@ -8,33 +8,33 @@ import post from '../utils/post';
 import createPosse from '../utils/createPosse';
 import joinPosse from '../utils/joinPosse';
 
+const header = {
+  id: '0',
+  title: true,
+};
+
 /**
  * Holds a user's feed.
  */
 const Feed = () => {
 
-  const [DATA, setDATA] = useState([]);
+  const [DATA, setDATA] = useState([ header ]);
 
+  // When the feed loads, get all posts for a user
   useEffect(() => {
-    // All posts to be displayed.
-    // TODO: Load these from the database.
-    const header = {
-      id: '0',
-      title: true,
-    };
-
     getFeed()
       .then(res => {
+
+        if (res === undefined || res.data.results === undefined) return;
+
         const feed = res.data.results;
+
+        const newDATA = [ ...DATA ];
 
         feed.forEach(f => {
           f.imagePath = 'https://picsum.photos/200';
+          newDATA.push(f);
         });
-
-        const newDATA = [
-          header,
-          ...feed,
-        ];
         
         setDATA(newDATA);
       })
