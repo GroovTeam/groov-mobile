@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
-import ProfileBody from '../components/profile/ProfileBody';
+import ProfileButtons from '../components/profile/ProfileButtons';
 
 const ProfileStyles = StyleSheet.create({
   item: {
@@ -21,7 +21,7 @@ const testUser = {
   bio: 'Just a developer trying to make a cool app! More testing flavor text here...'
 };
 
-const DATA = [
+const DATA1 = [
   {
     id: '1',
     type: 'header',
@@ -29,8 +29,11 @@ const DATA = [
   },
   {
     id: '2',
-    type: 'body',
+    type: 'buttons',
   },
+];
+
+const DATA2 = [
   {
     id: '3',
     type: 'text',
@@ -68,20 +71,30 @@ const DATA = [
 const profileItem = ({ item }) => {
   if (item.type === 'header')
     return <ProfileHeader data={item.data} />;
-  else if (item.type === 'body')
-    return <ProfileBody />;
+  else if (item.type === 'buttons')
+    return <ProfileButtons />;
   else if (item.type === 'text') {
     return <Text style={ProfileStyles.item}>TESTING TEXT</Text>;
   }
+};
+
+const footerItem = () => {
+  return (
+    <FlatList
+      data={DATA2}
+      renderItem={profileItem}
+    />
+  );
 };
 
 const Profile = () => {
   return (
     <SafeAreaView style={Styles.container}>
       <FlatList
-        data={DATA}
+        data={DATA1}
         renderItem={profileItem}
         stickyHeaderIndices={[1]}
+        ListFooterComponent={footerItem}
       />
     </SafeAreaView>
   );

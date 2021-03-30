@@ -4,13 +4,13 @@ import { ButtonGroup } from 'react-native-elements';
 
 var width = Dimensions.get('window').width;
 
-const ProfileBodyStyles = StyleSheet.create({
+const ProfileButtonsStyles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
   },
 });
 
-export default class ProfileBody extends React.Component {
+export default class ProfileButtons extends React.Component {
   constructor () {
     super();
     this.state = {
@@ -28,7 +28,7 @@ export default class ProfileBody extends React.Component {
     const { selectedIndex } = this.state;
 
     return (
-      <View style={ProfileBodyStyles.container}>
+      <View style={ProfileButtonsStyles.container}>
         <ButtonGroup 
           onPress={this.updateIndex}
           selectedIndex={selectedIndex}
