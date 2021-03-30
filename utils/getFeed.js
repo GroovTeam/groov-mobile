@@ -9,8 +9,6 @@ const getFeed = async () => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    console.log('Getting feed!');
-
     return axios.get(
       ApiConfig.feed,
       config,

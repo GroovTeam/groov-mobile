@@ -9,8 +9,6 @@ const getPosses = async () => {
       headers: { Authorization: `Bearer ${token}` },
     };
 
-    console.log('Getting posses!!');
-
     return axios.get(
       ApiConfig.posses,
       config,
