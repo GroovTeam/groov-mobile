@@ -89,7 +89,7 @@ const footerItem = () => {
 
 const Profile = () => {
   return (
-    <SafeAreaView style={Styles.container}>
+    <SafeAreaView style={Styles.container, Styles.androidSafeView}>
       <FlatList
         data={DATA1}
         renderItem={profileItem}
