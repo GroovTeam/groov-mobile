@@ -1,4 +1,6 @@
 import firebase from './Firebase';
+import axios from 'axios';
+import ApiConfig from './ApiConfig';
 
 const register = async (email, password, username, firstName, lastName) => {
 
@@ -11,42 +13,18 @@ const register = async (email, password, username, firstName, lastName) => {
     dateCreated: Date.now()
   };
 
-  const { errors, valid } = validateData(userData);
-  if(!valid)
-    throw Error(JSON.stringify(errors));
-
-  let res;
-
-  firebase.auth().createUserWithEmailAndPassword(userData.email, userData.password)
-    .then(response => { console.log(response); res = response; })
-    .catch(err => { throw Error(JSON.stringify(err)); });
-
-  return res;
-};
-
-const isEmpty = (str) => {
-  return (str === undefined || str === '');
-};
-
-// Data validation
-const validateData = (data) => {
-  let errors = {};
-
-  if (isEmpty(data.email))
-    errors.email = 'Cannot be empty';
-  if(isEmpty(data.password))
-    errors.password = 'Cannot be empty';
-  if(isEmpty(data.username))
-    errors.username = 'Cannot be empty';
-  if(isEmpty(data.firstName))
-    errors.firstName = 'Cannot be empty';
-  if(isEmpty(data.lastName))
-    errors.lastName = 'Cannot be empty';
-
-  return { 
-    errors, 
-    valid: Object.keys(errors).length === 0 ? true : false 
-  };
+  axios.post(
+    ApiConfig.register,
+    userData
+  ).then(result => {
+    if (result.data.token)
+      firebase.auth().signInWithEmailAndPassword(
+        email,
+        password
+      ).then(userCred => {
+        userCred.user.sendEmailVerification();
+      }).catch(console.error);
+  }).catch(console.error);
 };
 
 export default register;

@@ -40,8 +40,7 @@ const containerStyles = StyleSheet.create({
  * @param {Boolean} isStatic whether the buttons are a static list.
  * @returns 
  */
-const GenreSelections = ({ data, color, updateButtons, isStatic }) => {
-  
+const GenreSelections = ({ data, color, fontSize, updateButtons, isStatic }) => {
   const items = [];
 
   const toggleButton = (key) => {
@@ -73,6 +72,7 @@ const GenreSelections = ({ data, color, updateButtons, isStatic }) => {
         <GenreSelectionButton
           text={key}
           color={color}
+          fontSize={fontSize}
           toggleSelf={toggleButton}
         />
       </View>

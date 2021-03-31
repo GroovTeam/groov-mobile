@@ -1,4 +1,6 @@
 import firebase from './Firebase';
+import axios from 'axios';
+import ApiConfig from './ApiConfig';
 
 // Login a user with an email and password
 const login = async (email, password) => {
@@ -8,45 +10,19 @@ const login = async (email, password) => {
     password: password,
   };
 
-  const { errors, valid } = validateData(userData);
-
-  if (!valid)
-    throw Error(JSON.stringify(errors));
-
-  firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
-    .then((data) => {
-      return data.user.getIdToken(true);
-    })
-    .then((token) => {
-      return token;
-    })
-    .catch((err) => {
-      console.error(err);
-      // auth/invalid-email
-      // auth/user-disabled
-      // auth/user-not-found
-      // auth/wrong-password
-      throw Error(JSON.stringify(err));
-    });
-};
-
-const isEmpty = (str) => {
-  return (str === undefined || str === '');
-};
-
-// Data validation
-const validateData = (data) => {
-  let errors = {};
-
-  if (isEmpty(data.email))
-    errors.email = 'Cannot be empty';
-  if (isEmpty(data.password))
-    errors.password = 'Cannot be empty';
-
-  return {
-    errors,
-    valid: Object.keys(errors).length === 0 ? true : false
-  };
+  axios.post(
+    ApiConfig.login,
+    userData
+  ).then(result => {
+    if (result.data.token) {
+      firebase.auth().signInWithEmailAndPassword(
+        email,
+        password
+      ).then(userCred => {
+        userCred.sendEmailVerification();
+      }).catch(console.error);
+    }
+  }).catch(console.error);
 };
 
 export default login;

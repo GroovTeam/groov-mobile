@@ -4,6 +4,7 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import Styles from '../../components/Styles';
 import SwipeConfig from '../../utils/SwipeConfig';
 import GenreSelections from '../../components/genreButtons/GenreSelections';
+import Tags from '../../utils/Tags';
 
 /**
  * Selection menu for a user's likes.
@@ -15,19 +16,7 @@ const Likes = ({ route, navigation, userData, applyUserData, updateCurPage }) =>
 
   // Genres are stateful.
   // TODO: Retrieve genres from API.
-  const [ genres, setGenres ] = useState({
-    'Rap': false,
-    'Opera': false,
-    'Country': false,
-    'Pop': false,
-    'Latin': false,
-    'Musical-Theatre': false,
-    'Rock': false,
-    'Alternative': false,
-    'Hip-Hop': false,
-    'K-Pop': false,
-    'Samba': false,
-  });
+  const [ genres, setGenres ] = useState(Tags);
 
   // Update a like by key.
   const updateLiked = (key) => {

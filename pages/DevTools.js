@@ -1,14 +1,15 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-material-ui';
 import register from '../utils/register';
+import firebase from '../utils/Firebase';
 
 const DevStyles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     flexGrow: 1,
   },
   button: {
@@ -44,6 +45,16 @@ const DevTools = ({ navigation }) => {
       });
   };
 
+  const getAuthToken = () => {
+    firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
+      console.log(token);
+      Alert.alert(
+        'Token',
+        'Token logged to console'
+      );
+    });
+  };
+
   return (
     <View style={DevStyles.container}>
       <Button
@@ -51,6 +62,12 @@ const DevTools = ({ navigation }) => {
         raised
         text='Developer Login'
         onPress={devLogin}
+      />
+      <Button
+        primary
+        raised
+        text='Get Auth Token'
+        onPress={getAuthToken}
       />
     </View>
   );

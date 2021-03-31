@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Dimensions, StyleSheet } from 'react-native';
 import Interactions from './Interactions';
-import favicon from '../../assets/favicon.png';
+import axios from 'axios';
 
 const window = Dimensions.get('window');
 const windowWidth = window.width;
@@ -9,7 +9,6 @@ const windowWidth = window.width;
 // Styles useful for posts. (probably move to independent file soon?)
 const PostStyles = StyleSheet.create ({
   container: {
-    color: 'rgb(255,255,255)',
     display: 'flex',
     justifyContent: 'flex-start',
   },
@@ -50,6 +49,7 @@ const PostStyles = StyleSheet.create ({
     borderRadius: 25,
   },
   body: {
+    marginTop: 4,
     width: (windowWidth - 100),
   },
   negativeMargin: {
@@ -58,15 +58,14 @@ const PostStyles = StyleSheet.create ({
 });
 
 const Post = ({ data }) => {
+  const [profilePhoto, setProfilePhoto] = useState(undefined);
 
-  // Render title if necessary.
-  if ('title' in data) {
-    return (
-      <View style={PostStyles.header}>
-        <Text style={PostStyles.text}>The Soundwave</Text>
-      </View>
-    );  
-  }
+  useEffect(() => {
+    // Get their image from the server.
+    axios.get(data.imagePath)
+      .then(res => setProfilePhoto(res.request.responseURL))
+      .catch(err => console.error(err));
+  }, []);
 
   // Otherwise return post container.
   return (
@@ -82,11 +81,11 @@ const Post = ({ data }) => {
       ]}>
         <Image
           style={PostStyles.image}
-          source={favicon}
+          source={{uri: profilePhoto}}
         />
         <View style={PostStyles.text}>
-          <Text style={PostStyles.user}>{data.user}</Text>
-          <Text style={PostStyles.body}>{data.body}</Text>
+          <Text style={PostStyles.user}>{'@' + data.username}</Text>
+          <Text style={PostStyles.body}>{data.content}</Text>
         </View>
       </View>
       <Interactions style={[

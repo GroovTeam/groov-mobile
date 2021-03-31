@@ -17,9 +17,6 @@ const LoginOrRegister = () => {
       userData.username,
       userData.firstName,
       userData.lastName)
-      .then(response => {
-        console.log(response);
-      })
       .catch(err => {
         console.error(err);
       });
