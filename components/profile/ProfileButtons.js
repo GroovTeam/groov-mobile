@@ -11,20 +11,22 @@ const ProfileButtonsStyles = StyleSheet.create({
 });
 
 export default class ProfileButtons extends React.Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
       selectedIndex: 0
     };
     this.updateIndex = this.updateIndex.bind(this);
+    this.updateFunction = this.props.function;
   }
     
   updateIndex (selectedIndex) {
     this.setState({selectedIndex});
+    this.updateFunction(selectedIndex);
   }
 
   render () {
-    const buttons = ['Communities', 'Likes'];
+    const buttons = ['Posses', 'Likes'];
     const { selectedIndex } = this.state;
 
     return (
