@@ -109,7 +109,7 @@ const Profile = () => {
       type: 'text2',
     },
   ];
-  
+
   const [refresh, setRefresh] = useState(false);
   const [profileData, setData] = useState(DATA1);
 
@@ -117,7 +117,6 @@ const Profile = () => {
 
   let updateIndex = (newIndex) => {
     selectedIndex = newIndex;
-    console.log('Its working??');
     
     if (selectedIndex === 0)
       setData(DATA1);
