@@ -10,6 +10,7 @@ import { Button } from 'react-native-material-ui';
 import post from '../../utils/post';
 import NavStyles from '../../components/NavStyles';
 import Tags from '../../utils/Tags';
+import YoutubeSearchAndRecord from './YoutubeSearchAndRecord';
 
 /*
 {
@@ -58,6 +59,8 @@ const CreatePost = ({ returnToFeed }) => {
   // const [posses_og, setPosses_og] = useState([]); <-- Enable this if you need posses in their original form
   const [content, setContent] = useState('');
   const [tags, setTags] = useState(Tags);
+
+  const [recording, setRecording] = useState(false);
 
   useState(() => {
   // Store the posses in the posses variable
@@ -125,6 +128,12 @@ const CreatePost = ({ returnToFeed }) => {
       .catch(console.error);
   };
 
+  const doneRecording = () => {
+    setRecording(false);
+  };
+  
+  if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>
+
   return (
     <View>
       <NavBar style={NavStyles}>
@@ -180,6 +189,17 @@ const CreatePost = ({ returnToFeed }) => {
             color={'#007BFF44'}
             fontSize={15}
             updateButtons={updateTags}
+          />
+        </View>
+
+        <View style={CreatePostStyles.spacer} />
+
+        <View>
+          <Button
+            primary
+            raised
+            text='Attach Recording'
+            onPress={() => setRecording(true)}
           />
         </View>
 
