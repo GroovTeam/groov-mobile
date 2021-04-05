@@ -120,6 +120,7 @@ const CreatePost = ({ doneRecording }) => {
 
       console.log(offset);
       setRecordDelay(offset);
+      console.log(recordDelay);
 
       setRecording(recording);
       setBeatSound(beatSound);
