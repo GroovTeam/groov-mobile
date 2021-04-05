@@ -6,6 +6,8 @@ import Styles from '../../components/Styles';
 import { Button } from 'react-native-material-ui';
 import NavStyles from '../../components/NavStyles';
 import { Audio } from 'expo-av';
+import ytdl from 'react-native-ytdl';
+import axios from 'axios';
 
 const window = Dimensions.get('window');
 const [windowWidth, windowHeight] = [window.width, window.height];
@@ -72,6 +74,20 @@ const CreatePost = ({ doneRecording }) => {
     } catch (err) {
       console.error('Failed to start recording', err);
     }
+  };
+
+  const playYoutube = async () => {
+    const youtubeURL = 'http://www.youtube.com/watch?v=h6JH_ed1zus';
+    ytdl(youtubeURL, {
+      quality: 'highestaudio',
+      filter: 'audioonly'
+    })
+      .then(urls => {
+        const url = urls[0].url;
+        console.log(url);
+        axios.get(url)
+          .then(console.log);
+      }).catch(console.error);
   };
 
   const playbackBeatAndRecord = async () => {
@@ -173,9 +189,7 @@ const CreatePost = ({ doneRecording }) => {
       await recordedSound.playAsync();
       setTimeout(() => {
         beatSound.playAsync();
-      }, 275);
-      
-      
+      }, 200);
       
     } catch (err) {
       console.error(err);
@@ -264,6 +278,15 @@ const CreatePost = ({ doneRecording }) => {
             raised
             text={'Stop Sounds'}
             onPress={stopPlaying}
+          />
+
+          <View style={CreatePostStyles.spacer} />
+
+          <Button
+            primary
+            raised
+            text={'YT'}
+            onPress={playYoutube}
           />
         
         </View>

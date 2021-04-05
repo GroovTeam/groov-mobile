@@ -3,6 +3,9 @@ import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
+import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
+import NavStyles from '../components/NavStyles';
+import { StatusBar } from 'expo-status-bar';
 
 const Profile = () => {
   const ProfileStyles = StyleSheet.create({
@@ -139,12 +142,24 @@ const Profile = () => {
 
   return (
     <SafeAreaView style={Styles.container, Styles.androidSafeView}>
+      <NavBar style={NavStyles}>
+        <NavTitle style={NavStyles.title}>
+          {'Create Post'}
+        </NavTitle>
+        <NavButton onPress={() => {}}>
+          <NavButtonText style={Styles.blueAccentText}>
+            Go back
+          </NavButtonText>
+        </NavButton>
+      </NavBar>
       <FlatList
+        style={{backgroundColor: 'white'}}
         data={profileData}
         renderItem={profileItem}
         stickyHeaderIndices={[1]}
         extraData={refresh}
       />
+      <StatusBar style='light' />
     </SafeAreaView>
   );
 };
