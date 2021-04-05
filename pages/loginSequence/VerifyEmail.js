@@ -38,6 +38,7 @@ const VerifyEmail = ({ setEmailVerified }) => {
       <Text style={[{marginTop: 75}, Styles.text, Styles.blueAccentText]}>
         {firebase.auth().currentUser.email}
       </Text>
+      <View style={{marginTop: 25}}/>
       <Button
         raised
         primary
