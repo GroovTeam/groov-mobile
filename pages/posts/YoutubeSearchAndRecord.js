@@ -46,6 +46,7 @@ const CreatePost = ({ doneRecording }) => {
   const [uri, setUri] = useState(undefined);
   const [recordedSound, setRecordedSound] = useState(undefined);
   const [beatSound, setBeatSound] = useState(undefined);
+  const [recordDelay, setRecordDelay] = useState(0);
 
   useEffect(() => {
     return () => {
@@ -99,9 +100,10 @@ const CreatePost = ({ doneRecording }) => {
       await recording.startAsync();
       const startRec = Date.now();
 
-      const offset = startPlay - startRec;
+      const offset = startRec - startPlay;
 
       console.log(offset);
+      setRecordDelay(offset);
 
       setRecording(recording);
       setBeatSound(beatSound);
@@ -165,9 +167,13 @@ const CreatePost = ({ doneRecording }) => {
       const beatSound = new Audio.Sound();
       await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
       setBeatSound(beatSound);
-      
+
       recordedSound.playAsync();
-      beatSound.playAsync();
+      // Start recording and audio
+      setTimeout(() => {
+        beatSound.playAsync();
+      }, 200);
+
     } catch (err) {
       console.error(err);
     }
