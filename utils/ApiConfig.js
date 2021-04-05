@@ -2,11 +2,16 @@ let ApiConfig = {};
 
 const baseURL = 'https://us-central1-thepoopcrew-528e4.cloudfunctions.net/api';
 
-ApiConfig.register = baseURL + '/auth/register';
-ApiConfig.login = baseURL + '/auth/login';
+ApiConfig.auth = '/auth';
+ApiConfig.register = baseURL + ApiConfig.auth + '/register';
+ApiConfig.login = baseURL + ApiConfig.auth + '/login';
 
-ApiConfig.feed = baseURL + '/posts/feed';
-ApiConfig.post = baseURL + '/posts';
+ApiConfig.user = '/user';
+ApiConfig.profile = baseURL + ApiConfig.user + '/profile';
+
+ApiConfig.posts = '/posts';
+ApiConfig.post = baseURL + ApiConfig.posts;
+ApiConfig.feed = baseURL + ApiConfig.posts + '/feed';
 
 ApiConfig.posses = baseURL + '/posses';
 ApiConfig.joinPosse = ApiConfig.posses + '/join';
