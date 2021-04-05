@@ -146,7 +146,7 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Profile'}
@@ -164,7 +164,7 @@ const Profile = () => {
         stickyHeaderIndices={[1]}
         extraData={refresh}
       />
-      <StatusBar style='dark' />
+      <StatusBar style='dark' backgroundColor='white' />
     </SafeAreaView>
   );
 };
