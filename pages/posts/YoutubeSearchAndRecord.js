@@ -170,8 +170,12 @@ const CreatePost = ({ doneRecording }) => {
       setBeatSound(beatSound);
 
       // Start recording and audio
-      beatSound.playAsync();
-      recordedSound.playAsync();
+      await recordedSound.playAsync();
+      setTimeout(() => {
+        beatSound.playAsync();
+      }, 275);
+      
+      
       
     } catch (err) {
       console.error(err);
