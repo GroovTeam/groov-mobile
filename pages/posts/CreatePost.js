@@ -31,7 +31,7 @@ const CreatePostStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: windowHeight * 0.85,
+    height: windowHeight - 100, // weird constant for now
     backgroundColor: 'white'
   },
   label: {

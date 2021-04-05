@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { View, Dimensions } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
@@ -18,7 +18,7 @@ const CreatePostStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: windowHeight * 0.85,
+    height: windowHeight - 100,
     backgroundColor: 'white'
   },
   label: {
@@ -43,8 +43,18 @@ const CreatePostStyles = StyleSheet.create({
 const CreatePost = ({ doneRecording }) => {
 
   const [recording, setRecording] = useState(undefined);
+  const [uri, setUri] = useState(undefined);
+  const [recordedSound, setRecordedSound] = useState(undefined);
+  const [beatSound, setBeatSound] = useState(undefined);
 
-  const startRecording = async () => {
+  useEffect(() => {
+    return () => {
+      console.log('Unloading all sounds');
+      stopPlaying();
+    };
+  }, []);
+
+  const record = async () => {
     try {
       console.log('Requesting permissions..');
       await Audio.requestPermissionsAsync();
@@ -63,13 +73,119 @@ const CreatePost = ({ doneRecording }) => {
     }
   };
 
-  async function stopRecording() {
+  const playbackBeatAndRecord = async () => {
+    try {
+      // Prepare the recording
+      console.log('Requesting permissions..');
+      await Audio.requestPermissionsAsync();
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: true,
+        playsInSilentModeIOS: true,
+      }); 
+      console.log('Starting recording..');
+      const recording = new Audio.Recording();
+      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+
+      // Prepare the audio session
+      await unloadBeat();
+      console.log('Playing beat');
+      const beatSound = new Audio.Sound();
+      await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
+      
+
+      // Start recording and audio
+      await beatSound.playAsync();
+      const startPlay = Date.now();
+      await recording.startAsync();
+      const startRec = Date.now();
+
+      const offset = startPlay - startRec;
+
+      console.log(offset);
+
+      setRecording(recording);
+      setBeatSound(beatSound);
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const unloadRecorded = async () => {
+    if (!recordedSound) return;
+    console.log('Unloading recording');
+    await recordedSound.unloadAsync();
+    setRecordedSound(undefined);
+  };
+
+  const unloadBeat = async () => {
+    if (!beatSound) return;
+    console.log('Unloading beat');
+    await beatSound.unloadAsync();
+    setBeatSound(undefined);
+  };
+
+  // Play back the stored uri sound
+  const playRecorded = async () => {
+    try {
+      if (!uri) return;
+      await unloadRecorded();
+      console.log('Playing your sound');
+      const recordedSound = new Audio.Sound();
+      await recordedSound.loadAsync({uri: uri});
+      setRecordedSound(recordedSound);
+      await recordedSound.playAsync();
+    } catch (err) {
+      console.error('Failed to play your sound', err);
+    }
+  };
+
+  const playBeat = async () => {
+    try {
+      await unloadBeat();
+      console.log('Playing beat');
+      const beatSound = new Audio.Sound();
+      await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
+      setBeatSound(beatSound);
+      await beatSound.playAsync();
+    } catch (err) {
+      console.error('Failed to play your sound', err);
+    }
+  };
+
+  const playBeatAndRecording = async () => {
+    try {
+      if (!uri) return;
+      await unloadRecorded();
+      const recordedSound = new Audio.Sound();
+      await recordedSound.loadAsync({uri: uri});
+      setRecordedSound(recordedSound);
+
+      await unloadBeat();
+      const beatSound = new Audio.Sound();
+      await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
+      setBeatSound(beatSound);
+      
+      recordedSound.playAsync();
+      beatSound.playAsync();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const stopPlaying = async () => {
+    unloadBeat();
+    unloadRecorded();
+  };
+
+  const stopRecording = async () => {
     console.log('Stopping recording..');
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
-    const uri = recording.getURI(); 
+    const uri = recording.getURI();
+    setUri(uri);
     console.log('Recording stopped and stored at', uri);
-  }
+  };
 
   return (
     <View>
@@ -93,8 +209,54 @@ const CreatePost = ({ doneRecording }) => {
             primary
             raised
             text={recording ? 'Stop Recording' : 'Start Recording'}
-            onPress={recording ? stopRecording : startRecording}
+            onPress={recording ? stopRecording : record}
           />
+
+          <View style={CreatePostStyles.spacer} />
+
+          <Button
+            primary
+            raised
+            text={'Play Beat and record'}
+            onPress={playbackBeatAndRecord}
+          />
+
+          <View style={CreatePostStyles.spacer} />
+
+          <Button
+            primary
+            raised
+            text={uri ? 'Play Recording' : 'No Recording Stored'}
+            onPress={playRecorded}
+          />
+
+          <View style={CreatePostStyles.spacer} />
+
+          <Button
+            primary
+            raised
+            text={'Play Beat'}
+            onPress={playBeat}
+          />
+
+          <View style={CreatePostStyles.spacer} />
+
+          <Button
+            primary
+            raised
+            text={'Play Beat and Recording'}
+            onPress={playBeatAndRecording}
+          />
+
+          <View style={CreatePostStyles.spacer} />
+
+          <Button
+            primary
+            raised
+            text={'Stop Sounds'}
+            onPress={stopPlaying}
+          />
+        
         </View>
 
       </View>

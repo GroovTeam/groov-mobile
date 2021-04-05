@@ -16,7 +16,7 @@ const windowHeight = window.height;
 
 const backgroundColorTempFix = StyleSheet.create({
   fix: {
-    height: windowHeight * 0.85,
+    height: windowHeight,
     backgroundColor: 'white'
   }
 });
