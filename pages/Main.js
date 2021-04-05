@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Feed, Explore, Profile } from './ExpoPages';
+import { Feed, Profile } from './ExpoPages';
 import LoginOrRegister from './loginSequence/LoginOrRegister';
 import VerifyEmail from './loginSequence/VerifyEmail';
 import firebase from '../utils/Firebase';

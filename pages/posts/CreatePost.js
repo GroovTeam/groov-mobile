@@ -136,7 +136,7 @@ const CreatePost = ({ returnToFeed }) => {
     setRecording(false);
   };
   
-  if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>
+  if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>;
 
   return (
     <View>
