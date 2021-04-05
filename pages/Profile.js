@@ -3,6 +3,10 @@ import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
+import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
+import NavStyles from '../components/NavStyles';
+import { StatusBar } from 'expo-status-bar';
+import logout from '../utils/logout';
 
 const Profile = () => {
   const ProfileStyles = StyleSheet.create({
@@ -126,6 +130,10 @@ const Profile = () => {
     setRefresh(!refresh);
   };
 
+  const logoutUser = async () => {
+    await logout();
+  };
+
   const profileItem = ({ item }) => {
     if (item.type === 'header')
       return <ProfileHeader data={item.data} />;
@@ -138,13 +146,25 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView style={Styles.container, Styles.androidSafeView}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <NavBar style={NavStyles}>
+        <NavTitle style={NavStyles.title}>
+          {'Profile'}
+        </NavTitle>
+        <NavButton onPress={logoutUser}>
+          <NavButtonText style={Styles.blueAccentText}>
+            Logout
+          </NavButtonText>
+        </NavButton>
+      </NavBar>
       <FlatList
+        style={{backgroundColor: 'white'}}
         data={profileData}
         renderItem={profileItem}
         stickyHeaderIndices={[1]}
         extraData={refresh}
       />
+      <StatusBar style='dark' backgroundColor='white' />
     </SafeAreaView>
   );
 };

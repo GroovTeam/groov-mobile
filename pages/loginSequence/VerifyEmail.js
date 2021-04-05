@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
+import { Button } from 'react-native-material-ui';
 import Styles from '../../components/Styles';
 import firebase from '../../utils/Firebase';
+import logout from '../../utils/logout';
 
 /**
  * Tell a user that they must verify their email.
@@ -20,6 +22,10 @@ const VerifyEmail = ({ setEmailVerified }) => {
     return () => clearInterval(refresher);
   }, []);
 
+  const logoutUser = async () => {
+    logout();
+  };
+
   return (
     <View style={Styles.container}>
       <Text style={[Styles.text, Styles.headerText]}>
@@ -32,6 +38,13 @@ const VerifyEmail = ({ setEmailVerified }) => {
       <Text style={[{marginTop: 75}, Styles.text, Styles.blueAccentText]}>
         {firebase.auth().currentUser.email}
       </Text>
+      <View style={{marginTop: 25}}/>
+      <Button
+        raised
+        primary
+        text='Logout'
+        onPress={logoutUser}
+      />
     </View>
   );
 };

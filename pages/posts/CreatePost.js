@@ -4,12 +4,13 @@ import { View, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
-import getPosses from '../../utils/getPosses';
+import getProfile from '../../utils/getProfile';
 import GenreSelections from '../../components/genreButtons/GenreSelections';
 import { Button } from 'react-native-material-ui';
 import post from '../../utils/post';
 import NavStyles from '../../components/NavStyles';
 import Tags from '../../utils/Tags';
+import YoutubeSearchAndRecord from './YoutubeSearchAndRecord';
 
 /*
 {
@@ -30,7 +31,7 @@ const CreatePostStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: windowHeight * 0.85,
+    height: windowHeight - 100, // weird constant for now
     backgroundColor: 'white'
   },
   label: {
@@ -39,6 +40,8 @@ const CreatePostStyles = StyleSheet.create({
   input: {
     borderColor: 'black',
     borderBottomWidth: 1,
+    borderRadius: 15,
+    padding: 10,
     width: windowWidth * 0.8,
   },
   multiline: {
@@ -59,20 +62,24 @@ const CreatePost = ({ returnToFeed }) => {
   const [content, setContent] = useState('');
   const [tags, setTags] = useState(Tags);
 
+  const [recording, setRecording] = useState(false);
+
   useState(() => {
   // Store the posses in the posses variable
-    getPosses()
+    getProfile()
       .then(res => {
         if (res.data) {
-          const posses = res.data.results;
-          
-          const posseSelections = {};
-          posses.forEach(posse => {
-            posseSelections[posse.name] = false;
-          });
+          const posses = res.data.posses;
+          if (posses) {
 
-          // setPosses(posses); <-- Enable this if you need posses in their original form
-          setPosses(posseSelections);
+            const posseSelections = {};
+            posses.forEach(posse => {
+              posseSelections[posse] = false;
+            });
+
+            // setPosses(posses); <-- Enable this if you need posses in their original form
+            setPosses(posseSelections);
+          }
         }
       })
       .catch(console.error);
@@ -124,6 +131,12 @@ const CreatePost = ({ returnToFeed }) => {
       })
       .catch(console.error);
   };
+
+  const doneRecording = () => {
+    setRecording(false);
+  };
+  
+  if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>;
 
   return (
     <View>
@@ -180,6 +193,17 @@ const CreatePost = ({ returnToFeed }) => {
             color={'#007BFF44'}
             fontSize={15}
             updateButtons={updateTags}
+          />
+        </View>
+
+        <View style={CreatePostStyles.spacer} />
+
+        <View>
+          <Button
+            primary
+            raised
+            text='Attach Recording'
+            onPress={() => setRecording(true)}
           />
         </View>
 

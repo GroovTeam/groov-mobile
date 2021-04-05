@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import Styles from '../../components/Styles';
 import NavStyles from '../../components/NavStyles';
 import NavBar, { NavButton, NavTitle } from 'react-native-nav';
 import { Icon } from 'react-native-material-ui';
 import Post from '../../components/posts/Post';
 import getFeed from '../../utils/getFeed';
 import CreatePost from './CreatePost';
+import { StatusBar } from 'expo-status-bar';
 
 const buttonSize = 35;
 
@@ -16,7 +16,7 @@ const windowHeight = window.height;
 
 const backgroundColorTempFix = StyleSheet.create({
   fix: {
-    height: windowHeight * 0.85,
+    height: windowHeight,
     backgroundColor: 'white'
   }
 });
@@ -67,7 +67,7 @@ const Feed = () => {
     />;
 
   return (
-    <SafeAreaView style={Styles.container, Styles.stretch}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'The Soundwave'}
@@ -85,6 +85,7 @@ const Feed = () => {
         data={DATA}
         renderItem={renderItem}
       />
+      <StatusBar style='dark' backgroundColor='white' />
     </SafeAreaView>
   );
 };

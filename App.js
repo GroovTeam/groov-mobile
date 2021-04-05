@@ -3,6 +3,7 @@ import Main from './pages/Main';
 import DevTools from './pages/DevTools';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+
 /**
  * Main application.
  */

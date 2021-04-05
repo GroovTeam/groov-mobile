@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Feed, Explore, Profile } from './ExpoPages';
+import { Feed, Profile } from './ExpoPages';
 import LoginOrRegister from './loginSequence/LoginOrRegister';
 import VerifyEmail from './loginSequence/VerifyEmail';
 import firebase from '../utils/Firebase';
@@ -23,12 +23,14 @@ const Main = () => {
       setSignedIn(true);
       setEmailVerified(user.emailVerified);
     }
+    else
+      setSignedIn(false);
 
     if (initializing)
       setInitializing(false);
   };
 
-  // Listen for auth state changes
+  // Listen for auth state changes.
   useEffect(() => {    
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
@@ -65,7 +67,7 @@ const Main = () => {
             ),
           }}
         />
-        {/* Explore Tab */}
+        {/* Explore Tab
         <BottomTabs.Screen
           name='Explore'
           component={Explore}
@@ -75,7 +77,7 @@ const Main = () => {
               <MaterialCommunityIcons name='magnify' color={color} size={size} />
             ),
           }}
-        />
+        /> */}
         {/* Profile Tab */}
         <BottomTabs.Screen
           name='Profile'
