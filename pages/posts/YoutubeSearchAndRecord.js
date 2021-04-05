@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, TextInput } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
+import InputStyles from '../../components/InputStyles';
 import { Button } from 'react-native-material-ui';
 import NavStyles from '../../components/NavStyles';
+import { StatusBar } from 'expo-status-bar';
 import { Audio } from 'expo-av';
-import ytdl from 'react-native-ytdl';
-import axios from 'axios';
+import searchYoutube from '../../utils/searchYoutube';
+// import ytdl from 'react-native-ytdl';
+// import axios from 'axios';
 
 const window = Dimensions.get('window');
 const [windowWidth, windowHeight] = [window.width, window.height];
@@ -49,6 +52,7 @@ const CreatePost = ({ doneRecording }) => {
   const [recordedSound, setRecordedSound] = useState(undefined);
   const [beatSound, setBeatSound] = useState(undefined);
   const [recordDelay, setRecordDelay] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     return () => {
@@ -76,18 +80,25 @@ const CreatePost = ({ doneRecording }) => {
     }
   };
 
-  const playYoutube = async () => {
-    const youtubeURL = 'http://www.youtube.com/watch?v=h6JH_ed1zus';
-    ytdl(youtubeURL, {
-      quality: 'highestaudio',
-      filter: 'audioonly'
-    })
-      .then(urls => {
-        const url = urls[0].url;
-        console.log(url);
-        axios.get(url)
-          .then(console.log);
-      }).catch(console.error);
+  const searchYoutubeQuery = async () => {
+    searchYoutube(searchQuery)
+      .then(res => {
+        const links = res.data;
+        if (links) {
+          console.log(links);
+        }
+      })
+      .catch(console.error);
+    // ytdl(youtubeURL, {
+    //   quality: 'highestaudio',
+    //   filter: 'audioonly'
+    // })
+    //   .then(urls => {
+    //     const url = urls[0].url;
+    //     console.log(url);
+    //     axios.get(url)
+    //       .then(console.log);
+    //   }).catch(console.error);
   };
 
   const playbackBeatAndRecord = async () => {
@@ -228,6 +239,23 @@ const CreatePost = ({ doneRecording }) => {
 
         <View style={CreatePostStyles.spacer} />
 
+        <TextInput
+          style={InputStyles.textInput}
+          placeholder={'Search a beat'}
+          onChangeText={text => setSearchQuery(text)}
+        />
+
+        <View style={{marginTop: 10}} />
+
+        <Button
+          primary
+          raised
+          text={'Search Youtube'}
+          onPress={searchYoutubeQuery}
+        />
+
+        <View style={CreatePostStyles.spacer} />
+
         <View>
           <Button
             primary
@@ -280,19 +308,11 @@ const CreatePost = ({ doneRecording }) => {
             text={'Stop Sounds'}
             onPress={stopPlaying}
           />
-
-          <View style={CreatePostStyles.spacer} />
-
-          <Button
-            primary
-            raised
-            text={'YT'}
-            onPress={playYoutube}
-          />
         
         </View>
 
       </View>
+      <StatusBar style='dark' backgroundColor='white' />
     </View>
   );
 };
