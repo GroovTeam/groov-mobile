@@ -25,9 +25,6 @@ const LoginOrRegister = () => {
   // Attempt to login an existing user.
   const loginUser = (email, password) => {
     login(email, password)
-      .then(response => {
-        console.log(response);
-      })
       .catch(err => {
         console.error(err);
       });

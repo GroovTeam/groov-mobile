@@ -30,7 +30,7 @@ const Main = () => {
       setInitializing(false);
   };
 
-  // Listen for auth state changes
+  // Listen for auth state changes.
   useEffect(() => {    
     const subscriber = firebase.auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
@@ -67,7 +67,7 @@ const Main = () => {
             ),
           }}
         />
-        {/* Explore Tab */}
+        {/* Explore Tab
         <BottomTabs.Screen
           name='Explore'
           component={Explore}
@@ -77,7 +77,7 @@ const Main = () => {
               <MaterialCommunityIcons name='magnify' color={color} size={size} />
             ),
           }}
-        />
+        /> */}
         {/* Profile Tab */}
         <BottomTabs.Screen
           name='Profile'

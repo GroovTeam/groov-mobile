@@ -146,7 +146,7 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView style={Styles.container, Styles.androidSafeView}>
+    <SafeAreaView>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Profile'}
@@ -164,7 +164,7 @@ const Profile = () => {
         stickyHeaderIndices={[1]}
         extraData={refresh}
       />
-      <StatusBar style='light' />
+      <StatusBar style='dark' />
     </SafeAreaView>
   );
 };

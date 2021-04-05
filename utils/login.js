@@ -10,12 +10,12 @@ const login = async (email, password) => {
     password: password,
   };
 
-  axios.post(
+  return axios.post(
     ApiConfig.login,
     userData
   ).then(result => {
     if (result.data.token) {
-      firebase.auth().signInWithEmailAndPassword(
+      return firebase.auth().signInWithEmailAndPassword(
         email,
         password
       ).catch(console.error);
