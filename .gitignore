@@ -1,6 +1,9 @@
 # testing
 test_sounds
 
+# config
+utils/FirebaseConfig.js
+
 # Expo
 .expo
 __generated__

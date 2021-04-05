@@ -100,7 +100,7 @@ const CreatePost = ({ doneRecording }) => {
       await recording.startAsync();
       const startRec = Date.now();
 
-      const offset = startRec - startPlay;
+      const offset =  startRec - startPlay;
 
       console.log(offset);
       setRecordDelay(offset);
@@ -166,14 +166,13 @@ const CreatePost = ({ doneRecording }) => {
       await unloadBeat();
       const beatSound = new Audio.Sound();
       await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
+      await beatSound.setVolumeAsync(0.5);
       setBeatSound(beatSound);
 
-      recordedSound.playAsync();
       // Start recording and audio
-      setTimeout(() => {
-        beatSound.playAsync();
-      }, 200);
-
+      beatSound.playAsync();
+      recordedSound.playAsync();
+      
     } catch (err) {
       console.error(err);
     }

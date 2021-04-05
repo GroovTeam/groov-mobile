@@ -18,9 +18,7 @@ const login = async (email, password) => {
       firebase.auth().signInWithEmailAndPassword(
         email,
         password
-      ).then(userCred => {
-        userCred.sendEmailVerification();
-      }).catch(console.error);
+      ).catch(console.error);
     }
   }).catch(console.error);
 };
