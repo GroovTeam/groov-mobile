@@ -23,6 +23,8 @@ const Main = () => {
       setSignedIn(true);
       setEmailVerified(user.emailVerified);
     }
+    else
+      setSignedIn(false);
 
     if (initializing)
       setInitializing(false);

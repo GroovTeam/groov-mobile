@@ -6,6 +6,7 @@ import ProfileButtons from '../components/profile/ProfileButtons';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import NavStyles from '../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
+import logout from '../utils/logout';
 
 const Profile = () => {
   const ProfileStyles = StyleSheet.create({
@@ -129,6 +130,10 @@ const Profile = () => {
     setRefresh(!refresh);
   };
 
+  const logoutUser = async () => {
+    await logout();
+  };
+
   const profileItem = ({ item }) => {
     if (item.type === 'header')
       return <ProfileHeader data={item.data} />;
@@ -144,11 +149,11 @@ const Profile = () => {
     <SafeAreaView style={Styles.container, Styles.androidSafeView}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
-          {'Create Post'}
+          {'Profile'}
         </NavTitle>
-        <NavButton onPress={() => {}}>
+        <NavButton onPress={logoutUser}>
           <NavButtonText style={Styles.blueAccentText}>
-            Go back
+            Logout
           </NavButtonText>
         </NavButton>
       </NavBar>
