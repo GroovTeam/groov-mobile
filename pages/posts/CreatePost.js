@@ -11,6 +11,7 @@ import post from '../../utils/post';
 import NavStyles from '../../components/NavStyles';
 import Tags from '../../utils/Tags';
 import YoutubeSearchAndRecord from './YoutubeSearchAndRecord';
+import { StatusBar } from 'expo-status-bar';
 
 /*
 {
@@ -217,6 +218,7 @@ const CreatePost = ({ returnToFeed }) => {
         </View>
 
       </View>
+      <StatusBar style='dark' backgroundColor='white' />
     </View>
   );
 };

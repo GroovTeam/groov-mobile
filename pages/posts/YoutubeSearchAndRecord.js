@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Dimensions, TextInput } from 'react-native';
+import { View, Dimensions, Text } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
-import InputStyles from '../../components/InputStyles';
 import { Button } from 'react-native-material-ui';
 import NavStyles from '../../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
 import { Audio } from 'expo-av';
-import searchYoutube from '../../utils/searchYoutube';
-// import ytdl from 'react-native-ytdl';
-// import axios from 'axios';
+import BeatScroller from '../../components/posts/BeatScroller';
 
 const window = Dimensions.get('window');
 const [windowWidth, windowHeight] = [window.width, window.height];
@@ -23,7 +20,8 @@ const CreatePostStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: windowHeight - 100,
+    justifyContent: 'space-evenly',
+    height: windowHeight - 125,
     backgroundColor: 'white'
   },
   label: {
@@ -52,8 +50,7 @@ const CreatePost = ({ doneRecording }) => {
   const [recordedSound, setRecordedSound] = useState(undefined);
   const [beatSound, setBeatSound] = useState(undefined);
   const [recordDelay, setRecordDelay] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [video, setVideo] = useState({});
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -61,47 +58,6 @@ const CreatePost = ({ doneRecording }) => {
       stopPlaying();
     };
   }, []);
-
-  const record = async () => {
-    try {
-      console.log('Requesting permissions..');
-      await Audio.requestPermissionsAsync();
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-      }); 
-      console.log('Starting recording..');
-      const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
-      await recording.startAsync(); 
-      setRecording(recording);
-      console.log('Recording started');
-    } catch (err) {
-      console.error('Failed to start recording', err);
-    }
-  };
-
-  const searchYoutubeQuery = async () => {
-    searchYoutube(searchQuery)
-      .then(res => {
-        const links = res.data;
-        if (links) {
-          console.log(links[0]);
-
-        }
-      })
-      .catch(console.error);
-    // ytdl(youtubeURL, {
-    //   quality: 'highestaudio',
-    //   filter: 'audioonly'
-    // })
-    //   .then(urls => {
-    //     const url = urls[0].url;
-    //     console.log(url);
-    //     axios.get(url)
-    //       .then(console.log);
-    //   }).catch(console.error);
-  };
 
   const playbackBeatAndRecord = async () => {
     try {
@@ -157,34 +113,6 @@ const CreatePost = ({ doneRecording }) => {
     setBeatSound(undefined);
   };
 
-  // Play back the stored uri sound
-  const playRecorded = async () => {
-    try {
-      if (!uri) return;
-      await unloadRecorded();
-      console.log('Playing your sound');
-      const recordedSound = new Audio.Sound();
-      await recordedSound.loadAsync({uri: uri});
-      setRecordedSound(recordedSound);
-      await recordedSound.playAsync();
-    } catch (err) {
-      console.error('Failed to play your sound', err);
-    }
-  };
-
-  const playBeat = async () => {
-    try {
-      await unloadBeat();
-      console.log('Playing beat');
-      const beatSound = new Audio.Sound();
-      await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
-      setBeatSound(beatSound);
-      await beatSound.playAsync();
-    } catch (err) {
-      console.error('Failed to play your sound', err);
-    }
-  };
-
   const playBeatAndRecording = async () => {
     try {
       if (!uri) return;
@@ -204,10 +132,18 @@ const CreatePost = ({ doneRecording }) => {
       setTimeout(() => {
         beatSound.playAsync();
       }, 200);
+
+      setPlaying(true);
       
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const stopAll = async () => {
+    stopPlaying();
+    stopRecording();
+    setPlaying(false);
   };
 
   const stopPlaying = async () => {
@@ -216,6 +152,7 @@ const CreatePost = ({ doneRecording }) => {
   };
 
   const stopRecording = async () => {
+    if (!recording) return;
     console.log('Stopping recording..');
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
@@ -239,81 +176,32 @@ const CreatePost = ({ doneRecording }) => {
 
       <View style={CreatePostStyles.container}>
 
-        <View style={CreatePostStyles.spacer} />
+        <Text style={Styles.headerText}>
+          Choose a beat
+        </Text>
 
-        <TextInput
-          style={InputStyles.textInput}
-          placeholder={'Search a beat'}
-          onChangeText={text => setSearchQuery(text)}
-        />
+        <BeatScroller />
 
-        <View style={{marginTop: 10}} />
-        
+        <Text style={Styles.headerText}>
+          Groove it!
+        </Text>
+
         <Button
           primary
           raised
-          text={'Search Youtube'}
-          onPress={searchYoutubeQuery}
+          text={recording ? 'Stop' : 'Record'}
+          onPress={recording ? stopAll : playbackBeatAndRecord}
         />
 
-        <View style={CreatePostStyles.spacer} />
-
-        <View>
-          <Button
-            primary
-            raised
-            text={recording ? 'Stop Recording' : 'Start Recording'}
-            onPress={recording ? stopRecording : record}
-          />
-
-          <View style={CreatePostStyles.spacer} />
-
-          <Button
-            primary
-            raised
-            text={'Play Beat and record'}
-            onPress={playbackBeatAndRecord}
-          />
-
-          <View style={CreatePostStyles.spacer} />
-
-          <Button
-            primary
-            raised
-            text={uri ? 'Play Recording' : 'No Recording Stored'}
-            onPress={playRecorded}
-          />
-
-          <View style={CreatePostStyles.spacer} />
-
-          <Button
-            primary
-            raised
-            text={'Play Beat'}
-            onPress={playBeat}
-          />
-
-          <View style={CreatePostStyles.spacer} />
-
-          <Button
-            primary
-            raised
-            text={'Play Beat and Recording'}
-            onPress={playBeatAndRecording}
-          />
-
-          <View style={CreatePostStyles.spacer} />
-
-          <Button
-            primary
-            raised
-            text={'Stop Sounds'}
-            onPress={stopPlaying}
-          />
-        
-        </View>
-
+        <Button
+          primary
+          raised
+          text={playing ? 'Stop' : 'Play it back!'}
+          onPress={playing ? stopAll : playBeatAndRecording}
+        />
+      
       </View>
+
       <StatusBar style='dark' backgroundColor='white' />
     </View>
   );
