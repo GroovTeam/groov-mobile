@@ -12,6 +12,7 @@ import BeatScroller from '../../components/posts/BeatScroller';
 const window = Dimensions.get('window');
 const [windowWidth, windowHeight] = [window.width, window.height];
 
+// Styles specific to the create post menu.
 const CreatePostStyles = StyleSheet.create({
   white: {
     backgroundColor: 'white'
@@ -53,6 +54,7 @@ const CreatePost = ({ doneRecording }) => {
   const [playing, setPlaying] = useState(false);
   const [beat, setBeat] = useState(false);
 
+  // Properly clean up after ourselves to get rid of mem leaks.
   useEffect(() => {
     return () => {
       console.log('Unloading all sounds');
@@ -60,6 +62,7 @@ const CreatePost = ({ doneRecording }) => {
     };
   }, []);
 
+  // Play the selected beat back and record the user's audio.
   const playbackBeatAndRecord = async () => {
     try {
 
@@ -83,7 +86,7 @@ const CreatePost = ({ doneRecording }) => {
       await beatSound.loadAsync({ uri: beat });
       
 
-      // Start recording and audio
+      // Start recording and audio.
       await beatSound.playAsync();
       const startPlay = Date.now();
       await recording.startAsync();
@@ -103,6 +106,7 @@ const CreatePost = ({ doneRecording }) => {
     }
   };
 
+  // Unload the recorded track.
   const unloadRecorded = async () => {
     if (!recordedSound) return;
     console.log('Unloading recording');
@@ -110,6 +114,7 @@ const CreatePost = ({ doneRecording }) => {
     setRecordedSound(undefined);
   };
 
+  // Unload the beat track.
   const unloadBeat = async () => {
     if (!beatSound) return;
     console.log('Unloading beat');
@@ -117,6 +122,7 @@ const CreatePost = ({ doneRecording }) => {
     setBeatSound(undefined);
   };
 
+  // Play back both audio files, as close together as possible.
   const playBeatAndRecording = async () => {
     try {
       if (!uri) return;
@@ -144,17 +150,20 @@ const CreatePost = ({ doneRecording }) => {
     }
   };
 
+  // Stop playing and recording.
   const stopAll = async () => {
     stopPlaying();
     stopRecording();
     setPlaying(false);
   };
 
+  // Stop playing.
   const stopPlaying = async () => {
     unloadBeat();
     unloadRecorded();
   };
 
+  // Stop recording a user's mic.
   const stopRecording = async () => {
     if (!recording) return;
     console.log('Stopping recording..');
