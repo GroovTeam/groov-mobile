@@ -125,7 +125,7 @@ const CreatePost = ({ doneRecording }) => {
   // Play back both audio files, as close together as possible.
   const playBeatAndRecording = async () => {
     try {
-      if (!uri) return;
+      if (!uri || !beat) return;
       await unloadRecorded();
       const recordedSound = new Audio.Sound();
       await recordedSound.loadAsync({uri: uri});
@@ -133,7 +133,7 @@ const CreatePost = ({ doneRecording }) => {
 
       await unloadBeat();
       const beatSound = new Audio.Sound();
-      await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
+      await beatSound.loadAsync({ uri: beat });
       await beatSound.setVolumeAsync(0.5);
       setBeatSound(beatSound);
 
