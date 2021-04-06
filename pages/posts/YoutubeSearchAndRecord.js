@@ -51,6 +51,7 @@ const CreatePost = ({ doneRecording }) => {
   const [beatSound, setBeatSound] = useState(undefined);
   const [recordDelay, setRecordDelay] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [beat, setBeat] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -161,6 +162,10 @@ const CreatePost = ({ doneRecording }) => {
     console.log('Recording stopped and stored at', uri);
   };
 
+  const updateBeat = (newBeat) => {
+    setBeat(newBeat);
+  };
+
   return (
     <View>
       <NavBar style={NavStyles}>
@@ -180,7 +185,7 @@ const CreatePost = ({ doneRecording }) => {
           Choose a beat
         </Text>
 
-        <BeatScroller />
+        <BeatScroller updateBeat={updateBeat}/>
 
         <Text style={Styles.headerText}>
           Groove it!

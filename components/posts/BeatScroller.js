@@ -1,63 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-
-const DATA = [
-  {
-    id: '1',
-    title: 'Kanye - Free',
-    first: true
-  },
-  {
-    id: '2',
-    title: 'Kanye - Floating',
-  },
-  {
-    id: '3',
-    title: 'Another one',
-  },
-  {
-    id: '4',
-    title: 'Another one',
-  },
-  {
-    id: '5',
-    title: 'Another one',
-  },
-  {
-    id: '6',
-    title: 'Another one',
-  },
-  {
-    id: '7',
-    title: 'Another one',
-  },
-  {
-    id: '8',
-    title: 'Another one',
-  },
-  {
-    id: '9',
-    title: 'Another one',
-  },
-];
+import getBeat from '../../utils/getBeat';
+import getBeats from '../../utils/getBeats';
 
 const Item = ({ item, onPress, backgroundColor, textColor}) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Text style={[styles.title, textColor]}>{item.title}</Text>
+    <Text style={[styles.title, textColor]}>{item.displayName}</Text>
   </TouchableOpacity>
 );
 
-const BeatScroller = () => {
+/**
+ * Give the user a selection menu for their beats
+ * 
+ * @param {Callback} updateBeat update the currently selected beat in the parent component 
+ */
+const BeatScroller = ({ updateBeat }) => {
   const [selectedId, setSelectedId] = useState(null);
+  const [DATA, setDATA] = useState(undefined);
+
+  // Kind of convoluted, but get all the categories, and parse them into display fields
+  useEffect(() => {
+    getBeats()
+      .then(res => {
+        const categories = res.data.results;
+        if (categories) {
+          const DATA = [];
+          categories.forEach(category => {
+            const beats = category.beats;
+            beats.forEach(beat => {
+              beat.displayName = beat.title + ' - ' + category.type;
+              DATA.push(beat);
+            });
+          });
+          setDATA(DATA);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
+  const selectBeat = async (link) => {
+    getBeat(link);
+  };
 
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? '#2196f3' : '#ffffff';
-    const color = item.id === selectedId ? 'white' : 'black';
+    const backgroundColor = item.link === selectedId ? '#2196f3' : '#ffffff';
+    const color = item.link === selectedId ? 'white' : 'black';
 
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => {setSelectedId(item.link); selectBeat(item.link);}}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
@@ -69,7 +61,7 @@ const BeatScroller = () => {
       <FlatList
         data={DATA}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.link}
         extraData={selectedId}
       />
     </View>
@@ -78,8 +70,10 @@ const BeatScroller = () => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 300,
-    width: '60%'
+    maxHeight: 300,
+    width: '70%',
+    borderTopWidth: 1,
+    borderBottomWidth: 1
   },
   item: {
     alignItems: 'center',
