@@ -62,6 +62,9 @@ const CreatePost = ({ doneRecording }) => {
 
   const playbackBeatAndRecord = async () => {
     try {
+
+      if (!beat) return;
+
       // Prepare the recording
       console.log('Requesting permissions..');
       await Audio.requestPermissionsAsync();
@@ -77,7 +80,7 @@ const CreatePost = ({ doneRecording }) => {
       await unloadBeat();
       console.log('Playing beat');
       const beatSound = new Audio.Sound();
-      await beatSound.loadAsync(require('../../test_sounds/joey.mp3'));
+      await beatSound.loadAsync({ uri: beat });
       
 
       // Start recording and audio
