@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet } from 'react-native';
-import { View, Dimensions } from 'react-native';
+import { SafeAreaView, View, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
@@ -140,7 +140,7 @@ const CreatePost = ({ returnToFeed }) => {
   if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>;
 
   return (
-    <View>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Create Post'}
@@ -219,7 +219,7 @@ const CreatePost = ({ returnToFeed }) => {
 
       </View>
       <StatusBar style='dark' backgroundColor='white' />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { View, Dimensions, Text } from 'react-native';
+import { SafeAreaView, View, Dimensions, Text } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
 import { Button } from 'react-native-material-ui';
@@ -22,7 +22,7 @@ const CreatePostStyles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    height: windowHeight - 125,
+    height: windowHeight - 175,
     backgroundColor: 'white'
   },
   label: {
@@ -179,7 +179,7 @@ const CreatePost = ({ doneRecording }) => {
   };
 
   return (
-    <View>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Create Post'}
@@ -220,7 +220,7 @@ const CreatePost = ({ doneRecording }) => {
       </View>
 
       <StatusBar style='dark' backgroundColor='white' />
-    </View>
+    </SafeAreaView>
   );
 };
 
