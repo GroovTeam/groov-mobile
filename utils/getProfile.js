@@ -2,6 +2,7 @@ import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
+// Get the current user's profile.
 const getProfile = async () => {
   return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
 
