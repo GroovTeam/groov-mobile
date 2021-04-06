@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
@@ -7,8 +7,12 @@ import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import NavStyles from '../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
 import logout from '../utils/logout';
+import getProfile from '../utils/getProfile';
 
 const Profile = () => {
+  const [posseData, setPosseData] = useState([]);
+  const [likesData, setLikesData] = useState([]);
+
   const ProfileStyles = StyleSheet.create({
     item: {
       backgroundColor: '#f9c2ff',
@@ -144,6 +148,22 @@ const Profile = () => {
     else if (item.type === 'text2')
       return <Text style={ProfileStyles.item}>TABS ARE WORKING!!!</Text>;
   };
+
+  const updateProfile = () => {
+    getProfile()
+      .then(res => {
+        if (res === undefined) return;
+
+        const tempPosseData = [];
+        tempPosseData.push()
+
+        setDATA(data);
+      });
+  };
+
+  useEffect(() => {
+    updateProfile();
+  }, []);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
