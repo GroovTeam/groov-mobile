@@ -53,6 +53,7 @@ const CreatePost = ({ doneRecording }) => {
   const [beatSound, setBeatSound] = useState(undefined);
   const [recordDelay, setRecordDelay] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [video, setVideo] = useState({});
 
   useEffect(() => {
     return () => {
@@ -85,7 +86,8 @@ const CreatePost = ({ doneRecording }) => {
       .then(res => {
         const links = res.data;
         if (links) {
-          console.log(links);
+          console.log(links[0]);
+
         }
       })
       .catch(console.error);
@@ -246,7 +248,7 @@ const CreatePost = ({ doneRecording }) => {
         />
 
         <View style={{marginTop: 10}} />
-
+        
         <Button
           primary
           raised
