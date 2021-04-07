@@ -7,11 +7,13 @@ import { Button } from 'react-native-material-ui';
  * Playback menu for a post's beat
  * 
  * @param {String} beatPath A url to the specified beat (if it exists)
+ * @param {String} dubPath A url to the specified beat (if it exists)
  * @returns 
  */
-const PlaybackMenu = ({ beatPath }) => {
+const PlaybackMenu = ({ beatPath, dubPath }) => {
 
   const [beat, setBeat] = useState(undefined);
+  const [dub, setDub] = useState(undefined);
 
   useEffect(() => {
     return beat ? unloadBeat : undefined;
@@ -29,6 +31,11 @@ const PlaybackMenu = ({ beatPath }) => {
 
     // Custom implementation to handle permissions for playback.
     await Audio.setModePlayback();
+
+    if (beat) {
+      await beat.playAsync();
+      return;
+    }
 
     console.log('Loading beat ' + beatPath);
     const beat = new Audio.Sound();
