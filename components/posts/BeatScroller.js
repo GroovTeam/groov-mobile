@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FlatList, View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import getBeat from '../../utils/getBeat';
+import getFile from '../../utils/getFile';
 import getBeats from '../../utils/getBeats';
 
 const Item = ({ item, onPress, backgroundColor, textColor}) => (
@@ -39,7 +39,7 @@ const BeatScroller = ({ updateBeat }) => {
   }, []);
 
   const selectBeat = async (link) => {
-    getBeat(link).then(beat => updateBeat(beat));
+    getFile(link).then(beat => updateBeat(beat));
   };
 
   const renderItem = ({ item }) => {

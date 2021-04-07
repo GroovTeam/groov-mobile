@@ -44,6 +44,7 @@ const Feed = () => {
           // Add temp fillers
           f.imagePath = 'https://picsum.photos/200';
           f.beatPath = 'gs://thepoopcrew-528e4.appspot.com/beats/playboiCarti-ambition.mp3';
+          f.dubPath = 'gs://thepoopcrew-528e4.appspot.com/beats/juiceWrld-damage.mp3';
 
           f.key = index.toString();
           newDATA.push(f);

@@ -16,8 +16,23 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
   const [dub, setDub] = useState(undefined);
 
   useEffect(() => {
-    return beat ? unloadBeat : undefined;
-  }, [beat]);
+    return () => {
+      unloadAll();
+    };
+  }, []);
+
+  const unloadAll = async () => {
+    await unloadBeat();
+    await unloadDub();
+  };
+
+  const unloadDub = async () => {
+    console.log('Unloading dub ' + dubPath);
+
+    // Unload the beat track.
+    if (!dub) return;
+    await dub.unloadAsync();
+  };
 
   const unloadBeat = async () => {
     console.log('Unloading beat ' + beatPath);
@@ -27,10 +42,29 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
     await beat.unloadAsync();
   };
 
-  const playBeat = async () => {
-
+  const playTogether = async () => {
     // Custom implementation to handle permissions for playback.
     await Audio.setModePlayback();
+
+    playDub();
+    playBeat();
+  };
+
+  const playDub = async () => {
+    if (dub) {
+      await dub.playAsync();
+      return;
+    }
+
+    console.log('Loading dub ' + dubPath);
+    const dub = new Audio.Sound();
+    await dub.loadAsync({ uri: dubPath });
+    setDub(dub);
+
+    await dub.playAsync();
+  };
+
+  const playBeat = async () => {
 
     if (beat) {
       await beat.playAsync();
@@ -45,9 +79,8 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
     await beat.playAsync();
   };
 
-  const stopBeat = async () => {
-    if (!beat) return;
-    setBeat(undefined);
+  const stopAll = async () => {
+    await unloadAll();
   };
 
   return (
@@ -56,13 +89,13 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
         raised
         primary
         text='Play'
-        onPress={playBeat}
+        onPress={playTogether}
       />
       <Button
         raised
         primary
         text='Stop'
-        onPress={stopBeat}
+        onPress={stopAll}
       />
     </View>
   );
