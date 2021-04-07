@@ -17,4 +17,7 @@ ApiConfig.posses = baseURL + '/posses';
 ApiConfig.joinPosse = ApiConfig.posses + '/join';
 ApiConfig.createPosse = ApiConfig.posses + '/create';
 
+ApiConfig.beats = '/beats';
+ApiConfig.getBeats = baseURL + ApiConfig.beats;
+
 export default ApiConfig;

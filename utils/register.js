@@ -2,6 +2,7 @@ import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
+// Register a new user.
 const register = async (email, password, username, firstName, lastName) => {
 
   let userData = {
