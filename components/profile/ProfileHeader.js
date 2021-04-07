@@ -28,17 +28,16 @@ const ProfileHeaderStyles = StyleSheet.create ({
 });
 
 const ProfileHeader = ({data}) => {
-  
   return (
     <View style={ProfileHeaderStyles.container}>
       <Image
         style={ProfileHeaderStyles.image}
         source={favicon}
       />
-      <Text style={ProfileHeaderStyles.nameText}>{data.name}</Text>
-      <Text style={ProfileHeaderStyles.userText}>{data.user}</Text>
+      <Text style={ProfileHeaderStyles.nameText}>{data.firstName + ' ' + data.lastName}</Text>
+      <Text style={ProfileHeaderStyles.userText}>{'@' + data.username}</Text>
       <GenreSelections
-        data={data.genres}
+        data={data.tagLikes}
         isStatic='true'
       />
       <Text style={ProfileHeaderStyles.bioText}>{data.bio}</Text>

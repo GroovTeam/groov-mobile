@@ -12,6 +12,8 @@ import getProfile from '../utils/getProfile';
 const Profile = () => {
   const [posseData, setPosseData] = useState([]);
   const [likesData, setLikesData] = useState([]);
+  const [profileData, setData] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   const ProfileStyles = StyleSheet.create({
     item: {
@@ -23,113 +25,15 @@ const Profile = () => {
     },
   });
 
-  const testUser = {
-    name: 'Jacob Franz',
-    user: '@Zingsla',
-    genres: ['Rap', 'Rock', 'Alternative', 'Opera', 'Musical Theater', 'Hip-Hop'],
-    bio: 'Just a developer trying to make a cool app! More testing flavor text here...'
-  };
-
-  const DATA1 = [
-    {
-      id: '1',
-      type: 'header',
-      data: testUser,
-    },
-    {
-      id: '2',
-      type: 'buttons',
-    },
-    {
-      id: '3',
-      type: 'text',
-    },
-    {
-      id: '4',
-      type: 'text',
-    },
-    {
-      id: '5',
-      type: 'text',
-    },
-    {
-      id: '6',
-      type: 'text',
-    },
-    {
-      id: '7',
-      type: 'text',
-    },
-    {
-      id: '8',
-      type: 'text',
-    },
-    {
-      id: '9',
-      type: 'text',
-    },
-    {
-      id: '10',
-      type: 'text',
-    },
-  ];
-
-  const DATA2 = [
-    {
-      id: '1',
-      type: 'header',
-      data: testUser,
-    },
-    {
-      id: '2',
-      type: 'buttons',
-    },
-    {
-      id: '3',
-      type: 'text2',
-    },
-    {
-      id: '4',
-      type: 'text2',
-    },
-    {
-      id: '5',
-      type: 'text2',
-    },
-    {
-      id: '6',
-      type: 'text2',
-    },
-    {
-      id: '7',
-      type: 'text2',
-    },
-    {
-      id: '8',
-      type: 'text2',
-    },
-    {
-      id: '9',
-      type: 'text2',
-    },
-    {
-      id: '10',
-      type: 'text2',
-    },
-  ];
-
-  const [refresh, setRefresh] = useState(false);
-  const [profileData, setData] = useState(DATA1);
-
   let selectedIndex = 0;
 
   let updateIndex = (newIndex) => {
     selectedIndex = newIndex;
     
     if (selectedIndex === 0)
-      setData(DATA1);
+      setData(posseData);
     else if (selectedIndex === 1)
-      setData(DATA2);
+      setData(likesData);
     
     setRefresh(!refresh);
   };
@@ -152,12 +56,31 @@ const Profile = () => {
   const updateProfile = () => {
     getProfile()
       .then(res => {
-        if (res === undefined) return;
+        if (res.data === undefined) return;
 
         const tempPosseData = [];
-        tempPosseData.push()
+        const tempLikesData = [];
 
-        setDATA(data);
+        const header = {
+          id: '1',
+          type: 'header',
+          data: res.data,
+        };
+
+        const buttons = {
+          id: '2',
+          type: 'buttons',
+        };
+
+        tempPosseData.push(header);
+        tempPosseData.push(buttons);
+        tempLikesData.push(header);
+        tempLikesData.push(buttons);
+
+        setPosseData(tempPosseData);
+        setLikesData(tempLikesData);
+        
+        setData(tempPosseData);
       });
   };
 
