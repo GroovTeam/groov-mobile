@@ -29,6 +29,7 @@ const Feed = () => {
   const [DATA, setDATA] = useState([]);
   const [posting, setPosting] = useState(false);
 
+  // Retrieve the user's feed from the server.
   const updateFeed = () => {
     getFeed()
       .then(res => {
@@ -36,11 +37,14 @@ const Feed = () => {
         if (res === undefined || res.data.results === undefined) return;
 
         const feed = res.data.results;
-
         const newDATA = [];
 
         feed.forEach((f, index) => {
+
+          // Add temp fillers
           f.imagePath = 'https://picsum.photos/200';
+          f.beatPath = 'gs://thepoopcrew-528e4.appspot.com/beats/playboiCarti-ambition.mp3';
+
           f.key = index.toString();
           newDATA.push(f);
         });

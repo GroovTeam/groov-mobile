@@ -6,7 +6,7 @@ import Styles from '../../components/Styles';
 import { Button } from 'react-native-material-ui';
 import NavStyles from '../../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
-import { Audio } from 'expo-av';
+import Audio from '../../utils/Audio';
 import BeatScroller from '../../components/posts/BeatScroller';
 
 const window = Dimensions.get('window');
@@ -70,11 +70,10 @@ const CreatePost = ({ doneRecording }) => {
 
       // Prepare the recording
       console.log('Requesting permissions..');
-      await Audio.requestPermissionsAsync();
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        playsInSilentModeIOS: true,
-      }); 
+
+      // Custom implementation to ask for perms and set config properly
+      await Audio.setModeRecord();
+
       console.log('Starting recording..');
       const recording = new Audio.Recording();
       await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
@@ -85,7 +84,6 @@ const CreatePost = ({ doneRecording }) => {
       const beatSound = new Audio.Sound();
       await beatSound.loadAsync({ uri: beat });
       
-
       // Start recording and audio.
       await beatSound.playAsync();
       const startPlay = Date.now();
@@ -126,6 +124,10 @@ const CreatePost = ({ doneRecording }) => {
   const playBeatAndRecording = async () => {
     try {
       if (!uri || !beat) return;
+
+      // Custom implementation to set permissions.
+      await Audio.setModePlayback();
+
       await unloadRecorded();
       const recordedSound = new Audio.Sound();
       await recordedSound.loadAsync({uri: uri});

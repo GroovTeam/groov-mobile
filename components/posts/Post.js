@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Dimensions, StyleSheet } from 'react-native';
 import Interactions from './Interactions';
 import axios from 'axios';
+import getBeat from '../../utils/getBeat';
+import PlaybackMenu from './PlaybackMenu';
 
 const window = Dimensions.get('window');
 const windowWidth = window.width;
@@ -59,11 +61,17 @@ const PostStyles = StyleSheet.create ({
 
 const Post = ({ data }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
+  const [beatPath, setBeatPath] = useState(undefined);
 
   useEffect(() => {
     // Get their image from the server.
     axios.get(data.imagePath)
       .then(res => setProfilePhoto(res.request.responseURL))
+      .catch(err => console.error(err));
+
+    // Get the streamable url from the server.
+    getBeat(data.beatPath)
+      .then(res => setBeatPath(res))
       .catch(err => console.error(err));
   }, []);
 
@@ -88,6 +96,7 @@ const Post = ({ data }) => {
           <Text style={PostStyles.body}>{data.content}</Text>
         </View>
       </View>
+      <PlaybackMenu beatPath={beatPath} />
       <Interactions style={[
         PostStyles.container,
         PostStyles.flexHori,
