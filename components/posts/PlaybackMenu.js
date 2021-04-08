@@ -77,7 +77,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
     setBeat(beat);
 
     await beat.playAsync();
-  };
+  }; 
 
   const stopAll = async () => {
     await unloadAll();
