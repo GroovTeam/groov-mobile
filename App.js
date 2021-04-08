@@ -13,11 +13,7 @@ const App = () => {
   return(
     <NavigationContainer>
       <Drawer.Navigator>
-        <Drawer.Screen
-          name='Main'
-          component={Main}
-          initialParams={{ resetSession: true }}
-        />
+        <Drawer.Screen name='Main' component={Main} />
         <Drawer.Screen name='Dev' component={DevTools} />
       </Drawer.Navigator>
     </NavigationContainer>
