@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { SafeAreaView, View, Dimensions, Text } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
+import SafeViewAndroid from '../../components/SafeViewAndroid';
 import { Button } from 'react-native-material-ui';
 import NavStyles from '../../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
@@ -181,7 +182,7 @@ const CreatePost = ({ doneRecording }) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Create Post'}

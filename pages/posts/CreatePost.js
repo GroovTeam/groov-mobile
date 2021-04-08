@@ -4,6 +4,7 @@ import { SafeAreaView, View, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
+import SafeViewAndroid from '../../components/SafeViewAndroid';
 import getProfile from '../../utils/getProfile';
 import GenreSelections from '../../components/genreButtons/GenreSelections';
 import { Button } from 'react-native-material-ui';
@@ -140,7 +141,7 @@ const CreatePost = ({ returnToFeed }) => {
   if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>;
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Create Post'}

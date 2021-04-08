@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Dimensions } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import NavStyles from '../../components/NavStyles';
+import SafeViewAndroid from '../../components/SafeViewAndroid';
 import NavBar, { NavButton, NavTitle } from 'react-native-nav';
 import { Icon } from 'react-native-material-ui';
 import Post from '../../components/posts/Post';
@@ -72,7 +73,7 @@ const Feed = () => {
     />;
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'The Soundwave'}
