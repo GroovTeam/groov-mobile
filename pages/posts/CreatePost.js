@@ -152,7 +152,7 @@ const CreatePost = ({ returnToFeed }) => {
 
       // Post the blob to the server
       await fileRef.put(blob)
-        .then(snapshot => {
+        .then(() => {
 
           // Configure the new recording's path.
           const recordingPath = 'gs://' + FirebaseConfig.storageBucket + '/recordings/' + postUUID;
@@ -162,15 +162,22 @@ const CreatePost = ({ returnToFeed }) => {
 
           body.beatFile = beatServerPath;
           body.recordingFile = recordingPath;
+
+          post(body)
+            .then(() => {
+              returnToFeed();
+            })
+            .catch(console.error);
         })
         .catch(console.error);
     }
-    
-    post(body)
-      .then(() => {
-        returnToFeed();
-      })
-      .catch(console.error);
+    else {
+      post(body)
+        .then(() => {
+          returnToFeed();
+        })
+        .catch(console.error);
+    }
   };
 
   const doneRecording = (beatPath, recordingPath) => {
