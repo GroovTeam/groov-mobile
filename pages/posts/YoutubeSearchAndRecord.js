@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { SafeAreaView, View, Dimensions, Text } from 'react-native';
+import { SafeAreaView, View, Dimensions, Text, Alert } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
 import SafeViewAndroid from '../../components/SafeViewAndroid';
@@ -48,12 +48,13 @@ const CreatePostStyles = StyleSheet.create({
 const CreatePost = ({ doneRecording }) => {
 
   const [recording, setRecording] = useState(undefined);
-  const [uri, setUri] = useState(undefined);
+  const [recordingPath, setRecordingPath] = useState(undefined);
   const [recordedSound, setRecordedSound] = useState(undefined);
   const [beatSound, setBeatSound] = useState(undefined);
   const [recordDelay, setRecordDelay] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [beat, setBeat] = useState(false);
+  const [beatURL, setBeatURL] = useState(undefined);
+  const [beatPath, setBeatPath] = useState(undefined);
 
   // Properly clean up after ourselves to get rid of mem leaks.
   useEffect(() => {
@@ -67,7 +68,13 @@ const CreatePost = ({ doneRecording }) => {
   const playbackBeatAndRecord = async () => {
     try {
 
-      if (!beat) return;
+      if (!beatURL) {
+        Alert.alert(
+          'Hold up.',
+          'Select a beat before recording!'
+        );
+        return;
+      }
 
       // Prepare the recording
       console.log('Requesting permissions..');
@@ -83,7 +90,7 @@ const CreatePost = ({ doneRecording }) => {
       await unloadBeat();
       console.log('Playing beat');
       const beatSound = new Audio.Sound();
-      await beatSound.loadAsync({ uri: beat });
+      await beatSound.loadAsync({ uri: beatURL });
       
       // Start recording and audio.
       await beatSound.playAsync();
@@ -124,19 +131,19 @@ const CreatePost = ({ doneRecording }) => {
   // Play back both audio files, as close together as possible.
   const playBeatAndRecording = async () => {
     try {
-      if (!uri || !beat) return;
+      if (!recordingPath || !beatURL) return;
 
       // Custom implementation to set permissions.
       await Audio.setModePlayback();
 
       await unloadRecorded();
       const recordedSound = new Audio.Sound();
-      await recordedSound.loadAsync({uri: uri});
+      await recordedSound.loadAsync({uri: recordingPath});
       setRecordedSound(recordedSound);
 
       await unloadBeat();
       const beatSound = new Audio.Sound();
-      await beatSound.loadAsync({ uri: beat });
+      await beatSound.loadAsync({ uri: beatURL });
       await beatSound.setVolumeAsync(0.5);
       setBeatSound(beatSound);
 
@@ -173,12 +180,29 @@ const CreatePost = ({ doneRecording }) => {
     setRecording(undefined);
     await recording.stopAndUnloadAsync();
     const uri = recording.getURI();
-    setUri(uri);
+    setRecordingPath(uri);
     console.log('Recording stopped and stored at', uri);
   };
 
-  const updateBeat = (newBeat) => {
-    setBeat(newBeat);
+  const updateBeat = (newBeatPath, newBeatURL) => {
+    setBeatPath(newBeatPath);
+    setBeatURL(newBeatURL);
+  };
+
+  const attach = () => {
+    if (!recordingPath || !beatURL) {
+      Alert.alert(
+        'Hold up.',
+        'Record something before attaching it!'
+      );
+      return;
+    }
+
+    finishSession();
+  };
+
+  const finishSession = () => {
+    doneRecording(beatPath, recordingPath);
   };
 
   return (
@@ -218,6 +242,13 @@ const CreatePost = ({ doneRecording }) => {
           raised
           text={playing ? 'Stop' : 'Play it back!'}
           onPress={playing ? stopAll : playBeatAndRecording}
+        />
+
+        <Button
+          primary
+          raised
+          text={'Attach it!'}
+          onPress={attach}
         />
       
       </View>

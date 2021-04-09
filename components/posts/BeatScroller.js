@@ -39,7 +39,7 @@ const BeatScroller = ({ updateBeat }) => {
   }, []);
 
   const selectBeat = async (link) => {
-    getFile(link).then(beat => updateBeat(beat));
+    getFile(link).then(beat => updateBeat(link, beat));
   };
 
   const renderItem = ({ item }) => {

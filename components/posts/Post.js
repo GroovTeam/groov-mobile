@@ -61,8 +61,8 @@ const PostStyles = StyleSheet.create ({
 
 const Post = ({ data }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
-  const [beatPath, setBeatPath] = useState(undefined);
-  const [dubPath, setDubPath] =  useState(undefined);
+  const [beatURL, setBeatURL] = useState(undefined);
+  const [recordingURL, setRecordingURL] =  useState(undefined);
 
   useEffect(() => {
     // Get their image from the server.
@@ -71,13 +71,21 @@ const Post = ({ data }) => {
       .catch(err => console.error(err));
 
     // Get the streamable urls from the server.
-    getFile(data.beatPath)
-      .then(res => setBeatPath(res))
+    getFile(data.beatFile)
+      .then(res => setBeatURL(res))
       .catch(console.error);
-    getFile(data.dubPath)
-      .then(res => setDubPath(res))
+    getFile(data.recordingFile)
+      .then(res => setRecordingURL(res))
       .catch(console.error);
   }, []);
+
+  let conditionalPlayback = <View />;
+  if (beatURL && recordingURL) {
+    conditionalPlayback = <PlaybackMenu
+      beatPath={beatURL}
+      dubPath={recordingURL}
+    />;
+  }
 
   // Otherwise return post container.
   return (
@@ -100,10 +108,7 @@ const Post = ({ data }) => {
           <Text style={PostStyles.body}>{data.content}</Text>
         </View>
       </View>
-      <PlaybackMenu
-        beatPath={beatPath}
-        dubPath={dubPath}
-      />
+      {conditionalPlayback}
       <Interactions style={[
         PostStyles.container,
         PostStyles.flexHori,
