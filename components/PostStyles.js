@@ -51,6 +51,19 @@ const PostStyles = StyleSheet.create({
   negativeMargin: {
     marginTop: -15,
   },
+  posseImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 5,
+  },
+  posseText: {
+    color: 'rgb(0,0,0)',
+    fontSize: 25,
+    fontWeight: '300',
+    textAlign: 'center',
+    marginLeft: 20,
+    marginTop: 20,
+  },
 });
 
 export default PostStyles;

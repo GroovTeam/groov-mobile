@@ -3,6 +3,7 @@ import { FlatList, SafeAreaView, StyleSheet, Text } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
+import Posse from '../components/profile/Posse';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import NavStyles from '../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
@@ -47,8 +48,8 @@ const Profile = () => {
       return <ProfileHeader data={item.data} />;
     else if (item.type === 'buttons')
       return <ProfileButtons function={updateIndex} />;
-    else if (item.type === 'text')
-      return <Text style={ProfileStyles.item}>TESTING TEXT</Text>;
+    else if (item.type === 'posse')
+      return <Posse data={item} />;
     else if (item.type === 'text2')
       return <Text style={ProfileStyles.item}>TABS ARE WORKING!!!</Text>;
   };
@@ -74,6 +75,16 @@ const Profile = () => {
 
         tempPosseData.push(header);
         tempPosseData.push(buttons);
+        res.data.posses.forEach((f, index) => {
+          let tempPosse = {};
+          tempPosse.id = (index + 2).toString();
+          tempPosse.name = f;
+          tempPosse.imagePath = 'https://picsum.photos/200';
+          tempPosse.type = 'posse';
+
+          tempPosseData.push(tempPosse);
+        });
+
         tempLikesData.push(header);
         tempLikesData.push(buttons);
 
