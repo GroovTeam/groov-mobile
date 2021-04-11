@@ -45,7 +45,7 @@ const CreatePostStyles = StyleSheet.create({
   }
 });
 
-const CreatePost = ({ doneRecording }) => {
+const ChooseBeatAndRecord = ({ doneRecording }) => {
 
   const [recording, setRecording] = useState(undefined);
   const [recordingPath, setRecordingPath] = useState(undefined);
@@ -84,7 +84,8 @@ const CreatePost = ({ doneRecording }) => {
 
       console.log('Starting recording..');
       const recording = new Audio.Recording();
-      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+
+      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_CUSTOM_HIGH_QUALITY);
 
       // Prepare the audio session
       await unloadBeat();
@@ -258,4 +259,4 @@ const CreatePost = ({ doneRecording }) => {
   );
 };
 
-export default CreatePost;
+export default ChooseBeatAndRecord;

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { SafeAreaView, View, Dimensions } from 'react-native';
+import { Text, StyleSheet, SafeAreaView, View, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
@@ -11,7 +10,7 @@ import { Button } from 'react-native-material-ui';
 import post from '../../utils/post';
 import NavStyles from '../../components/NavStyles';
 import Tags from '../../utils/Tags';
-import YoutubeSearchAndRecord from './YoutubeSearchAndRecord';
+import ChooseBeatAndRecord from './ChooseBeatAndRecord';
 import { StatusBar } from 'expo-status-bar';
 import firebase from '../../utils/Firebase';
 import FirebaseConfig from '../../utils/FirebaseConfig';
@@ -194,90 +193,92 @@ const CreatePost = ({ returnToFeed }) => {
     console.log(recordingPhysicalPath);
   };
   
-  if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>;
+  if (recording) return <ChooseBeatAndRecord doneRecording={doneRecording}/>;
 
   return (
-    <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
-      <NavBar style={NavStyles}>
-        <NavTitle style={NavStyles.title}>
-          {'Create Post'}
-        </NavTitle>
-        <NavButton onPress={returnToFeed}>
-          <NavButtonText style={Styles.blueAccentText}>
-            Go back
-          </NavButtonText>
-        </NavButton>
-      </NavBar>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
+        <NavBar style={NavStyles}>
+          <NavTitle style={NavStyles.title}>
+            {'Create Post'}
+          </NavTitle>
+          <NavButton onPress={returnToFeed}>
+            <NavButtonText style={Styles.blueAccentText}>
+              Go back
+            </NavButtonText>
+          </NavButton>
+        </NavBar>
 
-      <View style={CreatePostStyles.container}>
+        <View style={CreatePostStyles.container}>
 
-        <View>
-          <Text style={CreatePostStyles.label}>
-            Content
-          </Text>
-          <TextInput
-            style={[
-              CreatePostStyles.input,
-              CreatePostStyles.multiline,
-              {marginTop: 15}
-            ]}
-            onChangeText={text => setContent(text)}
-            multiline={true}
+          <View>
+            <Text style={CreatePostStyles.label}>
+              Content
+            </Text>
+            <TextInput
+              style={[
+                CreatePostStyles.input,
+                CreatePostStyles.multiline,
+                {marginTop: 15}
+              ]}
+              onChangeText={text => setContent(text)}
+              multiline={true}
+            />
+          </View>
+
+          <View>
+            <Text style={CreatePostStyles.label}>
+              Select your posses
+            </Text>
+            <View style={CreatePostStyles.selections}>
+              <GenreSelections
+                data={posses}
+                color={'#007BFF44'}
+                fontSize={15}
+                updateButtons={updatePosses}
+              />
+            </View>
+          </View>
+
+          <View>
+            <Text style={CreatePostStyles.label}>
+              Select your tags
+            </Text>
+            <View style={CreatePostStyles.selections}>
+              <GenreSelections
+                data={tags}
+                color={'#007BFF44'}
+                fontSize={15}
+                updateButtons={updateTags}
+              />
+            </View>
+          </View>
+
+          <Button
+            primary
+            raised
+            text='Attach Recording'
+            onPress={() => setRecording(true)}
           />
+
+          <Button
+            primary
+            raised
+            text='Post'
+            onPress={makePost}
+          />
+
+          <Button
+            primary
+            raised
+            text='Log'
+            onPress={logPaths}
+          />
+
         </View>
-
-        <View>
-          <Text style={CreatePostStyles.label}>
-            Select your posses
-          </Text>
-          <View style={CreatePostStyles.selections}>
-            <GenreSelections
-              data={posses}
-              color={'#007BFF44'}
-              fontSize={15}
-              updateButtons={updatePosses}
-            />
-          </View>
-        </View>
-
-        <View>
-          <Text style={CreatePostStyles.label}>
-            Select your tags
-          </Text>
-          <View style={CreatePostStyles.selections}>
-            <GenreSelections
-              data={tags}
-              color={'#007BFF44'}
-              fontSize={15}
-              updateButtons={updateTags}
-            />
-          </View>
-        </View>
-
-        <Button
-          primary
-          raised
-          text='Attach Recording'
-          onPress={() => setRecording(true)}
-        />
-
-        <Button
-          primary
-          raised
-          text='Post'
-          onPress={makePost}
-        />
-
-        <Button
-          primary
-          raised
-          text='Log'
-          onPress={logPaths}
-        />
-
-      </View>
-      <StatusBar style='dark' backgroundColor='white' />
-    </SafeAreaView>
+        <StatusBar style='dark' backgroundColor='white' />
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
