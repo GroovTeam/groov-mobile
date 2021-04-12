@@ -23,6 +23,7 @@ const PostStyles = StyleSheet.create ({
   },
   padded: {
     padding: 15,
+    paddingBottom: 0
   },
   user: {
     color: 'rgb(0,0,0)',
@@ -55,7 +56,8 @@ const PostStyles = StyleSheet.create ({
     marginLeft: 'auto'
   },
   negativeMargin: {
-    marginTop: -15,
+    marginTop: -20,
+    marginBottom: 5
   },
 });
 
