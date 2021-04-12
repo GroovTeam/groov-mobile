@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import Audio from '../../utils/Audio';
-import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import IconToggle from '../IconToggle';
 
 /**
  * Playback menu for a post's beat
@@ -15,7 +14,6 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
 
   const [beat, setBeat] = useState(undefined);
   const [dub, setDub] = useState(undefined);
-  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -26,7 +24,6 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
   const unloadAll = async () => {
     await unloadBeat();
     await unloadDub();
-    setPlaying(false);
   };
 
   const unloadDub = async () => {
@@ -48,8 +45,6 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
   };
 
   const play = async () => {
-    setPlaying(true);
-
     // Custom implementation to handle permissions for playback.
     await Audio.setModePlayback();
 
@@ -80,13 +75,14 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
 
   return (
     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', margin: 5}}>
-      <TouchableOpacity onPress={playing ? stop : play}>
-        <Ionicons
-          name={playing ? 'md-stop-circle' : 'md-play-circle'}
-          size={45}
-          color='#007bff'
-        />
-      </TouchableOpacity>
+      <IconToggle
+        onActivate={play}
+        onDeactivate={stop}
+        onIcon={'stop-circle'}
+        offIcon={'play-circle'}
+        color={'#007bff'}
+        size={45}
+      />
     </View>
   );
 };
