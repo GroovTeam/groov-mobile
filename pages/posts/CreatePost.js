@@ -222,6 +222,7 @@ const CreatePost = ({ returnToFeed }) => {
                 {marginTop: 15}
               ]}
               onChangeText={text => setContent(text)}
+              value={content}
               multiline={true}
             />
           </View>
