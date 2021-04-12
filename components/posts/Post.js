@@ -4,6 +4,7 @@ import Interactions from './Interactions';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
 import PlaybackMenu from './PlaybackMenu';
+import { set } from 'react-native-reanimated';
 
 const window = Dimensions.get('window');
 const windowWidth = window.width;
@@ -52,7 +53,10 @@ const PostStyles = StyleSheet.create ({
   },
   body: {
     marginTop: 4,
-    width: (windowWidth - 100),
+    width: 'auto',
+  },
+  playbackMenu: {
+    marginLeft: 'auto'
   },
   negativeMargin: {
     marginTop: -15,
@@ -63,29 +67,42 @@ const Post = ({ data }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
+  const [playback, setPlayback] = useState(<View />);
 
   useEffect(() => {
-    // Get their image from the server.
-    axios.get(data.imagePath)
-      .then(res => setProfilePhoto(res.request.responseURL))
-      .catch(err => console.error(err));
+    if (beatURL || recordingURL) {
+      setPlayback(
+        <View style={PostStyles.playbackMenu}>
+          <PlaybackMenu
+            beatPath={beatURL}
+            dubPath={recordingURL}
+          />
+        </View>
+      );
+    }
+  }, [beatURL, recordingURL]);
 
-    // Get the streamable urls from the server.
-    getFile(data.beatFile)
-      .then(res => setBeatURL(res))
-      .catch(console.error);
-    getFile(data.recordingFile)
-      .then(res => setRecordingURL(res))
-      .catch(console.error);
+  useEffect(() => {
+    async function asyncWrapper() {
+      // Get their image from the server.
+      axios.get(data.imagePath)
+        .then(res => setProfilePhoto(res.request.responseURL))
+        .catch(err => console.error(err));
+
+      //console.log(data);
+
+      // Get the streamable urls from the server.
+      if (data.hasAudio) {
+        await getFile(data.beatFile)
+          .then(res => setBeatURL(res))
+          .catch(console.error);
+        await getFile(data.recordingFile)
+          .then(res => setRecordingURL(res))
+          .catch(console.error);
+      }
+    }
+    asyncWrapper();
   }, []);
-
-  let conditionalPlayback = <View />;
-  if (beatURL && recordingURL) {
-    conditionalPlayback = <PlaybackMenu
-      beatPath={beatURL}
-      dubPath={recordingURL}
-    />;
-  }
 
   // Otherwise return post container.
   return (
@@ -107,8 +124,8 @@ const Post = ({ data }) => {
           <Text style={PostStyles.user}>{'@' + data.username}</Text>
           <Text style={PostStyles.body}>{data.content}</Text>
         </View>
+        {playback}
       </View>
-      {conditionalPlayback}
       <Interactions style={[
         PostStyles.container,
         PostStyles.flexHori,

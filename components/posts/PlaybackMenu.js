@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import Audio from '../../utils/Audio';
 import { Button } from 'react-native-material-ui';
+import { Ionicons } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 /**
  * Playback menu for a post's beat
@@ -14,6 +16,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
 
   const [beat, setBeat] = useState(undefined);
   const [dub, setDub] = useState(undefined);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -24,6 +27,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
   const unloadAll = async () => {
     await unloadBeat();
     await unloadDub();
+    setPlaying(false);
   };
 
   const unloadDub = async () => {
@@ -32,6 +36,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
     // Unload the beat track.
     if (!dub) return;
     await dub.unloadAsync();
+    setDub(undefined);
   };
 
   const unloadBeat = async () => {
@@ -40,63 +45,49 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
     // Unload the beat track.
     if (!beat) return;
     await beat.unloadAsync();
+    setBeat(undefined);
   };
 
-  const playTogether = async () => {
+  const play = async () => {
+    setPlaying(true);
+
     // Custom implementation to handle permissions for playback.
     await Audio.setModePlayback();
 
-    playDub();
-    playBeat();
-  };
+    let preppedDub = dub;
+    let preppedBeat = beat;
 
-  const playDub = async () => {
-    if (dub) {
-      await dub.playAsync();
-      return;
+    if (!preppedDub) {
+      console.log('Loading dub ' + dubPath);
+      preppedDub = new Audio.Sound();
+      await preppedDub.loadAsync({ uri: dubPath });
+      setDub(preppedDub);
     }
 
-    console.log('Loading dub ' + dubPath);
-    const dub = new Audio.Sound();
-    await dub.loadAsync({ uri: dubPath });
-    setDub(dub);
-
-    await dub.playAsync();
-  };
-
-  const playBeat = async () => {
-
-    if (beat) {
-      await beat.playAsync();
-      return;
+    if (!preppedBeat) {
+      console.log('Loading beat ' + beatPath);
+      preppedBeat = new Audio.Sound();
+      await preppedBeat.loadAsync({ uri: beatPath });
+      setBeat(preppedBeat);
     }
 
-    console.log('Loading beat ' + beatPath);
-    const beat = new Audio.Sound();
-    await beat.loadAsync({ uri: beatPath });
-    setBeat(beat);
+    preppedBeat.playAsync();
+    preppedDub.playAsync();
+  };
 
-    await beat.playAsync();
-  }; 
-
-  const stopAll = async () => {
+  const stop = async () => {
     await unloadAll();
   };
 
   return (
     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', margin: 5}}>
-      <Button
-        raised
-        primary
-        text='Play'
-        onPress={playTogether}
-      />
-      <Button
-        raised
-        primary
-        text='Stop'
-        onPress={stopAll}
-      />
+      <TouchableOpacity onPress={playing ? stop : play}>
+        <Ionicons
+          name={playing ? 'md-stop-circle' : 'md-play-circle'}
+          size={45}
+          color='#007bff'
+        />
+      </TouchableOpacity>
     </View>
   );
 };

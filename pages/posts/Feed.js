@@ -29,9 +29,12 @@ const Feed = () => {
 
   const [DATA, setDATA] = useState([]);
   const [posting, setPosting] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   // Retrieve the user's feed from the server.
   const updateFeed = () => {
+    setRefreshing(true);
+    setDATA(undefined);
     getFeed()
       .then(res => {
 
@@ -50,6 +53,7 @@ const Feed = () => {
         });
         
         setDATA(newDATA);
+        setRefreshing(false);
       })
       .catch(console.error);
 
@@ -66,9 +70,7 @@ const Feed = () => {
   );
 
   if (posting)
-    return <CreatePost
-      returnToFeed={updateFeed}
-    />;
+    return <CreatePost returnToFeed={updateFeed} />;
 
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
@@ -90,6 +92,7 @@ const Feed = () => {
         renderItem={renderItem}
         refreshControl={
           <RefreshControl
+            refreshing={refreshing}
             onRefresh={updateFeed}
           />
         }
