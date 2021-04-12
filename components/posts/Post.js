@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Dimensions, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet } from 'react-native';
 import Interactions from './Interactions';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
 import PlaybackMenu from './PlaybackMenu';
-import { set } from 'react-native-reanimated';
-
-const window = Dimensions.get('window');
-const windowWidth = window.width;
 
 // Styles useful for posts. (probably move to independent file soon?)
 const PostStyles = StyleSheet.create ({

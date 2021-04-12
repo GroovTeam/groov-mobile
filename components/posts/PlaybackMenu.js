@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import Audio from '../../utils/Audio';
-import { Button } from 'react-native-material-ui';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
