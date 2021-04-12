@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Dimensions } from 'react-native';
+import { SafeAreaView, StyleSheet, Dimensions, RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import NavStyles from '../../components/NavStyles';
 import SafeViewAndroid from '../../components/SafeViewAndroid';
@@ -88,6 +88,11 @@ const Feed = () => {
         style={backgroundColorTempFix.fix}
         data={DATA}
         renderItem={renderItem}
+        refreshControl={
+          <RefreshControl
+            onRefresh={updateFeed}
+          />
+        }
       />
       <StatusBar style='dark' backgroundColor='white' />
     </SafeAreaView>
