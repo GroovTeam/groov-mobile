@@ -18,9 +18,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    return () => {
-      unloadAll();
-    };
+    return unloadAll();
   }, []);
 
   const unloadAll = async () => {
