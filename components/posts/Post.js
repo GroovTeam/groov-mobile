@@ -87,8 +87,6 @@ const Post = ({ data }) => {
         .then(res => setProfilePhoto(res.request.responseURL))
         .catch(err => console.error(err));
 
-      //console.log(data);
-
       // Get the streamable urls from the server.
       if (data.hasAudio) {
         await getFile(data.beatFile)
