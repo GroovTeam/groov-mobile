@@ -1,12 +1,14 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { cleanup, render, } from '@testing-library/react-native';
 
-import PageBubble from '../PageBubble';
+import PageBubble from '../../components/pageBubbles/PageBubble';
 
-describe('<PageBubble />', () => {
+describe('<PageBubble /> -- Unit', () => {
+  afterEach(cleanup);
+
   const n = 5;
   const k = 2;
-  const tree = renderer.create(
+  const tree = render(
     <PageBubble
       numBubbles={n}
       index={k}

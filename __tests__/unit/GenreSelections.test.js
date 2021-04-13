@@ -1,14 +1,16 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { cleanup, render } from '@testing-library/react-native';
 
-import GenreSelections from '../GenreSelections';
-import Tags from '../../../utils/Tags';
+import GenreSelections from '../../components/genreButtons/GenreSelections';
+import Tags from '../../utils/Tags';
 
 describe('<GenreSelections />', () => {
+  afterEach(cleanup);
+
   const tags = Tags;
   const selectionColor = '#00ff0044';
   it('creates the correct number of children', () => {
-    const tree = renderer.create(
+    const tree = render(
       <GenreSelections
         data={tags}
         color={selectionColor}
@@ -21,7 +23,7 @@ describe('<GenreSelections />', () => {
   it('allows for selections', () => {
     tags[Object.keys(tags)[0]] = true;
 
-    const tree = renderer.create(
+    const tree = render(
       <GenreSelections
         data={tags}
         color={selectionColor}
