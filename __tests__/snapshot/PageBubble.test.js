@@ -14,11 +14,8 @@ describe('<PageBubble />', () => {
       index={k}
     />
   ).toJSON();
-  it(`has ${n} children`, () => {
-    expect(tree.children.length).toBe(n);
-  });
-  it(`selects the ${k} indexed child`, () => {
-    expect(tree.children[k].props.style.length).toBe(2);
-    expect(tree.children[0].props.style.length).toBe(1);
+
+  it('renders properly', () => {
+    expect(tree).toMatchSnapshot();
   });
 });

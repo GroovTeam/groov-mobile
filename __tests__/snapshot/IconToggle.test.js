@@ -3,7 +3,7 @@ import { cleanup, render } from '@testing-library/react-native';
 
 import IconToggle from '../../components/IconToggle';
 
-describe('<IconToggle /> -- Snapshot', () => {
+describe('<IconToggle />', () => {
   afterEach(cleanup);
 
   it('renders properly', () => {

@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PageBubble /> renders properly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "display": "flex",
+      "flexDirection": "row",
+      "height": 50,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "lightgrey",
+          "borderRadius": 750,
+          "height": 30,
+          "margin": 3,
+          "width": 30,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "lightgrey",
+          "borderRadius": 750,
+          "height": 30,
+          "margin": 3,
+          "width": 30,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "lightgrey",
+          "borderRadius": 750,
+          "height": 30,
+          "margin": 3,
+          "width": 30,
+        },
+        Object {
+          "backgroundColor": "dimgrey",
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "lightgrey",
+          "borderRadius": 750,
+          "height": 30,
+          "margin": 3,
+          "width": 30,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "lightgrey",
+          "borderRadius": 750,
+          "height": 30,
+          "margin": 3,
+          "width": 30,
+        },
+      ]
+    }
+  />
+</View>
+`;

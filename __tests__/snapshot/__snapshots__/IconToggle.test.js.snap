@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<IconToggle /> -- Snapshot renders properly 1`] = `
+exports[`<IconToggle /> renders properly 1`] = `
 <View
   accessible={true}
   focusable={true}
