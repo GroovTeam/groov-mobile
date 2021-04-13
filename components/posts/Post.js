@@ -124,11 +124,16 @@ const Post = ({ data }) => {
         </View>
         {playback}
       </View>
-      <Interactions style={[
-        PostStyles.container,
-        PostStyles.flexHori,
-        PostStyles.negativeMargin,
-      ]}/>
+      <Interactions 
+        style={[
+          PostStyles.container,
+          PostStyles.flexHori,
+          PostStyles.negativeMargin,
+        ]}
+        postID={data.postID}
+        likeCount={data.likes ? data.likes.length : 0}
+        alreadyLiked={data.alreadyLiked}
+      />
     </View>
   );
 };

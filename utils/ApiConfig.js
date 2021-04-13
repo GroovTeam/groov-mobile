@@ -12,6 +12,8 @@ ApiConfig.profile = baseURL + ApiConfig.user + '/profile';
 ApiConfig.posts = '/posts';
 ApiConfig.post = baseURL + ApiConfig.posts;
 ApiConfig.feed = baseURL + ApiConfig.posts + '/feed';
+ApiConfig.like = baseURL + ApiConfig.posts + '/like';
+ApiConfig.unlike = baseURL + ApiConfig.posts + '/unlike';
 
 ApiConfig.posses = baseURL + '/posses';
 ApiConfig.joinPosse = ApiConfig.posses + '/join';

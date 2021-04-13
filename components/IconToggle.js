@@ -6,12 +6,11 @@ const IconToggle = ({ onActivate, onDeactivate, startStatus, onIcon, offIcon, co
 
   const [toggled, setToggled] = useState(startStatus ? true : false);
 
-  const toggle = () => {
-    // Call our parent functions, and toggle self
+  const toggle = async () => {
     if (toggled)
-      onDeactivate();
+      await onDeactivate();
     else
-      onActivate();
+      await onActivate();
 
     setToggled(!toggled);
   };

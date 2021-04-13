@@ -7,6 +7,7 @@ import NavBar, { NavButton, NavTitle } from 'react-native-nav';
 import { Icon } from 'react-native-material-ui';
 import Post from '../../components/posts/Post';
 import getFeed from '../../utils/getFeed';
+import getProfile from '../../utils/getProfile';
 import CreatePost from './CreatePost';
 import { StatusBar } from 'expo-status-bar';
 
@@ -34,26 +35,34 @@ const Feed = () => {
   // Retrieve the user's feed from the server.
   const updateFeed = () => {
     setRefreshing(true);
-    setDATA(undefined);
-    getFeed()
-      .then(res => {
 
-        if (res === undefined || res.data.results === undefined) return;
-
-        const feed = res.data.results;
-        const newDATA = [];
-
-        feed.forEach((f, index) => {
-
-          // Add temp fillers
-          f.imagePath = 'https://picsum.photos/200';
-
-          f.key = index.toString();
-          newDATA.push(f);
-        });
-        
-        setDATA(newDATA);
-        setRefreshing(false);
+    // First get the user's profile, allowing us to check the liked list for the user.
+    getProfile()
+      .then(prof => {
+        getFeed()
+          .then(res => {
+    
+            if (res === undefined || res.data.results === undefined) return;
+    
+            const feed = res.data.results;
+            const newDATA = [];
+    
+            feed.forEach((f, index) => {
+    
+              // Add temp fillers
+              f.imagePath = 'https://picsum.photos/200';
+    
+              // Determine if we have liked the post
+              f.alreadyLiked = f.likes ? (f.likes.includes(prof.data.username)) : false;
+    
+              f.key = index.toString();
+              newDATA.push(f);
+            });
+            
+            setDATA(newDATA);
+            setRefreshing(false);
+          })
+          .catch(console.error);
       })
       .catch(console.error);
 
@@ -89,6 +98,7 @@ const Feed = () => {
       <FlatList
         style={backgroundColorTempFix.fix}
         data={DATA}
+        extraData={DATA}
         renderItem={renderItem}
         refreshControl={
           <RefreshControl
