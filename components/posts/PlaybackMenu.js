@@ -12,8 +12,8 @@ import IconToggle from '../IconToggle';
  */
 const PlaybackMenu = ({ beatPath, dubPath }) => {
 
-  const [beat, setBeat] = useState(undefined);
-  const [dub, setDub] = useState(undefined);
+  const [beat, setBeat] = useState(new Audio.Sound());
+  const [dub, setDub] = useState(new Audio.Sound());
 
   useEffect(() => {
     return () => {
@@ -25,52 +25,47 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
     await unloadBeat();
     await unloadDub();
   };
-
-  const unloadDub = async () => {
-    console.log('Unloading dub ' + dubPath);
-
+  
+  const unloadBeat = async () => {
     // Unload the beat track.
-    if (!dub) return;
-    await dub.unloadAsync();
-    setDub(undefined);
+    const beatStatus = await beat.getStatusAsync();
+
+    if (beatStatus.isLoaded)
+      await beat.unloadAsync();
   };
 
-  const unloadBeat = async () => {
-    console.log('Unloading beat ' + beatPath);
+  const unloadDub = async () => {
+    // Unload the dub track.
+    const dubStatus = await dub.getStatusAsync();
 
-    // Unload the beat track.
-    if (!beat) return;
-    await beat.unloadAsync();
-    setBeat(undefined);
+    if (dubStatus.isLoaded)
+      await dub.unloadAsync();
   };
 
   const play = async () => {
     // Custom implementation to handle permissions for playback.
     await Audio.setModePlayback();
 
-    let preppedDub = dub;
-    let preppedBeat = beat;
-
-    if (!preppedDub) {
-      console.log('Loading dub ' + dubPath);
-      preppedDub = new Audio.Sound();
-      await preppedDub.loadAsync({ uri: dubPath });
-      setDub(preppedDub);
+    const beatStatus = await beat.getStatusAsync();
+    const dubStatus = await dub.getStatusAsync();
+    
+    if (!beatStatus.isLoaded) {
+      await beat.loadAsync({ uri: beatPath });
+      setBeat(beat);
     }
 
-    if (!preppedBeat) {
-      console.log('Loading beat ' + beatPath);
-      preppedBeat = new Audio.Sound();
-      await preppedBeat.loadAsync({ uri: beatPath });
-      setBeat(preppedBeat);
+    if (!dubStatus.isLoaded) {
+      await dub.loadAsync({ uri: dubPath });
+      setDub(dub);
     }
 
-    preppedBeat.playAsync();
-    preppedDub.playAsync();
+    beat.playAsync();
+    dub.playAsync();
   };
 
   const stop = async () => {
-    await unloadAll();
+    await beat.pauseAsync();
+    await dub.pauseAsync();
   };
 
   return (
