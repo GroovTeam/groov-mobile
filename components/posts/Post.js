@@ -62,6 +62,7 @@ const PostStyles = StyleSheet.create ({
 });
 
 const Post = ({ data }) => {
+  const [hasAudio, setHasAudio] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
@@ -87,10 +88,9 @@ const Post = ({ data }) => {
         .then(res => setProfilePhoto(res.request.responseURL))
         .catch(err => console.error(err));
 
-      //console.log(data);
-
       // Get the streamable urls from the server.
       if (data.hasAudio) {
+        setHasAudio(true);
         await getFile(data.beatFile)
           .then(res => setBeatURL(res))
           .catch(console.error);
@@ -128,7 +128,7 @@ const Post = ({ data }) => {
         style={[
           PostStyles.container,
           PostStyles.flexHori,
-          PostStyles.negativeMargin,
+          hasAudio ? PostStyles.negativeMargin : undefined,
         ]}
         postID={data.postID}
         likeCount={data.likes ? data.likes.length : 0}
