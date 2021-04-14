@@ -2,29 +2,23 @@ import React, { useState } from 'react';
 import { Text, StyleSheet, SafeAreaView, View, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
-import Styles from '../../components/Styles';
-import SafeViewAndroid from '../../components/SafeViewAndroid';
-import getProfile from '../../utils/getProfile';
-import GenreSelections from '../../components/genreButtons/GenreSelections';
-import { Button } from 'react-native-material-ui';
-import post from '../../utils/post';
-import NavStyles from '../../components/NavStyles';
-import Tags from '../../utils/Tags';
-import ChooseBeatAndRecord from './ChooseBeatAndRecord';
 import { StatusBar } from 'expo-status-bar';
+import { Button } from 'react-native-material-ui';
+import Styles from '../../components/Styles';
+import NavStyles from '../../components/NavStyles';
+import SafeViewAndroid from '../../components/SafeViewAndroid';
+import GenreSelections from '../../components/genreButtons/GenreSelections';
+import Tags from '../../utils/Tags';
 import firebase from '../../utils/Firebase';
 import FirebaseConfig from '../../utils/FirebaseConfig';
-
-/*
-{
-    "content": "metal post",
-    "posses" : ["cool guys", "group1"],
-    "tags" : ["metal"]
-}
-*/
+import post from '../../utils/post';
+import getProfile from '../../utils/getProfile';
+import ChooseBeatAndRecord from './ChooseBeatAndRecord';
+import DismissableBubble from '../../components/DismissableBubble';
+import { Alert } from 'react-native';
 
 const window = Dimensions.get('window');
-const [windowWidth, windowHeight] = [window.width, window.height];
+const windowWidth = window.width;
 
 const CreatePostStyles = StyleSheet.create({
   white: {
@@ -33,13 +27,15 @@ const CreatePostStyles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    height: windowHeight - 100, // weird constant for now
+    height: 'auto', // weird constant for now
     backgroundColor: 'white'
   },
   label: {
     fontSize: 25,
+    alignSelf: 'center'
   },
   input: {
     borderColor: 'black',
@@ -72,6 +68,9 @@ const CreatePost = ({ returnToFeed }) => {
   const [recordingPhysicalPath, setRecordingPhysicalPath] = useState(undefined);
   // The path to the selected beat on the server
   const [beatServerPath, setBeatServerPath] = useState(undefined);
+
+  // The name of the recorded beat
+  const [beatName, setBeatName] = useState(undefined);
 
   useState(() => {
   // Store the posses in the posses variable
@@ -136,6 +135,22 @@ const CreatePost = ({ returnToFeed }) => {
 
     const body = constructPost();
 
+    if (!body.content) {
+      Alert.alert(
+        'Hold up.',
+        'Add some content!'
+      );
+      return;
+    }
+
+    if (body.posses?.length === 0) {
+      Alert.alert(
+        'Hold up.',
+        'Add some posses!'
+      );
+      return;
+    }
+
     // We must first send the local recording file to the server.
     // Naming scheme is as follows uuid-date
     // Root reference
@@ -179,19 +194,41 @@ const CreatePost = ({ returnToFeed }) => {
     }
   };
 
-  const doneRecording = (beatPath, recordingPath) => {
+  const doneRecording = (beatName, beatPath, recordingPath) => {
+
+    setRecording(false);
+
+    if (!(beatName && beatPath && recordingPath))
+      return;
 
     // Since we are done recording, fetch the paths of the created data.
     setBeatServerPath(beatPath);
     setRecordingPhysicalPath(recordingPath);
 
-    setRecording(false);
+    setBeatName(beatName);
   };
 
-  const logPaths = () => {
-    console.log(beatServerPath);
-    console.log(recordingPhysicalPath);
+  const clearRecording = () => {
+    setBeatServerPath(undefined);
+    setRecordingPhysicalPath(undefined);
+    setBeatName(undefined);
   };
+
+  const recordOrShow =
+  beatName ? (
+    <DismissableBubble
+      text={beatName}
+      size={18}
+      dismiss={clearRecording}
+    />
+  ) : (
+    <Button
+      primary
+      raised
+      text='Freestyle'
+      onPress={() => setRecording(true)}
+    />
+  );
   
   if (recording) return <ChooseBeatAndRecord doneRecording={doneRecording}/>;
 
@@ -210,7 +247,6 @@ const CreatePost = ({ returnToFeed }) => {
         </NavBar>
 
         <View style={CreatePostStyles.container}>
-
           <View>
             <Text style={CreatePostStyles.label}>
               Content
@@ -229,13 +265,13 @@ const CreatePost = ({ returnToFeed }) => {
 
           <View>
             <Text style={CreatePostStyles.label}>
-              Select your posses
+              Posses
             </Text>
             <View style={CreatePostStyles.selections}>
               <GenreSelections
                 data={posses}
                 color={'#007BFF44'}
-                fontSize={15}
+                fontSize={18}
                 updateButtons={updatePosses}
               />
             </View>
@@ -243,37 +279,31 @@ const CreatePost = ({ returnToFeed }) => {
 
           <View>
             <Text style={CreatePostStyles.label}>
-              Select your tags
+              Tags
             </Text>
             <View style={CreatePostStyles.selections}>
               <GenreSelections
                 data={tags}
                 color={'#007BFF44'}
-                fontSize={15}
+                fontSize={18}
                 updateButtons={updateTags}
               />
             </View>
           </View>
 
-          <Button
-            primary
-            raised
-            text='Attach Recording'
-            onPress={() => setRecording(true)}
-          />
+          <View>
+            <Text style={[CreatePostStyles.label, {marginBottom: 10}]}>
+              {beatName ? 'Attached freestyle' : undefined}
+            </Text>
+            {recordOrShow}
+          </View>
+          
 
           <Button
             primary
             raised
             text='Post'
             onPress={makePost}
-          />
-
-          <Button
-            primary
-            raised
-            text='Log'
-            onPress={logPaths}
           />
 
         </View>

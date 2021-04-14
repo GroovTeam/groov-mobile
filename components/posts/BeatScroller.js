@@ -38,8 +38,8 @@ const BeatScroller = ({ updateBeat }) => {
       .catch(console.error);
   }, []);
 
-  const selectBeat = async (link) => {
-    getFile(link).then(beat => updateBeat(link, beat));
+  const selectBeat = async (displayName, link) => {
+    getFile(link).then(beat => updateBeat(displayName, link, beat));
   };
 
   const renderItem = ({ item }) => {
@@ -49,7 +49,7 @@ const BeatScroller = ({ updateBeat }) => {
     return (
       <Item
         item={item}
-        onPress={() => {setSelectedId(item.link); selectBeat(item.link);}}
+        onPress={() => {setSelectedId(item.link); selectBeat(item.displayName, item.link);}}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
