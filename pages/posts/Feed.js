@@ -47,16 +47,16 @@ const Feed = () => {
             const feed = res.data.results;
             const newDATA = [];
     
-            feed.forEach((f, index) => {
+            feed.forEach(post => {
     
               // Add temp fillers
-              f.imagePath = 'https://picsum.photos/200';
+              post.imagePath = 'https://picsum.photos/200';
     
               // Determine if we have liked the post
-              f.alreadyLiked = f.likes ? (f.likes.includes(prof.data.username)) : false;
+              post.alreadyLiked = post.likes ? (post.likes.includes(prof.data.username)) : false;
     
-              f.key = index.toString();
-              newDATA.push(f);
+              post.key = post.postID;
+              newDATA.push(post);
             });
             
             setDATA(newDATA);
@@ -98,7 +98,6 @@ const Feed = () => {
       <FlatList
         style={backgroundColorTempFix.fix}
         data={DATA}
-        extraData={DATA}
         renderItem={renderItem}
         refreshControl={
           <RefreshControl
