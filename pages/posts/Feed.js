@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Dimensions } from 'react-native';
+import { SafeAreaView, StyleSheet, Dimensions, RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import NavStyles from '../../components/NavStyles';
+import SafeViewAndroid from '../../components/SafeViewAndroid';
 import NavBar, { NavButton, NavTitle } from 'react-native-nav';
 import { Icon } from 'react-native-material-ui';
 import Post from '../../components/posts/Post';
 import getFeed from '../../utils/getFeed';
+import getProfile from '../../utils/getProfile';
 import CreatePost from './CreatePost';
 import { StatusBar } from 'expo-status-bar';
 
@@ -28,24 +30,39 @@ const Feed = () => {
 
   const [DATA, setDATA] = useState([]);
   const [posting, setPosting] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
+  // Retrieve the user's feed from the server.
   const updateFeed = () => {
-    getFeed()
-      .then(res => {
+    setRefreshing(true);
 
-        if (res === undefined || res.data.results === undefined) return;
-
-        const feed = res.data.results;
-
-        const newDATA = [];
-
-        feed.forEach((f, index) => {
-          f.imagePath = 'https://picsum.photos/200';
-          f.key = index.toString();
-          newDATA.push(f);
-        });
-        
-        setDATA(newDATA);
+    // First get the user's profile, allowing us to check the liked list for the user.
+    getProfile()
+      .then(prof => {
+        getFeed()
+          .then(res => {
+    
+            if (res === undefined || res.data.results === undefined) return;
+    
+            const feed = res.data.results;
+            const newDATA = [];
+    
+            feed.forEach(post => {
+    
+              // Add temp fillers
+              post.imagePath = 'https://picsum.photos/200';
+    
+              // Determine if we have liked the post
+              post.alreadyLiked = post.likes ? (post.likes.includes(prof.data.username)) : false;
+    
+              post.key = post.postID;
+              newDATA.push(post);
+            });
+            
+            setDATA(newDATA);
+            setRefreshing(false);
+          })
+          .catch(console.error);
       })
       .catch(console.error);
 
@@ -62,12 +79,10 @@ const Feed = () => {
   );
 
   if (posting)
-    return <CreatePost
-      returnToFeed={updateFeed}
-    />;
+    return <CreatePost returnToFeed={updateFeed} />;
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'The Soundwave'}
@@ -84,6 +99,12 @@ const Feed = () => {
         style={backgroundColorTempFix.fix}
         data={DATA}
         renderItem={renderItem}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={updateFeed}
+          />
+        }
       />
       <StatusBar style='dark' backgroundColor='white' />
     </SafeAreaView>

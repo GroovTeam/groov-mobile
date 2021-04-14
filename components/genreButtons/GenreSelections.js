@@ -63,7 +63,7 @@ const GenreSelections = ({ data, color, fontSize, updateButtons, isStatic }) => 
     );
   }
 
-  for (const key of Object.keys(data)) {
+  for (const [key, value] of Object.entries(data)) {
     items.push(
       <View
         key={key}
@@ -74,6 +74,7 @@ const GenreSelections = ({ data, color, fontSize, updateButtons, isStatic }) => 
           color={color}
           fontSize={fontSize}
           toggleSelf={toggleButton}
+          startSelected={value}
         />
       </View>
     );

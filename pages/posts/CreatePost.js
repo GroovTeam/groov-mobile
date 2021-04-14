@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet } from 'react-native';
-import { SafeAreaView, View, Dimensions } from 'react-native';
+import { Text, StyleSheet, SafeAreaView, View, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
+import SafeViewAndroid from '../../components/SafeViewAndroid';
 import getProfile from '../../utils/getProfile';
 import GenreSelections from '../../components/genreButtons/GenreSelections';
 import { Button } from 'react-native-material-ui';
 import post from '../../utils/post';
 import NavStyles from '../../components/NavStyles';
 import Tags from '../../utils/Tags';
-import YoutubeSearchAndRecord from './YoutubeSearchAndRecord';
+import ChooseBeatAndRecord from './ChooseBeatAndRecord';
 import { StatusBar } from 'expo-status-bar';
+import firebase from '../../utils/Firebase';
+import FirebaseConfig from '../../utils/FirebaseConfig';
 
 /*
 {
@@ -32,6 +34,7 @@ const CreatePostStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'space-evenly',
     height: windowHeight - 100, // weird constant for now
     backgroundColor: 'white'
   },
@@ -64,6 +67,11 @@ const CreatePost = ({ returnToFeed }) => {
   const [tags, setTags] = useState(Tags);
 
   const [recording, setRecording] = useState(false);
+
+  // The physical path of a recording
+  const [recordingPhysicalPath, setRecordingPhysicalPath] = useState(undefined);
+  // The path to the selected beat on the server
+  const [beatServerPath, setBeatServerPath] = useState(undefined);
 
   useState(() => {
   // Store the posses in the posses variable
@@ -124,102 +132,154 @@ const CreatePost = ({ returnToFeed }) => {
   };
 
   // Calls upon constructPost to generate the body, then sends it off to the API
-  const makePost = () => {
+  const makePost = async () => {
+
     const body = constructPost();
-    post(body)
-      .then(() => {
-        returnToFeed();
-      })
-      .catch(console.error);
+
+    // We must first send the local recording file to the server.
+    // Naming scheme is as follows uuid-date
+    // Root reference
+    if (recordingPhysicalPath) {
+      const storageRef = firebase.storage().ref();
+
+      // Construct a unique identifier
+      const postUUID = firebase.auth().currentUser.uid + '-' + Date.now();
+      const fileRef = storageRef.child('recordings/' + postUUID);
+
+      const response = await fetch(recordingPhysicalPath);
+      const blob = await response.blob();
+
+      // Post the blob to the server
+      await fileRef.put(blob)
+        .then(() => {
+
+          // Configure the new recording's path.
+          const recordingPath = 'gs://' + FirebaseConfig.storageBucket + '/recordings/' + postUUID;
+
+          // prep the body to contain audio
+          body.hasAudio = true;
+
+          body.beatFile = beatServerPath;
+          body.recordingFile = recordingPath;
+
+          post(body)
+            .then(() => {
+              returnToFeed();
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
+    }
+    else {
+      post(body)
+        .then(() => {
+          returnToFeed();
+        })
+        .catch(console.error);
+    }
   };
 
-  const doneRecording = () => {
+  const doneRecording = (beatPath, recordingPath) => {
+
+    // Since we are done recording, fetch the paths of the created data.
+    setBeatServerPath(beatPath);
+    setRecordingPhysicalPath(recordingPath);
+
     setRecording(false);
   };
+
+  const logPaths = () => {
+    console.log(beatServerPath);
+    console.log(recordingPhysicalPath);
+  };
   
-  if (recording) return <YoutubeSearchAndRecord doneRecording={doneRecording}/>;
+  if (recording) return <ChooseBeatAndRecord doneRecording={doneRecording}/>;
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <NavBar style={NavStyles}>
-        <NavTitle style={NavStyles.title}>
-          {'Create Post'}
-        </NavTitle>
-        <NavButton onPress={returnToFeed}>
-          <NavButtonText style={Styles.blueAccentText}>
-            Go back
-          </NavButtonText>
-        </NavButton>
-      </NavBar>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
+        <NavBar style={NavStyles}>
+          <NavTitle style={NavStyles.title}>
+            {'Create Post'}
+          </NavTitle>
+          <NavButton onPress={returnToFeed}>
+            <NavButtonText style={Styles.blueAccentText}>
+              Go back
+            </NavButtonText>
+          </NavButton>
+        </NavBar>
 
-      <View style={CreatePostStyles.container}>
+        <View style={CreatePostStyles.container}>
 
-        <View style={CreatePostStyles.spacer} />
+          <View>
+            <Text style={CreatePostStyles.label}>
+              Content
+            </Text>
+            <TextInput
+              style={[
+                CreatePostStyles.input,
+                CreatePostStyles.multiline,
+                {marginTop: 15}
+              ]}
+              onChangeText={text => setContent(text)}
+              value={content}
+              multiline={true}
+            />
+          </View>
 
-        <Text style={CreatePostStyles.label}>
-          Content
-        </Text>
-        <TextInput
-          style={[
-            CreatePostStyles.input,
-            CreatePostStyles.multiline,
-            {marginTop: 15}
-          ]}
-          onChangeText={text => setContent(text)}
-          multiline={true}
-        />
+          <View>
+            <Text style={CreatePostStyles.label}>
+              Select your posses
+            </Text>
+            <View style={CreatePostStyles.selections}>
+              <GenreSelections
+                data={posses}
+                color={'#007BFF44'}
+                fontSize={15}
+                updateButtons={updatePosses}
+              />
+            </View>
+          </View>
 
-        <View style={CreatePostStyles.spacer} />
+          <View>
+            <Text style={CreatePostStyles.label}>
+              Select your tags
+            </Text>
+            <View style={CreatePostStyles.selections}>
+              <GenreSelections
+                data={tags}
+                color={'#007BFF44'}
+                fontSize={15}
+                updateButtons={updateTags}
+              />
+            </View>
+          </View>
 
-        <Text style={CreatePostStyles.label}>
-          Select your posses
-        </Text>
-        <View style={CreatePostStyles.selections}>
-          <GenreSelections
-            data={posses}
-            color={'#007BFF44'}
-            fontSize={15}
-            updateButtons={updatePosses}
-          />
-        </View>
-
-        <View style={CreatePostStyles.spacer} />
-
-        <Text style={CreatePostStyles.label}>
-          Select your tags
-        </Text>
-        <View style={CreatePostStyles.selections}>
-          <GenreSelections
-            data={tags}
-            color={'#007BFF44'}
-            fontSize={15}
-            updateButtons={updateTags}
-          />
-        </View>
-
-        <View style={CreatePostStyles.spacer} />
-
-        <View>
           <Button
             primary
             raised
             text='Attach Recording'
             onPress={() => setRecording(true)}
           />
-        </View>
 
-        <View style={{marginTop: 'auto', marginBottom: 50}}>
           <Button
             primary
             raised
             text='Post'
             onPress={makePost}
           />
-        </View>
 
-      </View>
-      <StatusBar style='dark' backgroundColor='white' />
-    </SafeAreaView>
+          <Button
+            primary
+            raised
+            text='Log'
+            onPress={logPaths}
+          />
+
+        </View>
+        <StatusBar style='dark' backgroundColor='white' />
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
