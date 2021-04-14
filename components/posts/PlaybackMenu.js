@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { View } from 'react-native';
 import Audio from '../../utils/Audio';
-import IconToggle from '../IconToggle';
+import { Ionicons } from '@expo/vector-icons';
+
+const color = '#007bff';
 
 /**
  * Playback menu for a post's beat
@@ -14,6 +17,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
 
   const [beat, setBeat] = useState(new Audio.Sound());
   const [dub, setDub] = useState(new Audio.Sound());
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -61,23 +65,46 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
 
     beat.playAsync();
     dub.playAsync();
+
+    setPlaying(true);
   };
 
   const stop = async () => {
     await beat.pauseAsync();
     await dub.pauseAsync();
+
+    setPlaying(false);
+  };
+
+  const stopAndRewind = async () => {
+
+    const beatStatus = await beat.getStatusAsync();
+    const dubStatus = await dub.getStatusAsync();
+
+    if (beatStatus.isLoaded && dubStatus.isLoaded) {
+      await stop();
+      beat.setPositionAsync(0);
+      dub.setPositionAsync(0);
+    }
   };
 
   return (
     <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', margin: 5}}>
-      <IconToggle
-        onActivate={play}
-        onDeactivate={stop}
-        onIcon={'stop-circle'}
-        offIcon={'play-circle'}
-        color={'#007bff'}
-        size={45}
-      />
+      <TouchableOpacity onPress={stopAndRewind}>
+        <Ionicons
+          name={'play-skip-back-circle-outline'}
+          color={color}
+          size={45}
+        />
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={playing ? stop : play}>
+        <Ionicons
+          name={playing ? 'stop-circle-outline' : 'play-circle-outline'}
+          color={color}
+          size={45}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
