@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet, Dimensions } from 'react-native';
 import Interactions from './Interactions';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
-import PlaybackMenu from './PlaybackMenu';
+
+const window = Dimensions.get('window');
+const windowWidth = window.width;
 
 // Styles useful for posts. (probably move to independent file soon?)
 const PostStyles = StyleSheet.create ({
   container: {
+    width: windowWidth,
     display: 'flex',
     justifyContent: 'flex-start',
   },
@@ -50,36 +53,17 @@ const PostStyles = StyleSheet.create ({
   },
   body: {
     marginTop: 4,
-    width: 'auto',
+    width: windowWidth * 0.7,
   },
   playbackMenu: {
     marginLeft: 'auto'
-  },
-  negativeMargin: {
-    marginTop: -20,
-    marginBottom: 5
-  },
+  }
 });
 
 const Post = ({ data }) => {
-  const [hasAudio, setHasAudio] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
-  const [playback, setPlayback] = useState(<View />);
-
-  useEffect(() => {
-    if (beatURL || recordingURL) {
-      setPlayback(
-        <View style={PostStyles.playbackMenu}>
-          <PlaybackMenu
-            beatPath={beatURL}
-            dubPath={recordingURL}
-          />
-        </View>
-      );
-    }
-  }, [beatURL, recordingURL]);
 
   useEffect(() => {
     async function asyncWrapper() {
@@ -90,7 +74,6 @@ const Post = ({ data }) => {
 
       // Get the streamable urls from the server.
       if (data.hasAudio) {
-        setHasAudio(true);
         await getFile(data.beatFile)
           .then(res => setBeatURL(res))
           .catch(console.error);
@@ -122,17 +105,13 @@ const Post = ({ data }) => {
           <Text style={PostStyles.user}>{'@' + data.username}</Text>
           <Text style={PostStyles.body}>{data.content}</Text>
         </View>
-        {playback}
       </View>
       <Interactions 
-        style={[
-          PostStyles.container,
-          PostStyles.flexHori,
-          hasAudio ? PostStyles.negativeMargin : undefined,
-        ]}
         postID={data.postID}
         likeCount={data.likes ? data.likes.length : 0}
         alreadyLiked={data.alreadyLiked}
+        recordingURL={recordingURL}
+        beatURL={beatURL}
       />
     </View>
   );

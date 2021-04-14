@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Audio from '../../utils/Audio';
 import { Ionicons } from '@expo/vector-icons';
 
 const color = '#007bff';
+const size = 35;
 
 /**
  * Playback menu for a post's beat
@@ -94,7 +94,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
         <Ionicons
           name={'play-skip-back-circle-outline'}
           color={color}
-          size={45}
+          size={size}
         />
       </TouchableOpacity>
 
@@ -102,7 +102,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
         <Ionicons
           name={playing ? 'stop-circle-outline' : 'play-circle-outline'}
           color={color}
-          size={45}
+          size={size}
         />
       </TouchableOpacity>
     </View>
