@@ -11,7 +11,7 @@ import Audio from '../../utils/Audio';
 import BeatScroller from '../../components/posts/BeatScroller';
 
 const window = Dimensions.get('window');
-const [windowWidth, windowHeight] = [window.width, window.height];
+const windowWidth = window.width;
 
 // Styles specific to the create post menu.
 const CreatePostStyles = StyleSheet.create({
@@ -21,9 +21,9 @@ const CreatePostStyles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    height: windowHeight - 175,
     backgroundColor: 'white'
   },
   label: {
@@ -55,6 +55,7 @@ const ChooseBeatAndRecord = ({ doneRecording }) => {
   const [playing, setPlaying] = useState(false);
   const [beatURL, setBeatURL] = useState(undefined);
   const [beatPath, setBeatPath] = useState(undefined);
+  const [beatName, setBeatName] = useState(undefined);
 
   // Properly clean up after ourselves to get rid of mem leaks.
   useEffect(() => {
@@ -185,16 +186,17 @@ const ChooseBeatAndRecord = ({ doneRecording }) => {
     console.log('Recording stopped and stored at', uri);
   };
 
-  const updateBeat = (newBeatPath, newBeatURL) => {
-    setBeatPath(newBeatPath);
-    setBeatURL(newBeatURL);
+  const updateBeat = (beatName, beatPath, beatURL) => {
+    setBeatName(beatName);
+    setBeatPath(beatPath);
+    setBeatURL(beatURL);
   };
 
   const attach = () => {
     if (!recordingPath || !beatURL) {
       Alert.alert(
         'Hold up.',
-        'Record something before attaching it!'
+        'Record something before finishing!'
       );
       return;
     }
@@ -203,33 +205,30 @@ const ChooseBeatAndRecord = ({ doneRecording }) => {
   };
 
   const finishSession = () => {
-    doneRecording(beatPath, recordingPath);
+    doneRecording(beatName, beatPath, recordingPath);
   };
 
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
-          {'Create Post'}
+          {'Freestyle'}
         </NavTitle>
         <NavButton onPress={doneRecording}>
           <NavButtonText style={Styles.blueAccentText}>
-            Go back
+            Cancel
           </NavButtonText>
         </NavButton>
       </NavBar>
 
       <View style={CreatePostStyles.container}>
 
+      
         <Text style={Styles.headerText}>
           Choose a beat
         </Text>
 
         <BeatScroller updateBeat={updateBeat}/>
-
-        <Text style={Styles.headerText}>
-          Groove it!
-        </Text>
 
         <Button
           primary
@@ -241,14 +240,14 @@ const ChooseBeatAndRecord = ({ doneRecording }) => {
         <Button
           primary
           raised
-          text={playing ? 'Stop' : 'Play it back!'}
+          text={playing ? 'Stop' : 'Play it back'}
           onPress={playing ? stopAll : playBeatAndRecording}
         />
 
         <Button
           primary
           raised
-          text={'Attach it!'}
+          text={'Done'}
           onPress={attach}
         />
       

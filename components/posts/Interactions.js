@@ -1,21 +1,38 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import IconToggle from '../IconToggle';
 import LikeButton from './LikeButton';
+import PlaybackMenu from './PlaybackMenu';
 import like from '../../utils/like';
 import unlike from '../../utils/unlike';
 
 // Space those icons nicely!
 const IconStyles = StyleSheet.create({
-  'evenSpace': {
+  'container': {
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
+    margin: 10
   },
 });
 
-const Interactions = ({ style, postID, likeCount, alreadyLiked }) => {
+const Interactions = ({ postID, likeCount, alreadyLiked, beatURL, recordingURL }) => {
 
   const [likes, setLikes] = useState(likeCount);
+  const [playback, setPlayback] = useState(<View style={{width: 80}} />);
+
+  useEffect(() => {
+    if (beatURL || recordingURL) {
+      setPlayback(
+        <PlaybackMenu
+          beatPath={beatURL}
+          dubPath={recordingURL}
+        />
+      );
+    }
+  }, [beatURL, recordingURL]);
 
   const onLike = async () => {
     setLikes(likes + 1);
@@ -42,7 +59,7 @@ const Interactions = ({ style, postID, likeCount, alreadyLiked }) => {
   };
 
   return (
-    <View style={[style, IconStyles.evenSpace]}>
+    <View style={IconStyles.container}>
       <IconToggle
         onActivate={() => {}}
         onDeactivate={() => {}}
@@ -57,6 +74,7 @@ const Interactions = ({ style, postID, likeCount, alreadyLiked }) => {
         likeCount={likes}
         alreadyLiked={alreadyLiked}
       />
+      {playback}
     </View>
   );
 };
