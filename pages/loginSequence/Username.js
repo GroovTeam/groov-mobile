@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View, Alert } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import Styles from '../../components/Styles';
 import InputStyles from '../../components/InputStyles';
 import SwipeConfig from '../../utils/SwipeConfig';
+import userExists from '../../utils/userExists';
 
 /**
  * Greets the user in registration.
@@ -23,10 +24,32 @@ const Handle = ({ route, navigation, userData, applyUserData, updateCurPage }) =
   };
 
   // Proceed to the next step in registration.
-  const proceed = () => {
+  const proceed = async () => {
     // Don't allow the user to continue if empty fields.
-    if (username == '')
+    if (username == '') {
+      Alert.alert(
+        'Hold up.',
+        'You\'re username is really boring right now...'
+      );
       return;
+    }
+
+    try {
+      if (await userExists(username)) {
+        Alert.alert(
+          'Hold up.',
+          'That username is taken, try a different one.'
+        );
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert(
+        'Hold up.',
+        'We couldn\'t verify the status of that username, try again.'
+      );
+      return;
+    }
 
     // Grab and update the data.
     const profileData = userData;
