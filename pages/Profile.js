@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView } from 'react-native';
 import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
@@ -14,22 +14,22 @@ import getProfile from '../utils/getProfile';
 import getLikedPosts from '../utils/getLikedPosts';
 
 const Profile = () => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [posseData, setPosseData] = useState([]);
   const [likesData, setLikesData] = useState([]);
   const [profileData, setData] = useState([]);
-  const [refresh, setRefresh] = useState(false);
-
-  let selectedIndex = 0;
+  const [tabSwitch, setTabSwitch] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   let updateIndex = (newIndex) => {
-    selectedIndex = newIndex;
+    setSelectedIndex(newIndex);
     
-    if (selectedIndex === 0)
+    if (newIndex === 0)
       setData(posseData);
-    else if (selectedIndex === 1)
+    else if (newIndex === 1)
       setData(likesData);
     
-    setRefresh(!refresh);
+    setTabSwitch(!tabSwitch);
   };
 
   const logoutUser = async () => {
@@ -50,6 +50,8 @@ const Profile = () => {
   };
 
   const updateProfile = () => {
+    setRefreshing(true);
+
     getProfile()
       .then(res => {
         if (res.data === undefined) return;
@@ -96,7 +98,6 @@ const Profile = () => {
         getLikedPosts().then(likedRes => {
           if (likedRes.data === undefined) return;
 
-          console.log(likedRes.data.results);
           if (likedRes.data.results !== undefined && likedRes.data.results.length > 0) {
             likedRes.data.results.forEach(post => {
               post.imagePath = 'https://picsum.photos/200';
@@ -113,7 +114,13 @@ const Profile = () => {
         setPosseData(tempPosseData);
         setLikesData(tempLikesData);
         
-        setData(tempPosseData);
+        if (selectedIndex === 0)
+          setData(tempPosseData);
+        else
+          setData(tempLikesData);
+        
+        setRefreshing(false);
+        setTabSwitch(!tabSwitch);
       });
   };
 
@@ -138,7 +145,13 @@ const Profile = () => {
         data={profileData}
         renderItem={profileItem}
         stickyHeaderIndices={[1]}
-        extraData={refresh}
+        extraData={tabSwitch}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={updateProfile}
+          />
+        }
       />
       <StatusBar style='dark' backgroundColor='white' />
     </SafeAreaView>
