@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, SafeAreaView } from 'react-native';
 import Styles from '../components/Styles';
+import SafeViewAndroid from '../components/SafeViewAndroid';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
 import Posse from '../components/profile/Posse';
@@ -129,7 +130,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Profile'}
