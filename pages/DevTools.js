@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-material-ui';
-import register from '../utils/register';
+import login from '../utils/login';
 import firebase from '../utils/Firebase';
 
 const DevStyles = StyleSheet.create({
@@ -24,20 +24,15 @@ const DevTools = ({ navigation }) => {
 
   const devLogin = () => {
     const devData = {
-      email: 'dev@dev.com',
-      username: 'dev',
+      email: 'tylerhm.dev@gmail.com',
       password: 'admin1234',
-      firstName: 'dev',
-      lastName: 'deverson',
     };
 
-    register(devData.email,
+    login(
+      devData.email,
       devData.password,
-      devData.username,
-      devData.firstName,
-      devData.lastName)
-      .then(response => {
-        console.log(response);
+    )
+      .then(() => {
         navigation.navigate('Main');
       })
       .catch(err => {

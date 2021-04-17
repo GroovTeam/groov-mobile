@@ -3,15 +3,31 @@ import { Text, View, Image } from 'react-native';
 import Interactions from './Interactions';
 import PostStyles from '../PostStyles';
 import axios from 'axios';
+import getFile from '../../utils/getFile';
 
 const Post = ({ data }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
+  const [beatURL, setBeatURL] = useState(undefined);
+  const [recordingURL, setRecordingURL] =  useState(undefined);
 
   useEffect(() => {
-    // Get their image from the server.
-    axios.get(data.imagePath)
-      .then(res => setProfilePhoto(res.request.responseURL))
-      .catch(err => console.error(err));
+    async function asyncWrapper() {
+      // Get their image from the server.
+      axios.get(data.imagePath)
+        .then(res => setProfilePhoto(res.request.responseURL))
+        .catch(err => console.error(err));
+
+      // Get the streamable urls from the server.
+      if (data.hasAudio) {
+        await getFile(data.beatFile)
+          .then(res => setBeatURL(res))
+          .catch(console.error);
+        await getFile(data.recordingFile)
+          .then(res => setRecordingURL(res))
+          .catch(console.error);
+      }
+    }
+    asyncWrapper();
   }, []);
 
   // Otherwise return post container.
@@ -35,11 +51,13 @@ const Post = ({ data }) => {
           <Text style={PostStyles.body}>{data.content}</Text>
         </View>
       </View>
-      <Interactions style={[
-        PostStyles.container,
-        PostStyles.flexHori,
-        PostStyles.negativeMargin,
-      ]}/>
+      <Interactions 
+        postID={data.postID}
+        likeCount={data.likes ? data.likes.length : 0}
+        alreadyLiked={data.alreadyLiked}
+        recordingURL={recordingURL}
+        beatURL={beatURL}
+      />
     </View>
   );
 };

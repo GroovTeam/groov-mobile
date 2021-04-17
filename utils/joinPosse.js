@@ -2,6 +2,7 @@ import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
+// Join a posse by ID.
 const joinPosse = async (posseID) => {
   firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
 

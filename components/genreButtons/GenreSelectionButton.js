@@ -7,8 +7,9 @@ import Button from 'react-native-button';
  * @param {String} text the text to be applied on this button.
  * @param {String} color the highlight color to be used for this button.
  * @param {Callback} toggleSelf callback to the GenreSelections, selects a button.
+ * @param {Boolean} selected whether or not the item is already selected
  */
-const GenreSelectionButton = ({ text, color, fontSize, toggleSelf }) => {
+const GenreSelectionButton = ({ text, color, fontSize, toggleSelf, startSelected }) => {
 
   // Styles specifically for each button.
   const buttonStyles = StyleSheet.create({
@@ -32,7 +33,7 @@ const GenreSelectionButton = ({ text, color, fontSize, toggleSelf }) => {
     },
   });
 
-  const [ selected, setSelected ] = useState(false);
+  const [ selected, setSelected ] = useState(startSelected);
   
   // Simple custom color stylesheet.
   const customColor = StyleSheet.create({

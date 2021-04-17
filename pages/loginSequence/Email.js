@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View, Alert } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import InputStyles from '../../components/InputStyles';
 import Styles from '../../components/Styles';
 import SwipeConfig from '../../utils/SwipeConfig';
+import emailExists from '../../utils/emailExists';
 
 /**
  * Greets the user in registration.
@@ -17,10 +18,40 @@ const Email = ({ route, navigation, userData, applyUserData, updateCurPage }) =>
   const [password, setPassword] = useState('');
 
   // Proceed to the next step in registration.
-  const proceed = () => {
+  const proceed = async () => {
     // Don't allow the user to continue if empty fields.
-    if (email == '' || password == '')
+    if (email == '' || password == '') {
+      Alert.alert(
+        'Hold up.',
+        'You really should fill these fields out...'
+      );
       return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert(
+        'Hold up.',
+        'Passwords must be 6 characters or longer.'
+      );
+      return;
+    }
+
+    try {
+      if (await emailExists(email)) {
+        Alert.alert(
+          'Hold up.',
+          'That email is taken, try a different one.'
+        );
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert(
+        'Hold up.',
+        'We couldn\'t verify the status of that email, try again.'
+      );
+      return;
+    }
 
     // Grab and update the data.
     const profileData = userData;
