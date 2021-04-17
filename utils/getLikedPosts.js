@@ -1,4 +1,4 @@
-import firebase from './Firesbase';
+import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
