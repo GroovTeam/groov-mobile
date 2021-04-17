@@ -73,7 +73,7 @@ const Profile = () => {
         tempPosseData.push(buttons);
         res.data.posses.forEach((f, index) => {
           let tempPosse = {};
-          tempPosse.id = (index + 2).toString();
+          tempPosse.id = (index + 3).toString();
           tempPosse.name = f;
           tempPosse.imagePath = 'https://picsum.photos/200';
           tempPosse.type = 'posse';
