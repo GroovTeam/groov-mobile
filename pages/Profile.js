@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView } from 'react-native';
 import Styles from '../components/Styles';
-import SafeViewAndroid from '../components/SafeViewAndroid';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
 import Posse from '../components/profile/Posse';
@@ -72,15 +71,20 @@ const Profile = () => {
 
         tempPosseData.push(header);
         tempPosseData.push(buttons);
-        res.data.posses.forEach((f, index) => {
-          let tempPosse = {};
-          tempPosse.id = (index + 3).toString();
-          tempPosse.name = f;
-          tempPosse.imagePath = 'https://picsum.photos/200';
-          tempPosse.type = 'posse';
 
-          tempPosseData.push(tempPosse);
-        });
+        if (res.data.posses) {
+          res.data.posses.forEach((f, index) => {
+            let tempPosse = {};
+            tempPosse.id = (index + 2).toString();
+            tempPosse.name = f;
+            tempPosse.imagePath = 'https://picsum.photos/200';
+            tempPosse.type = 'posse';
+  
+            tempPosseData.push(tempPosse);
+          });
+        } else {
+          tempPosseData.push(empty);
+        }
 
         tempLikesData.push(header);
         tempLikesData.push(buttons);
@@ -98,7 +102,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Profile'}
