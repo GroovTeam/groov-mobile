@@ -130,7 +130,7 @@ const Profile = () => {
   }, []);
 
   return (
-    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Profile'}
