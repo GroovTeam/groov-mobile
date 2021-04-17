@@ -4,12 +4,14 @@ import Styles from '../components/Styles';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
 import Posse from '../components/profile/Posse';
+import Post from '../components/posts/Post';
 import Empty from '../components/profile/Empty';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import NavStyles from '../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
 import logout from '../utils/logout';
 import getProfile from '../utils/getProfile';
+import getLikedPosts from '../utils/getLikedPosts';
 
 const Profile = () => {
   const [posseData, setPosseData] = useState([]);
@@ -41,6 +43,8 @@ const Profile = () => {
       return <ProfileButtons function={updateIndex} />;
     else if (item.type === 'posse')
       return <Posse data={item} />;
+    else if (item.type === 'post')
+      return <Post data={item} />;
     else if (item.type === 'empty')
       return <Empty />;
   };
@@ -88,7 +92,23 @@ const Profile = () => {
 
         tempLikesData.push(header);
         tempLikesData.push(buttons);
-        tempLikesData.push(empty);
+
+        getLikedPosts().then(likedRes => {
+          if (likedRes.data === undefined) return;
+
+          console.log(likedRes.data.results);
+          if (likedRes.data.results !== undefined && likedRes.data.results.length > 0) {
+            likedRes.data.results.forEach(post => {
+              post.imagePath = 'https://picsum.photos/200';
+              post.alreadyLiked = true;
+              post.id = post.postID;
+              post.type = 'post';
+              tempLikesData.push(post);
+            });
+          } else {
+            tempLikesData.push(empty);
+          }
+        });
 
         setPosseData(tempPosseData);
         setLikesData(tempLikesData);
