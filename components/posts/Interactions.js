@@ -1,27 +1,22 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import Collapsible from 'react-native-collapsible';
+import Comments from './Comments';
 import IconToggle from '../IconToggle';
 import LikeButton from './LikeButton';
 import PlaybackMenu from './PlaybackMenu';
 import like from '../../utils/like';
 import unlike from '../../utils/unlike';
 
-// Space those icons nicely!
-const IconStyles = StyleSheet.create({
-  'container': {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    margin: 10
-  },
-});
+const window = Dimensions.get('window');
+const windowWidth = window.width;
 
-const Interactions = ({ postID, likeCount, alreadyLiked, beatURL, recordingURL }) => {
+const Interactions = ({ postID, username, likes, beatURL, recordingURL }) => {
 
-  const [likes, setLikes] = useState(likeCount);
+  const [likeCount, setLikeCount] = useState(likes ? likes.length : 0);
   const [playback, setPlayback] = useState(<View style={{width: 80}} />);
+  const [isCommenting, setIsCommenting] = useState(true);
 
   useEffect(() => {
     if (beatURL || recordingURL) {
@@ -35,48 +30,81 @@ const Interactions = ({ postID, likeCount, alreadyLiked, beatURL, recordingURL }
   }, [beatURL, recordingURL]);
 
   const onLike = async () => {
-    setLikes(likes + 1);
+    setLikeCount(likeCount + 1);
     like(postID)
       .then(() => {
         console.log('liked post');
       })
       .catch(err => {
         console.error('Unable to like your post', err);
-        setLikes(likes - 1);
+        setLikeCount(likeCount - 1);
       });
   };
 
   const onUnlike = async () => {
-    setLikes(likes - 1);
+    setLikeCount(likeCount - 1);
     unlike(postID)
       .then(() => {
         console.log('unliked post');
       })
       .catch(err => {
         console.error('Unable to unlike your post', err);
-        setLikes(likes + 1);
+        setLikeCount(likeCount + 1);
       });
   };
 
   return (
-    <View style={IconStyles.container}>
-      <IconToggle
-        onActivate={() => {}}
-        onDeactivate={() => {}}
-        onIcon={'chatbox-ellipses-outline'}
-        offIcon={'chatbox-outline'}
-        color={'#000000'}
-        size={20}
-      />
-      <LikeButton
-        onLike={onLike}
-        onUnlike={onUnlike}
-        likeCount={likes}
-        alreadyLiked={alreadyLiked}
-      />
-      {playback}
+    <View style={InteractionsStyles.container}>
+      <View style={InteractionsStyles.buttonsContainer}>
+        <IconToggle
+          onActivate={() => setIsCommenting(true)}
+          onDeactivate={() => setIsCommenting(false)}
+          onIcon={'chatbox-ellipses-outline'}
+          offIcon={'chatbox-outline'}
+          color={'#000000'}
+          startStatus={true}
+          size={20}
+        />
+        <LikeButton
+          onLike={onLike}
+          onUnlike={onUnlike}
+          username={username}
+          likes={likes}
+          likeCount={likeCount}
+        />
+        {playback}
+      </View>
+      <Collapsible collapsed={!isCommenting}>
+        <Comments postID={postID} username={username} />
+      </Collapsible>
     </View>
   );
 };
 
 export default Interactions;
+
+// Space those icons nicely!
+const InteractionsStyles = StyleSheet.create({
+  'container': {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: windowWidth
+  },
+  'buttonsContainer': {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: '100%',
+    margin: 10
+  },
+  'commentsContainer': {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    overflow: 'hidden'
+  }
+});

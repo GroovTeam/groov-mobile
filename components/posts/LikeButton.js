@@ -11,7 +11,10 @@ const LikeStyles = StyleSheet.create({
   }
 });
 
-const LikeButton = ({ onLike, onUnlike, likeCount, alreadyLiked }) => {
+const LikeButton = ({ onLike, onUnlike, username, likes, likeCount, size }) => {
+
+  const alreadyLiked = likes?.includes(username);
+
   return (
     <View style={LikeStyles.container}>
       <IconToggle
@@ -21,7 +24,7 @@ const LikeButton = ({ onLike, onUnlike, likeCount, alreadyLiked }) => {
         offIcon={'heart-outline'}
         color={'#dc143c'}
         startStatus={alreadyLiked}
-        size={20}
+        size={size ? size : 20}
       />
       <Text style={{fontWeight: '200', fontSize: 15, marginLeft: 1}}>
         {likeCount}

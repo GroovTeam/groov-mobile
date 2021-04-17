@@ -30,7 +30,7 @@ const CreatePostStyles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    height: 'auto', // weird constant for now
+    height: 'auto',
     backgroundColor: 'white'
   },
   label: {

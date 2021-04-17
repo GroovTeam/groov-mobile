@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet, Dimensions } from 'react-native';
+import { Text, View, Image, StyleSheet } from 'react-native';
 import Interactions from './Interactions';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
-
-const window = Dimensions.get('window');
-const windowWidth = window.width;
+import { windowWidth } from '../../utils/Dimensions';
 
 // Styles useful for posts. (probably move to independent file soon?)
 const PostStyles = StyleSheet.create ({
@@ -49,7 +47,7 @@ const PostStyles = StyleSheet.create ({
   image: {
     width: 40,
     height: 40,
-    borderRadius: 25,
+    borderRadius: 20,
   },
   body: {
     marginTop: 4,
@@ -60,7 +58,7 @@ const PostStyles = StyleSheet.create ({
   }
 });
 
-const Post = ({ data }) => {
+const Post = ({ data, username }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
@@ -108,8 +106,8 @@ const Post = ({ data }) => {
       </View>
       <Interactions 
         postID={data.postID}
-        likeCount={data.likes ? data.likes.length : 0}
-        alreadyLiked={data.alreadyLiked}
+        username={username}
+        likes={data.likes}
         recordingURL={recordingURL}
         beatURL={beatURL}
       />

@@ -31,6 +31,7 @@ const Feed = () => {
   const [DATA, setDATA] = useState([]);
   const [posting, setPosting] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [username, setUsername] = useState(undefined);
 
   // Retrieve the user's feed from the server.
   const updateFeed = () => {
@@ -39,6 +40,7 @@ const Feed = () => {
     // First get the user's profile, allowing us to check the liked list for the user.
     getProfile()
       .then(prof => {
+        setUsername(prof.data.username);
         getFeed()
           .then(res => {
     
@@ -51,9 +53,6 @@ const Feed = () => {
     
               // Add temp fillers
               post.imagePath = 'https://picsum.photos/200';
-    
-              // Determine if we have liked the post
-              post.alreadyLiked = post.likes ? (post.likes.includes(prof.data.username)) : false;
     
               post.key = post.postID;
               newDATA.push(post);
@@ -75,7 +74,7 @@ const Feed = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <Post data={item} />
+    <Post data={item} username={username} />
   );
 
   if (posting)
@@ -97,6 +96,7 @@ const Feed = () => {
       </NavBar>
       <FlatList
         style={backgroundColorTempFix.fix}
+        contentContainerStyle={{flexGrow: 0}}
         data={DATA}
         renderItem={renderItem}
         refreshControl={
