@@ -12,6 +12,7 @@ ApiConfig.emailExists = baseURL + ApiConfig.utils + '/emailexists';
 
 ApiConfig.user = '/user';
 ApiConfig.profile = baseURL + ApiConfig.user + '/profile';
+ApiConfig.likedPosts = baseURL + ApiConfig.user + '/likedPosts';
 
 ApiConfig.posts = '/posts';
 ApiConfig.post = baseURL + ApiConfig.posts;
