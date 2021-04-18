@@ -1,63 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import Interactions from './Interactions';
 import PostStyles from '../PostStyles';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
-import { windowWidth } from '../../utils/Dimensions';
-
-// Styles useful for posts. (probably move to independent file soon?)
-const PostStyles = StyleSheet.create ({
-  container: {
-    width: windowWidth,
-    display: 'flex',
-    justifyContent: 'flex-start',
-  },
-  flexHori: {
-    flexDirection: 'row',
-  },
-  flexVert: {
-    flexDirection: 'column',
-  },
-  topBorder: {
-    borderTopWidth: 1,
-    borderTopColor: '#888888',
-  },
-  padded: {
-    padding: 15,
-    paddingBottom: 0
-  },
-  user: {
-    color: 'rgb(0,0,0)',
-    fontSize: 13,
-    fontWeight: 'bold',
-  },
-  text: {
-    color: 'rgb(0,0,0)',
-    fontSize: 25,
-    fontWeight: '100',
-    textAlign: 'center',
-    marginLeft: 10,
-  },
-  header: {
-    marginTop: 25,
-    padding: 5,
-    paddingLeft: 10,
-    alignItems: 'flex-start',
-  },
-  image: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  body: {
-    marginTop: 4,
-    width: windowWidth * 0.7,
-  },
-  playbackMenu: {
-    marginLeft: 'auto'
-  }
-});
 
 const Post = ({ data, username }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
