@@ -99,7 +99,7 @@ const Profile = () => {
         getLikedPosts().then(likedRes => {
           if (likedRes.data === undefined) return;
 
-          if (likedRes.data.results !== undefined && likedRes.data.results.length > 0) {
+          if (likedRes.data.results?.length > 0) {
             likedRes.data.results.forEach(post => {
               post.imagePath = 'https://picsum.photos/200';
               post.alreadyLiked = true;
