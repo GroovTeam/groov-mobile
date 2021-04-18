@@ -5,7 +5,7 @@ import PostStyles from '../PostStyles';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
 
-const Post = ({ data }) => {
+const Post = ({ data, username }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
@@ -53,8 +53,8 @@ const Post = ({ data }) => {
       </View>
       <Interactions 
         postID={data.postID}
-        likeCount={data.likes ? data.likes.length : 0}
-        alreadyLiked={data.alreadyLiked}
+        username={username}
+        likes={data.likes}
         recordingURL={recordingURL}
         beatURL={beatURL}
       />

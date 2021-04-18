@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { SafeAreaView, View, Dimensions, Text, Alert } from 'react-native';
+import { SafeAreaView, View, Text, Alert } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import Styles from '../../components/Styles';
 import SafeViewAndroid from '../../components/SafeViewAndroid';
@@ -9,9 +9,7 @@ import NavStyles from '../../components/NavStyles';
 import { StatusBar } from 'expo-status-bar';
 import Audio from '../../utils/Audio';
 import BeatScroller from '../../components/posts/BeatScroller';
-
-const window = Dimensions.get('window');
-const windowWidth = window.width;
+import { windowWidth } from '../../utils/Dimensions';
 
 // Styles specific to the create post menu.
 const CreatePostStyles = StyleSheet.create({
