@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, SafeAreaView, View, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { Text, StyleSheet, SafeAreaView, View, Keyboard, TouchableWithoutFeedback, Alert, TextInput } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import { StatusBar } from 'expo-status-bar';
 import { Button } from 'react-native-material-ui';
@@ -15,10 +14,7 @@ import post from '../../utils/post';
 import getProfile from '../../utils/getProfile';
 import ChooseBeatAndRecord from './ChooseBeatAndRecord';
 import DismissableBubble from '../../components/DismissableBubble';
-import { Alert } from 'react-native';
-
-const window = Dimensions.get('window');
-const windowWidth = window.width;
+import { windowWidth } from '../../utils/Dimensions';
 
 const CreatePostStyles = StyleSheet.create({
   white: {

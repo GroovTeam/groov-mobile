@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import GenreButton from './GenreButton';
 import GenreSelectionButton from './GenreSelectionButton';
-
-const window = Dimensions.get('window');
-const [ windowWidth, windowHeight ] = [ window.width, window.height ];
+import { windowWidth, windowHeight } from '../../utils/Dimensions';
 
 // Styles for organizing the buttons.
 const containerStyles = StyleSheet.create({

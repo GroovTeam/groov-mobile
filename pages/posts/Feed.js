@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Dimensions, RefreshControl } from 'react-native';
+import { SafeAreaView, StyleSheet, RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import NavStyles from '../../components/NavStyles';
 import SafeViewAndroid from '../../components/SafeViewAndroid';
@@ -10,11 +10,9 @@ import getFeed from '../../utils/getFeed';
 import getProfile from '../../utils/getProfile';
 import CreatePost from './CreatePost';
 import { StatusBar } from 'expo-status-bar';
+import { windowHeight } from '../../utils/Dimensions';
 
 const buttonSize = 35;
-
-const window = Dimensions.get('window');
-const windowHeight = window.height;
 
 const backgroundColorTempFix = StyleSheet.create({
   fix: {

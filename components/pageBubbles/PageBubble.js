@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, Dimensions, StyleSheet } from 'react-native';
-
-const window = Dimensions.get('window');
-const windowWidth = window.width;
+import { View, StyleSheet } from 'react-native';
+import { windowWidth } from '../../utils/Dimensions';
 
 const BubbleStyles = StyleSheet.create({
   container: {

@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { windowWidth } from '../../utils/Dimensions';
 import Collapsible from 'react-native-collapsible';
 import Comments from './Comments';
 import IconToggle from '../IconToggle';
@@ -8,9 +9,6 @@ import LikeButton from './LikeButton';
 import PlaybackMenu from './PlaybackMenu';
 import like from '../../utils/like';
 import unlike from '../../utils/unlike';
-
-const window = Dimensions.get('window');
-const windowWidth = window.width;
 
 const Interactions = ({ postID, username, likes, beatURL, recordingURL }) => {
 

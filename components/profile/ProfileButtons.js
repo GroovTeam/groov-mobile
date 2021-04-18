@@ -1,8 +1,7 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
-
-var width = Dimensions.get('window').width;
+import { windowWidth } from '../../utils/Dimensions';
 
 const ProfileButtonsStyles = StyleSheet.create({
   container: {
@@ -35,7 +34,7 @@ export default class ProfileButtons extends React.Component {
           onPress={this.updateIndex}
           selectedIndex={selectedIndex}
           buttons={buttons}
-          containerStyle={{width: width - 20, height: 35}}
+          containerStyle={{width: windowWidth - 20, height: 35}}
         />
       </View>
     );
