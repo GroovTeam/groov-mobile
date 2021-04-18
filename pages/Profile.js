@@ -96,21 +96,23 @@ const Profile = () => {
         tempLikesData.push(header);
         tempLikesData.push(buttons);
 
-        getLikedPosts().then(likedRes => {
-          if (likedRes.data === undefined) return;
+        getLikedPosts()
+          .then(likedRes => {
+            if (likedRes.data === undefined) return;
 
-          if (likedRes.data.results?.length > 0) {
-            likedRes.data.results.forEach(post => {
-              post.imagePath = 'https://picsum.photos/200';
-              post.alreadyLiked = true;
-              post.id = post.postID;
-              post.type = 'post';
-              tempLikesData.push(post);
-            });
-          } else {
-            tempLikesData.push(empty);
-          }
-        });
+            if (likedRes.data.results?.length > 0) {
+              likedRes.data.results.forEach(post => {
+                post.imagePath = 'https://picsum.photos/200';
+                post.alreadyLiked = true;
+                post.id = post.postID;
+                post.type = 'post';
+                tempLikesData.push(post);
+              });
+            } else {
+              tempLikesData.push(empty);
+            }
+          })
+          .catch(console.error);
 
         setPosseData(tempPosseData);
         setLikesData(tempLikesData);
@@ -122,7 +124,8 @@ const Profile = () => {
         
         setRefreshing(false);
         setTabSwitch(!tabSwitch);
-      });
+      })
+      .catch(console.error);
   };
 
   useEffect(() => {
