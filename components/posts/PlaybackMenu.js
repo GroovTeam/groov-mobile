@@ -60,6 +60,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
 
     if (!dubStatus.isLoaded) {
       await dub.loadAsync({ uri: dubPath });
+      await dub.setOnPlaybackStatusUpdate(handleDubPlaybackUpdate);
       setDub(dub);
     }
 
@@ -69,23 +70,31 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
     setPlaying(true);
   };
 
-  const stop = async () => {
+  // Pause the audio
+  const pause = async () => {
     await beat.pauseAsync();
     await dub.pauseAsync();
 
     setPlaying(false);
   };
 
+  // Check to see if the audio is currently running, then stop and rewind
   const stopAndRewind = async () => {
 
     const beatStatus = await beat.getStatusAsync();
     const dubStatus = await dub.getStatusAsync();
 
     if (beatStatus.isLoaded && dubStatus.isLoaded) {
-      await stop();
+      await pause();
       beat.setPositionAsync(0);
       dub.setPositionAsync(0);
     }
+  };
+
+  // Tell the player to stop playing as soon as the dub finishes
+  const handleDubPlaybackUpdate = async (dubStatus) => {
+    if (dubStatus.didJustFinish)
+      await stopAndRewind();
   };
 
   return (
@@ -98,7 +107,7 @@ const PlaybackMenu = ({ beatPath, dubPath }) => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={playing ? stop : play}>
+      <TouchableOpacity onPress={playing ? pause : play}>
         <Ionicons
           name={playing ? 'stop-circle-outline' : 'play-circle-outline'}
           color={color}

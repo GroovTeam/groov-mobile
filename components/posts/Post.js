@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 import Interactions from './Interactions';
+import PostStyles from '../PostStyles';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
 import { windowWidth } from '../../utils/Dimensions';
