@@ -79,8 +79,8 @@ const Profile = () => {
         tempPosseData.push(header);
         tempPosseData.push(buttons);
 
-        if (res.data.posses) {
-          res.data.posses.forEach(f => {
+        if (res.data.possesData) {
+          res.data.possesData.forEach(f => {
             let tempPosse = {};
             tempPosse.id = f.posseID;
             tempPosse.name = f.name;
