@@ -30,7 +30,7 @@ const CommentsStyles = StyleSheet.create({
   },
 });
 
-const Comments = ({ postID, username }) => {
+const CommentsContainer = ({ postID, username }) => {
 
   const [DATA, setDATA] = useState(undefined);
   const [commenting, setCommenting] = useState(false);
@@ -119,4 +119,4 @@ const Comments = ({ postID, username }) => {
   );
 };
 
-export default Comments;
+export default CommentsContainer;

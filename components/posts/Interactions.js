@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { windowWidth } from '../../utils/Dimensions';
 import Collapsible from 'react-native-collapsible';
-import Comments from './Comments';
+import CommentsContainer from './CommentsContainer';
 import IconToggle from '../IconToggle';
 import LikeButton from './LikeButton';
 import PlaybackMenu from './PlaybackMenu';
@@ -14,7 +14,7 @@ const Interactions = ({ postID, username, likes, beatURL, recordingURL }) => {
 
   const [likeCount, setLikeCount] = useState(likes ? likes.length : 0);
   const [playback, setPlayback] = useState(<View style={{width: 80}} />);
-  const [isCommenting, setIsCommenting] = useState(true);
+  const [isCommenting, setIsCommenting] = useState(false);
 
   useEffect(() => {
     if (beatURL || recordingURL) {
@@ -60,7 +60,7 @@ const Interactions = ({ postID, username, likes, beatURL, recordingURL }) => {
           onIcon={'chatbox-ellipses-outline'}
           offIcon={'chatbox-outline'}
           color={'#000000'}
-          startStatus={true}
+          //startStatus={true}
           size={20}
         />
         <LikeButton
@@ -73,7 +73,7 @@ const Interactions = ({ postID, username, likes, beatURL, recordingURL }) => {
         {playback}
       </View>
       <Collapsible collapsed={!isCommenting}>
-        <Comments postID={postID} username={username} />
+        <CommentsContainer postID={postID} username={username} />
       </Collapsible>
     </View>
   );
