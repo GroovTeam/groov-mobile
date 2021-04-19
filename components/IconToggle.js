@@ -17,7 +17,7 @@ const IconToggle = ({ onActivate, onDeactivate, startStatus, onIcon, offIcon, co
 
   return (
     <TouchableOpacity
-      testID={'button'}
+      testID='button'
       style={{marginBottom: 5}}
       onPress={toggle}
     >
