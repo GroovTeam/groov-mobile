@@ -7,6 +7,7 @@ import SafeViewAndroid from '../components/SafeViewAndroid';
 import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
 import EditProfileModal from '../components/profile/EditProfileModal';
+import CreatePosse from '../components/profile/CreatePosse';
 import Posse from '../components/profile/Posse';
 import Post from '../components/posts/Post';
 import Empty from '../components/profile/Empty';
@@ -52,6 +53,8 @@ const Profile = () => {
       return <Posse data={item} />;
     else if (item.type === 'post')
       return <Post data={item} />;
+    else if (item.type === 'posseAdd')
+      return <CreatePosse />;
     else if (item.type === 'empty')
       return <Empty />;
   };
@@ -82,8 +85,14 @@ const Profile = () => {
           type: 'empty',
         };
 
+        const posseAdd = {
+          id: '4',
+          type: 'posseAdd',
+        };
+
         tempPosseData.push(header);
         tempPosseData.push(buttons);
+        tempPosseData.push(posseAdd);
 
         if (res.data.possesData) {
           res.data.possesData.forEach(f => {
