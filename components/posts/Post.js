@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import Interactions from './Interactions';
+import Posses from './Posses';
+import Tags from './Tags';
+import Collapsible from 'react-native-collapsible';
 import PostStyles from '../PostStyles';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
@@ -9,6 +12,7 @@ const Post = ({ data, username }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
+  const [tagsShown, setTagsShown] = useState(false);
 
   useEffect(() => {
     async function asyncWrapper() {
@@ -47,8 +51,25 @@ const Post = ({ data, username }) => {
           source={{uri: profilePhoto}}
         />
         <View style={PostStyles.text}>
-          <Text style={PostStyles.user}>{'@' + data.username}</Text>
+          <View style={[
+            PostStyles.container,
+            PostStyles.flexHori
+          ]}>
+            <Text style={PostStyles.user}>{'@' + data.username}</Text>
+            <Posses posses={data.posses} />
+          </View>
           <Text style={PostStyles.body}>{data.content}</Text>
+          <View style={{marginTop: 10}}>
+            <TouchableOpacity onPress={() => setTagsShown(!tagsShown)}>
+              <Text style={{fontSize: 10, color: '#007bff'}}>
+                {tagsShown ? 'Hide tags' : 'Show tags'}
+              </Text>
+            </TouchableOpacity>
+            <View style={{height: 5}} />
+            <Collapsible collapsed={!tagsShown}>
+              <Tags tags={data.tags} />
+            </Collapsible>
+          </View>
         </View>
       </View>
       <Interactions 

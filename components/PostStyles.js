@@ -25,6 +25,7 @@ const PostStyles = StyleSheet.create({
     color: 'rgb(0,0,0)',
     fontSize: 13,
     fontWeight: 'bold',
+    alignSelf: 'center'
   },
   text: {
     color: 'rgb(0,0,0)',
