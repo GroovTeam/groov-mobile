@@ -64,6 +64,7 @@ const Interactions = ({ postID, username, likes, beatURL, recordingURL }) => {
           size={20}
         />
         <LikeButton
+          testID={'like-button'}
           onLike={onLike}
           onUnlike={onUnlike}
           username={username}

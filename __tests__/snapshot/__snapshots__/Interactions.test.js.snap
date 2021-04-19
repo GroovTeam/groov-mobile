@@ -1,0 +1,320 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Interactions /> renders properly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "justifyContent": "flex-start",
+      "width": 750,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "row",
+        "justifyContent": "space-evenly",
+        "margin": 10,
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "marginBottom": 5,
+          "opacity": 1,
+        }
+      }
+      testID="button"
+    >
+      <Text />
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "marginBottom": 5,
+            "opacity": 1,
+          }
+        }
+        testID="button"
+      >
+        <Text />
+      </View>
+      <Text
+        style={
+          Object {
+            "fontSize": 15,
+            "fontWeight": "200",
+            "marginLeft": 1,
+          }
+        }
+      >
+        2
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "width": 80,
+        }
+      }
+    />
+  </View>
+  <View
+    pointerEvents="none"
+    style={
+      Object {
+        "height": 0,
+        "overflow": "hidden",
+      }
+    }
+  >
+    <View
+      forwardedRef={[Function]}
+      onLayout={[Function]}
+      style={Object {}}
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "flex-start",
+              "display": "flex",
+              "flexDirection": "column",
+              "justifyContent": "flex-start",
+              "marginBottom": 30,
+              "width": 525,
+            },
+            Object {
+              "marginBottom": 10,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "alignSelf": "center",
+                "display": "flex",
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "marginBottom": 20,
+                "width": "100%",
+              },
+              Object {
+                "marginBottom": 0,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "fontSize": 25,
+                  "fontWeight": "300",
+                },
+                Object {
+                  "fontSize": 20,
+                },
+              ]
+            }
+          >
+            Nothing here... yet!
+          </Text>
+          <View
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <Text />
+          </View>
+          <Modal
+            animationType="slide"
+            hardwareAccelerated={false}
+            onRequestClose={[Function]}
+            transparent={true}
+            visible={false}
+          >
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "height": 1334,
+                  "opacity": 1,
+                  "width": 750,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flex": 1,
+                    "justifyContent": "center",
+                    "marginTop": 22,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "white",
+                        "borderRadius": 20,
+                        "elevation": 5,
+                        "margin": 20,
+                        "padding": 35,
+                        "shadowColor": "#000",
+                        "shadowOffset": Object {
+                          "height": 2,
+                          "width": 0,
+                        },
+                        "shadowOpacity": 0.25,
+                        "shadowRadius": 4,
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "marginBottom": 25,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "alignSelf": "center",
+                          "fontSize": 25,
+                        }
+                      }
+                    >
+                      Comment
+                    </Text>
+                    <TextInput
+                      allowFontScaling={true}
+                      multiline={true}
+                      onChangeText={[Function]}
+                      rejectResponderTermination={true}
+                      style={
+                        Array [
+                          Object {
+                            "borderBottomWidth": 1,
+                            "borderColor": "black",
+                            "borderRadius": 15,
+                            "padding": 10,
+                            "width": 375,
+                          },
+                          Object {
+                            "borderWidth": 1,
+                          },
+                          Object {
+                            "marginTop": 15,
+                          },
+                        ]
+                      }
+                      underlineColorAndroid="transparent"
+                      value=""
+                    />
+                  </View>
+                  <View
+                    accessible={true}
+                    focusable={true}
+                    onClick={[Function]}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#2196F3",
+                        "borderRadius": 20,
+                        "elevation": 2,
+                        "opacity": 1,
+                        "padding": 10,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Object {
+                          "color": "white",
+                          "fontWeight": "bold",
+                          "textAlign": "center",
+                        }
+                      }
+                    >
+                      Post
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
