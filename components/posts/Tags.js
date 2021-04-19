@@ -8,7 +8,10 @@ const Tags = ({ tags }) => {
 
   tags.forEach(tag => {
     renderableTags.push(
-      <View style={{margin: 2}}>
+      <View 
+        style={{margin: 2}}
+        key={tag}
+      >
         <GenreButton
           text={tag}
           fontSize={10}

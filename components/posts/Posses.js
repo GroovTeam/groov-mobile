@@ -9,7 +9,10 @@ const Posses = ({ posses }) => {
 
   posses.forEach(posse => {
     renderablePosses.push(
-      <View style={{margin: 2}}>
+      <View
+        style={{margin: 2}}
+        key={posse}
+      >
         <GenreButton
           text={posse}
           fontSize={10}
