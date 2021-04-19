@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, Dimensions, RefreshControl } from 'react-native';
+import { SafeAreaView, StyleSheet, RefreshControl } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import NavStyles from '../../components/NavStyles';
 import SafeViewAndroid from '../../components/SafeViewAndroid';
@@ -7,13 +7,12 @@ import NavBar, { NavButton, NavTitle } from 'react-native-nav';
 import { Icon } from 'react-native-material-ui';
 import Post from '../../components/posts/Post';
 import getFeed from '../../utils/getFeed';
+import getProfile from '../../utils/getProfile';
 import CreatePost from './CreatePost';
 import { StatusBar } from 'expo-status-bar';
+import { windowHeight } from '../../utils/Dimensions';
 
 const buttonSize = 35;
-
-const window = Dimensions.get('window');
-const windowHeight = window.height;
 
 const backgroundColorTempFix = StyleSheet.create({
   fix: {
@@ -30,30 +29,37 @@ const Feed = () => {
   const [DATA, setDATA] = useState([]);
   const [posting, setPosting] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [username, setUsername] = useState(undefined);
 
   // Retrieve the user's feed from the server.
   const updateFeed = () => {
     setRefreshing(true);
-    setDATA(undefined);
-    getFeed()
-      .then(res => {
 
-        if (res === undefined || res.data.results === undefined) return;
-
-        const feed = res.data.results;
-        const newDATA = [];
-
-        feed.forEach((f, index) => {
-
-          // Add temp fillers
-          f.imagePath = 'https://picsum.photos/200';
-
-          f.key = index.toString();
-          newDATA.push(f);
-        });
-        
-        setDATA(newDATA);
-        setRefreshing(false);
+    // First get the user's profile, allowing us to check the liked list for the user.
+    getProfile()
+      .then(prof => {
+        setUsername(prof.data.username);
+        getFeed()
+          .then(res => {
+    
+            if (res === undefined || res.data.results === undefined) return;
+    
+            const feed = res.data.results;
+            const newDATA = [];
+    
+            feed.forEach(post => {
+    
+              // Add temp fillers
+              post.imagePath = 'https://picsum.photos/200';
+    
+              post.key = post.postID;
+              newDATA.push(post);
+            });
+            
+            setDATA(newDATA);
+            setRefreshing(false);
+          })
+          .catch(console.error);
       })
       .catch(console.error);
 
@@ -66,7 +72,7 @@ const Feed = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <Post data={item} />
+    <Post data={item} username={username} />
   );
 
   if (posting)
@@ -88,6 +94,7 @@ const Feed = () => {
       </NavBar>
       <FlatList
         style={backgroundColorTempFix.fix}
+        contentContainerStyle={{flexGrow: 0}}
         data={DATA}
         renderItem={renderItem}
         refreshControl={

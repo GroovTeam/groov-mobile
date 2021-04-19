@@ -1,84 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import Interactions from './Interactions';
+import Posses from './Posses';
+import Tags from './Tags';
+import Collapsible from 'react-native-collapsible';
+import PostStyles from '../PostStyles';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
-import PlaybackMenu from './PlaybackMenu';
 
-// Styles useful for posts. (probably move to independent file soon?)
-const PostStyles = StyleSheet.create ({
-  container: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-  },
-  flexHori: {
-    flexDirection: 'row',
-  },
-  flexVert: {
-    flexDirection: 'column',
-  },
-  topBorder: {
-    borderTopWidth: 1,
-    borderTopColor: '#888888',
-  },
-  padded: {
-    padding: 15,
-    paddingBottom: 0
-  },
-  user: {
-    color: 'rgb(0,0,0)',
-    fontSize: 13,
-    fontWeight: 'bold',
-  },
-  text: {
-    color: 'rgb(0,0,0)',
-    fontSize: 25,
-    fontWeight: '100',
-    textAlign: 'center',
-    marginLeft: 10,
-  },
-  header: {
-    marginTop: 25,
-    padding: 5,
-    paddingLeft: 10,
-    alignItems: 'flex-start',
-  },
-  image: {
-    width: 40,
-    height: 40,
-    borderRadius: 25,
-  },
-  body: {
-    marginTop: 4,
-    width: 'auto',
-  },
-  playbackMenu: {
-    marginLeft: 'auto'
-  },
-  negativeMargin: {
-    marginTop: -20,
-    marginBottom: 5
-  },
-});
-
-const Post = ({ data }) => {
+const Post = ({ data, username }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
-  const [playback, setPlayback] = useState(<View />);
-
-  useEffect(() => {
-    if (beatURL || recordingURL) {
-      setPlayback(
-        <View style={PostStyles.playbackMenu}>
-          <PlaybackMenu
-            beatPath={beatURL}
-            dubPath={recordingURL}
-          />
-        </View>
-      );
-    }
-  }, [beatURL, recordingURL]);
+  const [tagsShown, setTagsShown] = useState(false);
 
   useEffect(() => {
     async function asyncWrapper() {
@@ -117,16 +51,34 @@ const Post = ({ data }) => {
           source={{uri: profilePhoto}}
         />
         <View style={PostStyles.text}>
-          <Text style={PostStyles.user}>{'@' + data.username}</Text>
+          <View style={[
+            PostStyles.container,
+            PostStyles.flexHori
+          ]}>
+            <Text style={PostStyles.user}>{'@' + data.username}</Text>
+            <Posses posses={data.posses} />
+          </View>
           <Text style={PostStyles.body}>{data.content}</Text>
+          <View style={{marginTop: 10}}>
+            <TouchableOpacity onPress={() => setTagsShown(!tagsShown)}>
+              <Text style={{fontSize: 10, color: '#007bff'}}>
+                {tagsShown ? 'Hide tags' : 'Show tags'}
+              </Text>
+            </TouchableOpacity>
+            <View style={{height: 5}} />
+            <Collapsible collapsed={!tagsShown}>
+              <Tags tags={data.tags} />
+            </Collapsible>
+          </View>
         </View>
-        {playback}
       </View>
-      <Interactions style={[
-        PostStyles.container,
-        PostStyles.flexHori,
-        PostStyles.negativeMargin,
-      ]}/>
+      <Interactions 
+        postID={data.postID}
+        username={username}
+        likes={data.likes}
+        recordingURL={recordingURL}
+        beatURL={beatURL}
+      />
     </View>
   );
 };
