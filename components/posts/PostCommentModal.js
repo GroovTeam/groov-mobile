@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet, TextInput, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
 import { windowWidth, windowHeight } from '../../utils/Dimensions';
+import ModalStyles from '../ModalStyles';
 import postComment from '../../utils/postComment';
 import postReply from '../../utils/replyComment';
 
@@ -37,16 +38,16 @@ const PostCommentModal = ({ id, commenting, updateCommenting, updateComments, is
         style={{width: windowWidth, height: windowHeight}}
         onPress={() => updateCommenting(false)}
       >
-        <View style={modalStyles.centeredView}>
-          <View style={[modalStyles.modalView, modalStyles.content]}>
+        <View style={ModalStyles.centeredView}>
+          <View style={[ModalStyles.modalView, ModalStyles.content]}>
             <View style={{marginBottom: 25}}>
-              <Text style={modalStyles.label}>
+              <Text style={ModalStyles.label}>
                 { isReply ? 'Reply' : 'Comment' }
               </Text>
               <TextInput
                 style={[
-                  modalStyles.input,
-                  modalStyles.multiline,
+                  ModalStyles.input,
+                  ModalStyles.multiline,
                   {marginTop: 15}
                 ]}
                 onChangeText={text => setContent(text)}
@@ -55,10 +56,10 @@ const PostCommentModal = ({ id, commenting, updateCommenting, updateComments, is
               />
             </View>
             <TouchableOpacity
-              style={[modalStyles.button, modalStyles.buttonClose]}
+              style={[ModalStyles.button, ModalStyles.buttonClose]}
               onPress={prepareComment}
             >
-              <Text style={modalStyles.textStyle}>Post</Text>
+              <Text style={ModalStyles.textStyle}>Post</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -68,70 +69,3 @@ const PostCommentModal = ({ id, commenting, updateCommenting, updateComments, is
 };
 
 export default PostCommentModal;
-
-const modalStyles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    height: 'auto',
-    backgroundColor: 'white'
-  },  
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center'
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center'
-  },
-  label: {
-    fontSize: 25,
-    alignSelf: 'center'
-  },
-  input: {
-    borderColor: 'black',
-    borderBottomWidth: 1,
-    borderRadius: 15,
-    padding: 10,
-    width: windowWidth * 0.5,
-  },
-  multiline: {
-    borderWidth: 1,
-  },
-});

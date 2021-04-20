@@ -14,7 +14,7 @@ const containerStyles = StyleSheet.create({
     display: 'flex',
     width: windowWidth - 100,
     maxHeight: windowHeight - 500,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
     overflow: 'hidden',
