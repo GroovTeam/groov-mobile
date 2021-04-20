@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import { Button } from 'react-native-material-ui';
 import Styles from '../../components/Styles';
 import firebase from '../../utils/Firebase';
@@ -26,6 +26,20 @@ const VerifyEmail = ({ setEmailVerified }) => {
     logout();
   };
 
+  const resendVerification = async () => {
+    firebase.auth().currentUser.sendEmailVerification()
+      .then(Alert.alert(
+        'All set!',
+        'A new verification email has been sent.'
+      ))
+      .catch(() => {
+        Alert.alert(
+          'Uh oh',
+          'Something went wrong, please try again.'
+        );
+      });
+  };
+
   return (
     <View style={Styles.container}>
       <Text style={[Styles.text, Styles.headerText]}>
@@ -44,6 +58,13 @@ const VerifyEmail = ({ setEmailVerified }) => {
         primary
         text='Logout'
         onPress={logoutUser}
+      />
+      <View style={{marginTop: 15}}/>
+      <Button
+        raised
+        primary
+        text='Resend verification'
+        onPress={resendVerification}
       />
     </View>
   );
