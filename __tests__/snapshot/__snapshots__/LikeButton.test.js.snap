@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LikeButton /> renders properly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "row",
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "marginBottom": 5,
+        "opacity": 1,
+      }
+    }
+    testID="button"
+  >
+    <Text />
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 15,
+        "fontWeight": "200",
+        "marginLeft": 1,
+      }
+    }
+  >
+    2
+  </Text>
+</View>
+`;

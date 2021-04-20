@@ -1,0 +1,525 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GenreSelections /> renders properly 1`] = `
+<View
+  style={
+    Object {
+      "display": "flex",
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "justifyContent": "flex-start",
+      "marginTop": 50,
+      "maxHeight": 834,
+      "overflow": "hidden",
+      "width": 650,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Rap
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Opera
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Country
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Pop
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Latin
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Musical-Theatre
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Rock
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Alternative
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Hip-Hop
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        K-Pop
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "padding": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "white",
+          "borderColor": "black",
+          "borderRadius": 25,
+          "borderWidth": 0.8,
+          "height": "auto",
+          "opacity": 1,
+          "overflow": "hidden",
+          "paddingHorizontal": 10,
+          "paddingVertical": 5,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "rgb(0,0,0)",
+            "fontSize": 25,
+            "fontWeight": "200",
+            "textAlign": "center",
+          }
+        }
+      >
+        Samba
+      </Text>
+    </View>
+  </View>
+</View>
+`;
