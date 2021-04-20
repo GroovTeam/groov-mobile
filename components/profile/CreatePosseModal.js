@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Modal, TextInput, Keyboard } from 'react-native';
 import { windowWidth, windowHeight } from '../../utils/Dimensions';
 import createPosse from '../../utils/createPosse';
+import joinPosse from '../../utils/joinPosse';
 import ModalStyles from '../ModalStyles';
 
 const CreatePosseModal = ({ creating, updateCreating, refreshProfile }) => {
@@ -14,9 +15,12 @@ const CreatePosseModal = ({ creating, updateCreating, refreshProfile }) => {
 
   const create = body => {
     createPosse(body)
-      .then(() => {
-        updateCreating(false);
-        refreshProfile();
+      .then(res => {
+        joinPosse(res.data.posseID)
+          .then(() => {
+            updateCreating(false);
+            refreshProfile();
+          });
       });
   };
 

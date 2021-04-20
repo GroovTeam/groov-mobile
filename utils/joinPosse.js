@@ -18,7 +18,7 @@ const joinPosse = async (posseID) => {
       posseURL,
       {}, // must have empty body
       config,
-    ).then(console.log).catch(console.error);
+    ).catch(console.error);
   }).catch(console.error);
 };
 
