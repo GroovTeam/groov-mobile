@@ -8,6 +8,7 @@ import ProfileHeader from '../components/profile/ProfileHeader';
 import ProfileButtons from '../components/profile/ProfileButtons';
 import EditProfileModal from '../components/profile/EditProfileModal';
 import CreatePosse from '../components/profile/CreatePosse';
+import CreatePosseModal from '../components/profile/CreatePosseModal';
 import Posse from '../components/profile/Posse';
 import Post from '../components/posts/Post';
 import Empty from '../components/profile/Empty';
@@ -24,6 +25,7 @@ const Profile = () => {
   const [tabSwitch, setTabSwitch] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [editingProfile, setEditingProfile] = useState(false);
+  const [creatingPosse, setCreatingPosse] = useState(false);
 
   let updateIndex = (newIndex) => {
     setSelectedIndex(newIndex);
@@ -40,6 +42,10 @@ const Profile = () => {
     setEditingProfile(true);
   };
 
+  const createPosse = () => {
+    setCreatingPosse(true);
+  };
+
   const logoutUser = async () => {
     await logout();
   };
@@ -54,7 +60,7 @@ const Profile = () => {
     else if (item.type === 'post')
       return <Post data={item} username={item.currUser} />;
     else if (item.type === 'posseAdd')
-      return <CreatePosse />;
+      return <CreatePosse createFunction={createPosse}/>;
     else if (item.type === 'empty')
       return <Empty />;
   };
@@ -180,6 +186,11 @@ const Profile = () => {
       <EditProfileModal
         editing={editingProfile}
         updateEditing={setEditingProfile}
+        refreshProfile={updateProfile}
+      />
+      <CreatePosseModal
+        creating={creatingPosse}
+        updateCreating={setCreatingPosse}
         refreshProfile={updateProfile}
       />
       <StatusBar style='dark' backgroundColor='white' />

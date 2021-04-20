@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import PostStyles from '../PostStyles';
 
-const CreatePosse = () => {
+const CreatePosse = ({ createFunction }) => {
   return (
     <View style={[
       PostStyles.container,
@@ -15,7 +15,7 @@ const CreatePosse = () => {
         PostStyles.flexHori,
         PostStyles.padded,
       ]}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={createFunction}>
           <Ionicons 
             name={'add-circle-outline'}
             size={70}
