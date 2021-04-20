@@ -7,7 +7,7 @@ exports[`<GenreSelections /> renders properly 1`] = `
       "display": "flex",
       "flexDirection": "row",
       "flexWrap": "wrap",
-      "justifyContent": "flex-start",
+      "justifyContent": "center",
       "marginTop": 50,
       "maxHeight": 834,
       "overflow": "hidden",
