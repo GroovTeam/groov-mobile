@@ -29,14 +29,20 @@ const Profile = () => {
   const [editingProfile, setEditingProfile] = useState(false);
   const [creatingPosse, setCreatingPosse] = useState(false);
 
+  const Tabs = {
+    POSSES: 0,
+    LIKES: 1,
+    POSTS: 2,
+  };
+
   let updateIndex = (newIndex) => {
     setSelectedIndex(newIndex);
     
-    if (newIndex === 0)
+    if (newIndex === Tabs.POSSES)
       setData(posseData);
-    else if (newIndex === 1)
+    else if (newIndex === Tabs.LIKES)
       setData(likesData);
-    else if (newIndex === 2)
+    else if (newIndex === Tabs.POSTS)
       setData(postsData);
     
     setTabSwitch(!tabSwitch);
@@ -165,11 +171,11 @@ const Profile = () => {
         setLikesData(tempLikesData);
         setPostsData(tempPostsData);
         
-        if (selectedIndex === 0)
+        if (selectedIndex === Tabs.POSSES)
           setData(tempPosseData);
-        else if (selectedIndex === 1)
+        else if (selectedIndex === Tabs.LIKES)
           setData(tempLikesData);
-        else if (selectedIndex === 2)
+        else if (selectedIndex === Tabs.POSTS)
           setData(tempPostsData);
         
         setRefreshing(false);
