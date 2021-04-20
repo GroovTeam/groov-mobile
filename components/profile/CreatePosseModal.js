@@ -36,15 +36,15 @@ const CreatePosseModal = ({ creating, updateCreating, refreshProfile }) => {
   const prepareCreate = () => {
     const body = {};
     const posseTags = [];
-    for (const key of tags)
-      if (tags[key])
+    for (const [key, value] of Object.entries(tags))
+      if (value)
         posseTags.push(key);
-
-    updateContent(tags, posseTags);
 
     for (const [key, value] of Object.entries(content))
       if (value != '')
         body[key] = value;
+
+    body['tags'] = posseTags;
     create(body);
   };
 
