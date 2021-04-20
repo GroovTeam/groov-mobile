@@ -16,24 +16,34 @@ import NavStyles from '../components/NavStyles';
 import logout from '../utils/logout';
 import getProfile from '../utils/getProfile';
 import getLikedPosts from '../utils/getLikedPosts';
+import getUsersPosts from '../utils/getUsersPosts';
 
 const Profile = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [posseData, setPosseData] = useState([]);
   const [likesData, setLikesData] = useState([]);
+  const [postsData, setPostsData] = useState([]);
   const [profileData, setData] = useState([]);
   const [tabSwitch, setTabSwitch] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [editingProfile, setEditingProfile] = useState(false);
   const [creatingPosse, setCreatingPosse] = useState(false);
 
+  const Tabs = {
+    POSSES: 0,
+    LIKES: 1,
+    POSTS: 2,
+  };
+
   let updateIndex = (newIndex) => {
     setSelectedIndex(newIndex);
     
-    if (newIndex === 0)
+    if (newIndex === Tabs.POSSES)
       setData(posseData);
-    else if (newIndex === 1)
+    else if (newIndex === Tabs.LIKES)
       setData(likesData);
+    else if (newIndex === Tabs.POSTS)
+      setData(postsData);
     
     setTabSwitch(!tabSwitch);
   };
@@ -58,9 +68,11 @@ const Profile = () => {
     else if (item.type === 'posse')
       return <Posse data={item} />;
     else if (item.type === 'post')
+      return <Post data={item} username={item.currUser} canBeDeleted={true} updatePosts={updateProfile} />;
+    else if (item.type === 'likedPost')
       return <Post data={item} username={item.currUser} />;
     else if (item.type === 'posseAdd')
-      return <CreatePosse createFunction={createPosse}/>;
+      return <CreatePosse createFunction={createPosse} />;
     else if (item.type === 'empty')
       return <Empty />;
   };
@@ -74,6 +86,7 @@ const Profile = () => {
 
         const tempPosseData = [];
         const tempLikesData = [];
+        const tempPostsData = [];
 
         const header = {
           id: '1',
@@ -125,7 +138,7 @@ const Profile = () => {
               likedRes.data.results.forEach(post => {
                 post.imagePath = 'https://picsum.photos/200';
                 post.id = post.postID;
-                post.type = 'post';
+                post.type = 'likedPost';
                 post.currUser = res.data.username;
                 tempLikesData.push(post);
               });
@@ -135,13 +148,37 @@ const Profile = () => {
           })
           .catch(console.error);
 
+        tempPostsData.push(header);
+        tempPostsData.push(buttons);
+
+        getUsersPosts()
+          .then(postsRes => {
+            if (postsRes.data === undefined) return;
+
+            if (postsRes.data.results?.length > 0) {
+              postsRes.data.results.forEach(post => {
+                post.imagePath = 'https://picsum.photos/200';
+                post.id = post.postID;
+                post.type = 'post';
+                post.currUser = res.data.username;
+                tempPostsData.push(post);
+              });
+            } else {
+              tempPostsData.push(empty);
+            }
+          })
+          .catch(console.error);
+
         setPosseData(tempPosseData);
         setLikesData(tempLikesData);
+        setPostsData(tempPostsData);
         
-        if (selectedIndex === 0)
+        if (selectedIndex === Tabs.POSSES)
           setData(tempPosseData);
-        else
+        else if (selectedIndex === Tabs.LIKES)
           setData(tempLikesData);
+        else if (selectedIndex === Tabs.POSTS)
+          setData(tempPostsData);
         
         setRefreshing(false);
         setTabSwitch(!tabSwitch);

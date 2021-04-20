@@ -13,12 +13,14 @@ ApiConfig.emailExists = baseURL + ApiConfig.utils + '/emailexists';
 ApiConfig.user = '/user';
 ApiConfig.profile = baseURL + ApiConfig.user + '/profile';
 ApiConfig.likedPosts = baseURL + ApiConfig.user + '/likedPosts';
+ApiConfig.usersPosts = baseURL + ApiConfig.user + '/posts';
 
 ApiConfig.posts = '/posts';
 ApiConfig.post = baseURL + ApiConfig.posts;
 ApiConfig.feed = baseURL + ApiConfig.posts + '/feed';
 ApiConfig.like = baseURL + ApiConfig.posts + '/like';
 ApiConfig.unlike = baseURL + ApiConfig.posts + '/unlike';
+ApiConfig.deletePost = baseURL + ApiConfig.posts + '/delete';
 
 ApiConfig.comments = '/comments';
 ApiConfig.getComments = baseURL + ApiConfig.comments;

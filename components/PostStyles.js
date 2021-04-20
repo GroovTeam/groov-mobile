@@ -1,7 +1,5 @@
-import { Dimensions, StyleSheet } from 'react-native';
-
-const window = Dimensions.get('window');
-const windowWidth = window.width;
+import { StyleSheet } from 'react-native';
+import { windowWidth } from '../utils/Dimensions';
 
 const PostStyles = StyleSheet.create({
   container: {
@@ -10,6 +8,7 @@ const PostStyles = StyleSheet.create({
   },
   flexHori: {
     flexDirection: 'row',
+    width: windowWidth * 0.8
   },
   flexVert: {
     flexDirection: 'column',
