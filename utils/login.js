@@ -14,7 +14,7 @@ const login = async (email, password) => {
     ApiConfig.login,
     userData
   ).then(result => {
-    if (result.data.token) {
+    if (result.data.customToken) {
       return firebase.auth().signInWithEmailAndPassword(
         email,
         password
