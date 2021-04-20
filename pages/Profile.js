@@ -106,7 +106,10 @@ const Profile = ({ username, likeSearch, backToFeed }) => {
         const header = {
           id: '1',
           type: 'header',
-          data: res.data,
+          data: {
+            ...res.data,
+            imagePath: 'https://picsum.photos/200'
+          },
         };
 
         const buttons = {
