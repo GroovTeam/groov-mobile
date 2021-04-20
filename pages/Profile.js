@@ -16,11 +16,13 @@ import NavStyles from '../components/NavStyles';
 import logout from '../utils/logout';
 import getProfile from '../utils/getProfile';
 import getLikedPosts from '../utils/getLikedPosts';
+import getUsersPosts from '../utils/getUsersPosts';
 
 const Profile = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [posseData, setPosseData] = useState([]);
   const [likesData, setLikesData] = useState([]);
+  const [postsData, setPostsData] = useState([]);
   const [profileData, setData] = useState([]);
   const [tabSwitch, setTabSwitch] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -34,6 +36,8 @@ const Profile = () => {
       setData(posseData);
     else if (newIndex === 1)
       setData(likesData);
+    else if (newIndex === 2)
+      setData(postsData);
     
     setTabSwitch(!tabSwitch);
   };
@@ -74,6 +78,7 @@ const Profile = () => {
 
         const tempPosseData = [];
         const tempLikesData = [];
+        const tempPostsData = [];
 
         const header = {
           id: '1',
@@ -135,13 +140,37 @@ const Profile = () => {
           })
           .catch(console.error);
 
+        tempPostsData.push(header);
+        tempPostsData.push(buttons);
+
+        getUsersPosts()
+          .then(postsRes => {
+            if (postsRes.data === undefined) return;
+
+            if (postsRes.data.results?.length > 0) {
+              postsRes.data.results.forEach(post => {
+                post.imagePath = 'https://picsum.photos/200';
+                post.id = post.postID;
+                post.type = 'post';
+                post.currUser = res.data.username;
+                tempPostsData.push(post);
+              });
+            } else {
+              tempPostsData.push(empty);
+            }
+          })
+          .catch(console.error);
+
         setPosseData(tempPosseData);
         setLikesData(tempLikesData);
+        setPostsData(tempPostsData);
         
         if (selectedIndex === 0)
           setData(tempPosseData);
-        else
+        else if (selectedIndex === 1)
           setData(tempLikesData);
+        else if (selectedIndex === 2)
+          setData(tempPostsData);
         
         setRefreshing(false);
         setTabSwitch(!tabSwitch);

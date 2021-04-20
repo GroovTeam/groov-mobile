@@ -25,7 +25,7 @@ export default class ProfileButtons extends React.Component {
   }
 
   render () {
-    const buttons = ['Posses', 'Likes'];
+    const buttons = ['Posses', 'Likes', 'Posts'];
     const { selectedIndex } = this.state;
 
     return (
