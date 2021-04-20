@@ -20,6 +20,7 @@ ApiConfig.post = baseURL + ApiConfig.posts;
 ApiConfig.feed = baseURL + ApiConfig.posts + '/feed';
 ApiConfig.like = baseURL + ApiConfig.posts + '/like';
 ApiConfig.unlike = baseURL + ApiConfig.posts + '/unlike';
+ApiConfig.deletePost = baseURL + ApiConfig.posts + '/delete';
 
 ApiConfig.comments = '/comments';
 ApiConfig.getComments = baseURL + ApiConfig.comments;

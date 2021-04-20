@@ -68,9 +68,11 @@ const Profile = () => {
     else if (item.type === 'posse')
       return <Posse data={item} />;
     else if (item.type === 'post')
+      return <Post data={item} username={item.currUser} canBeDeleted={true} updatePosts={updateProfile} />;
+    else if (item.type === 'likedPost')
       return <Post data={item} username={item.currUser} />;
     else if (item.type === 'posseAdd')
-      return <CreatePosse createFunction={createPosse}/>;
+      return <CreatePosse createFunction={createPosse} />;
     else if (item.type === 'empty')
       return <Empty />;
   };
@@ -136,7 +138,7 @@ const Profile = () => {
               likedRes.data.results.forEach(post => {
                 post.imagePath = 'https://picsum.photos/200';
                 post.id = post.postID;
-                post.type = 'post';
+                post.type = 'likedPost';
                 post.currUser = res.data.username;
                 tempLikesData.push(post);
               });

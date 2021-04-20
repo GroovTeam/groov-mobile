@@ -1,21 +1,11 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import PostStyles from '../PostStyles';
+import Styles from '../Styles';
 
 const Empty = () => {
   return (
-    <View style={[
-      PostStyles.container,
-      PostStyles.flexVert,
-      PostStyles.topBorder,
-    ]}>
-      <View style={[
-        PostStyles.container,
-        PostStyles.flexHori,
-        PostStyles.padded,
-      ]}>
-        <Text style={PostStyles.posseText}>Uh oh! Looks like there&apos;s nothing to show here :(</Text>
-      </View>
+    <View style={Styles.container}>
+      <Text style={{paddingHorizontal: 35, fontSize: 32, marginTop: 25, fontWeight: '200', textAlign: 'center'}}>Uh oh! Looks like there&apos;s nothing to show here :(</Text>
     </View>
   );
 };

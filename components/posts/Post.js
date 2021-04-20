@@ -5,14 +5,17 @@ import Posses from './Posses';
 import Tags from './Tags';
 import Collapsible from 'react-native-collapsible';
 import PostStyles from '../PostStyles';
+import ConfirmDeletePostModal from './ConfirmDeletePostModal';
+import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
 
-const Post = ({ data, username }) => {
+const Post = ({ data, username, canBeDeleted, updatePosts }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
   const [tagsShown, setTagsShown] = useState(false);
+  const [deletingPost, setDeletingPost] = useState(false);
 
   useEffect(() => {
     async function asyncWrapper() {
@@ -33,6 +36,19 @@ const Post = ({ data, username }) => {
     }
     asyncWrapper();
   }, []);
+
+  const confirmDeletePost = () => {
+    setDeletingPost(true);
+  };
+
+  const remove =
+  canBeDeleted ? (
+    <TouchableOpacity onPress={confirmDeletePost}>
+      <Ionicons name={'trash-outline'} size={24} />
+    </TouchableOpacity>
+  ) : (
+    <View />
+  );
 
   // Otherwise return post container.
   return (
@@ -57,6 +73,9 @@ const Post = ({ data, username }) => {
           ]}>
             <Text style={PostStyles.user}>{'@' + data.username}</Text>
             <Posses posses={data.posses} />
+            <View style={{marginLeft: 'auto'}}>
+              {remove}
+            </View>
           </View>
           <Text style={PostStyles.body}>{data.content}</Text>
           <View style={{marginTop: 10}}>
@@ -78,6 +97,12 @@ const Post = ({ data, username }) => {
         likes={data.likes}
         recordingURL={recordingURL}
         beatURL={beatURL}
+      />
+      <ConfirmDeletePostModal
+        id={data.postID}
+        deleting={deletingPost}
+        updateDeleting={setDeletingPost}
+        updatePosts={updatePosts}
       />
     </View>
   );
