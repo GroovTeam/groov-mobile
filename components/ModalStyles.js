@@ -66,6 +66,13 @@ const ModalStyles = StyleSheet.create({
   multiline: {
     borderWidth: 1,
   },
+  posseInput: {
+    borderColor: 'black',
+    borderBottomWidth: 1,
+    borderRadius: 15,
+    padding: 10,
+    width: windowWidth * 0.8,
+  },
 });
 
 export default ModalStyles;

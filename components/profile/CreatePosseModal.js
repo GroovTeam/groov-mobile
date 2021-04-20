@@ -4,13 +4,22 @@ import { windowWidth, windowHeight } from '../../utils/Dimensions';
 import createPosse from '../../utils/createPosse';
 import joinPosse from '../../utils/joinPosse';
 import ModalStyles from '../ModalStyles';
+import GenreSelections from '../genreButtons/GenreSelections';
+import Tags from '../../utils/Tags';
 
 const CreatePosseModal = ({ creating, updateCreating, refreshProfile }) => {
   const [content, setContent] = useState({});
+  const [tags, setTags] = useState(Tags);
 
   const updateContent = (key, value) => {
     content[key] = value;
     setContent(content);
+  };
+
+  const updateSelectedTags = (key) => {
+    const currTags = tags;
+    currTags[key] = !currTags[key];
+    setTags(currTags);
   };
 
   const create = body => {
@@ -26,6 +35,13 @@ const CreatePosseModal = ({ creating, updateCreating, refreshProfile }) => {
 
   const prepareCreate = () => {
     const body = {};
+    const posseTags = [];
+    for (const key of tags)
+      if (tags[key])
+        posseTags.push(key);
+
+    updateContent(tags, posseTags);
+
     for (const [key, value] of Object.entries(content))
       if (value != '')
         body[key] = value;
@@ -52,7 +68,7 @@ const CreatePosseModal = ({ creating, updateCreating, refreshProfile }) => {
                 </Text>
                 <TextInput
                   style={[
-                    ModalStyles.input,
+                    ModalStyles.posseInput,
                     ModalStyles.multiline,
                     {marginTop: 15, marginBottom: 15}
                   ]}
@@ -64,11 +80,17 @@ const CreatePosseModal = ({ creating, updateCreating, refreshProfile }) => {
                 </Text>
                 <TextInput
                   style={[
-                    ModalStyles.input,
+                    ModalStyles.posseInput,
                     ModalStyles.multiline,
                     {marginTop: 15}
                   ]}
                   onChangeText={text => updateContent('bio', text)}
+                />
+
+                <GenreSelections 
+                  data={tags}
+                  color={'#00FF0044'}
+                  updateButtons={updateSelectedTags}
                 />
               </View>
               <TouchableOpacity
