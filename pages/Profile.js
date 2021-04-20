@@ -17,8 +17,11 @@ import logout from '../utils/logout';
 import getProfile from '../utils/getProfile';
 import getLikedPosts from '../utils/getLikedPosts';
 import getUsersPosts from '../utils/getUsersPosts';
+import getProfileByUsername from '../utils/getProfileByUsername';
+import getLikedPostsByUsername from '../utils/getLikedPostsByUsername';
+import getPostsByUsername from '../utils/getPostsByUsername'
 
-const Profile = () => {
+const Profile = ({ username }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [posseData, setPosseData] = useState([]);
   const [likesData, setLikesData] = useState([]);
@@ -80,7 +83,11 @@ const Profile = () => {
   const updateProfile = () => {
     setRefreshing(true);
 
-    getProfile()
+    const getProf = username ? getProfileByUsername : getProfile;
+    const getLiked = username ? getLikedPostsByUsername : getLikedPosts;
+    const getPosts = username ? getPostsByUsername : getUsersPosts;
+
+    getProf()
       .then(res => {
         if (res.data === undefined) return;
 
@@ -130,7 +137,7 @@ const Profile = () => {
         tempLikesData.push(header);
         tempLikesData.push(buttons);
 
-        getLikedPosts()
+        getLiked()
           .then(likedRes => {
             if (likedRes.data === undefined) return;
 
@@ -151,7 +158,7 @@ const Profile = () => {
         tempPostsData.push(header);
         tempPostsData.push(buttons);
 
-        getUsersPosts()
+        getPosts()
           .then(postsRes => {
             if (postsRes.data === undefined) return;
 
