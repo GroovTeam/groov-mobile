@@ -74,7 +74,7 @@ const Profile = ({ username, likeSearch, backToFeed }) => {
       return <Post
         data={item}
         username={likeSearch ? likeSearch : item.currUser}
-        canBeDeleted={true}
+        canBeDeleted={!username}
         updatePosts={updateProfile} 
       />;
     else if (item.type === 'likedPost')
