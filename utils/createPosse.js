@@ -2,12 +2,8 @@ import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
-const post = async () => {
-  firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
-
-    const body = {
-      name: 'the peeps',
-    };
+const post = async (body) => {
+  return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
 
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -15,7 +11,7 @@ const post = async () => {
 
     console.log('Creating posse!!');
 
-    axios.post(
+    return axios.post(
       ApiConfig.createPosse,
       body,
       config,
