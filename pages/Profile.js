@@ -52,7 +52,7 @@ const Profile = () => {
     else if (item.type === 'posse')
       return <Posse data={item} />;
     else if (item.type === 'post')
-      return <Post data={item} />;
+      return <Post data={item} username={item.currUser} />;
     else if (item.type === 'posseAdd')
       return <CreatePosse />;
     else if (item.type === 'empty')
@@ -118,9 +118,9 @@ const Profile = () => {
             if (likedRes.data.results?.length > 0) {
               likedRes.data.results.forEach(post => {
                 post.imagePath = 'https://picsum.photos/200';
-                post.alreadyLiked = true;
                 post.id = post.postID;
                 post.type = 'post';
+                post.currUser = res.data.username;
                 tempLikesData.push(post);
               });
             } else {
