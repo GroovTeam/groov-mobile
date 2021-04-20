@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, SafeAreaView } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView, View } from 'react-native';
 import NavBar, { NavButton, NavButtonText, NavTitle } from 'react-native-nav';
 import { StatusBar } from 'expo-status-bar';
 import Styles from '../components/Styles';
@@ -21,7 +21,7 @@ import getProfileByUsername from '../utils/getProfileByUsername';
 import getLikedPostsByUsername from '../utils/getLikedPostsByUsername';
 import getPostsByUsername from '../utils/getPostsByUsername'
 
-const Profile = ({ username }) => {
+const Profile = ({ username, likeSearch, backToFeed }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [posseData, setPosseData] = useState([]);
   const [likesData, setLikesData] = useState([]);
@@ -71,9 +71,17 @@ const Profile = ({ username }) => {
     else if (item.type === 'posse')
       return <Posse data={item} />;
     else if (item.type === 'post')
-      return <Post data={item} username={item.currUser} canBeDeleted={true} updatePosts={updateProfile} />;
+      return <Post
+        data={item}
+        username={likeSearch ? likeSearch : item.currUser}
+        canBeDeleted={true}
+        updatePosts={updateProfile} 
+      />;
     else if (item.type === 'likedPost')
-      return <Post data={item} username={item.currUser} />;
+      return <Post
+        data={item}
+        username={likeSearch ? likeSearch : item.currUser}
+      />;
     else if (item.type === 'posseAdd')
       return <CreatePosse createFunction={createPosse} />;
     else if (item.type === 'empty')
@@ -83,11 +91,11 @@ const Profile = ({ username }) => {
   const updateProfile = () => {
     setRefreshing(true);
 
-    const getProf = username ? getProfileByUsername : getProfile;
-    const getLiked = username ? getLikedPostsByUsername : getLikedPosts;
-    const getPosts = username ? getPostsByUsername : getUsersPosts;
+    const getProf = username ? getProfileByUsername(username) : getProfile();
+    const getLiked = username ? getLikedPostsByUsername(username) : getLikedPosts();
+    const getPosts = username ? getPostsByUsername(username) : getUsersPosts();
 
-    getProf()
+    getProf
       .then(res => {
         if (res.data === undefined) return;
 
@@ -137,7 +145,7 @@ const Profile = ({ username }) => {
         tempLikesData.push(header);
         tempLikesData.push(buttons);
 
-        getLiked()
+        getLiked
           .then(likedRes => {
             if (likedRes.data === undefined) return;
 
@@ -158,7 +166,7 @@ const Profile = ({ username }) => {
         tempPostsData.push(header);
         tempPostsData.push(buttons);
 
-        getPosts()
+        getPosts
           .then(postsRes => {
             if (postsRes.data === undefined) return;
 
@@ -197,22 +205,40 @@ const Profile = ({ username }) => {
     updateProfile();
   }, []);
 
+  const editProfileLink =
+    username ? (
+      <View />
+    ) : (
+      <NavButton onPress={editProfile}>
+        <NavButtonText style={Styles.blueAccentText}>
+          Edit Profile
+        </NavButtonText>
+      </NavButton>
+    );
+
+  const logoutOrGoBack =
+    username ? (
+      <NavButton onPress={backToFeed}>
+        <NavButtonText style={Styles.blueAccentText}>
+          Go back
+        </NavButtonText>
+      </NavButton>
+    ) : (
+      <NavButton onPress={logoutUser}>
+        <NavButtonText style={Styles.blueAccentText}>
+          Logout
+        </NavButtonText>
+      </NavButton>
+    );
+
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>
       <NavBar style={NavStyles}>
         <NavTitle style={NavStyles.title}>
           {'Profile'}
         </NavTitle>
-        <NavButton onPress={editProfile}>
-          <NavButtonText style={Styles.blueAccentText}>
-            Edit Profile
-          </NavButtonText>
-        </NavButton>
-        <NavButton onPress={logoutUser}>
-          <NavButtonText style={Styles.blueAccentText}>
-            Logout
-          </NavButtonText>
-        </NavButton>
+        {editProfileLink}
+        {logoutOrGoBack}
       </NavBar>
       <FlatList
         style={{backgroundColor: 'white'}}
