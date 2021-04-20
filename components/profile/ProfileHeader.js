@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import GenreSelections from '../genreButtons/GenreSelections';
-import favicon from '../../assets/favicon.png';
+import axios from 'axios';
 
 const ProfileHeaderStyles = StyleSheet.create ({
   container: {
@@ -27,12 +27,24 @@ const ProfileHeaderStyles = StyleSheet.create ({
   },
 });
 
-const ProfileHeader = ({data}) => {
+const ProfileHeader = ({ data }) => {
+
+  const [profilePhoto, setProfilePhoto] = useState(undefined);
+
+  useEffect(() => {
+    // Get their image from the server.
+    axios.get(data.imagePath)
+    .then(res => setProfilePhoto(res.request.responseURL))
+    .catch(err => console.error(err));
+  }, []);
+
+   
+
   return (
     <View style={ProfileHeaderStyles.container}>
       <Image
         style={ProfileHeaderStyles.image}
-        source={favicon}
+        source={{uri: profilePhoto}}
       />
       <Text style={ProfileHeaderStyles.nameText}>{data.firstName + ' ' + data.lastName}</Text>
       <Text style={ProfileHeaderStyles.userText}>{'@' + data.username}</Text>

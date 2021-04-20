@@ -9,6 +9,7 @@ import Post from '../../components/posts/Post';
 import getFeed from '../../utils/getFeed';
 import getProfile from '../../utils/getProfile';
 import CreatePost from './CreatePost';
+import Profile from '../Profile';
 import { StatusBar } from 'expo-status-bar';
 import { windowHeight } from '../../utils/Dimensions';
 
@@ -30,6 +31,18 @@ const Feed = () => {
   const [posting, setPosting] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [username, setUsername] = useState(undefined);
+  const [viewingProfile, setViewingProfile] = useState(false);
+  const [viewedProfile, setViewedProfile] = useState()
+
+  const viewProfile = (profileUsername) => {
+    setViewedProfile(profileUsername);
+    setViewingProfile(true);
+  }
+
+  const backToFeed = () => {
+    setViewingProfile(false);
+    updateFeed();
+  };
 
   // Retrieve the user's feed from the server.
   const updateFeed = () => {
@@ -72,11 +85,18 @@ const Feed = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <Post data={item} username={username} />
+    <Post
+      data={item}
+      username={username}
+      viewProfile={viewProfile}
+    />
   );
 
   if (posting)
     return <CreatePost returnToFeed={updateFeed} />;
+
+  if (viewingProfile)
+    return <Profile username={viewedProfile} likeSearch={username} backToFeed={backToFeed} />;
 
   return (
     <SafeAreaView style={[SafeViewAndroid.AndroidSafeArea, {flex: 1, backgroundColor: 'white'}]}>

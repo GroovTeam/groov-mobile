@@ -10,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import getFile from '../../utils/getFile';
 
-const Post = ({ data, username, canBeDeleted, updatePosts }) => {
+const Post = ({ data, username, canBeDeleted, updatePosts, viewProfile }) => {
   const [profilePhoto, setProfilePhoto] = useState(undefined);
   const [beatURL, setBeatURL] = useState(undefined);
   const [recordingURL, setRecordingURL] =  useState(undefined);
@@ -71,7 +71,9 @@ const Post = ({ data, username, canBeDeleted, updatePosts }) => {
             PostStyles.container,
             PostStyles.flexHori
           ]}>
-            <Text style={PostStyles.user}>{'@' + data.username}</Text>
+            <TouchableOpacity onPress={() => viewProfile(data.username)}>
+              <Text style={PostStyles.user}>{'@' + data.username}</Text>
+            </TouchableOpacity>
             <Posses posses={data.posses} />
             <View style={{marginLeft: 'auto'}}>
               {remove}
