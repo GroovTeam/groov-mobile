@@ -15,7 +15,7 @@ const post = async (body) => {
       ApiConfig.createPosse,
       body,
       config,
-    ).then(console.log).catch(console.error);
+    ).catch(console.error);
   }).catch(console.error);
 };
 
