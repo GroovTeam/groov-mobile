@@ -2,7 +2,7 @@ import firebase from './Firebase';
 import axios from 'axios';
 import ApiConfig from './ApiConfig';
 
-// Get the current user's posses.
+// Get all of the current posses.
 const getPosses = async () => {
   return firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(token => {
 

@@ -9,6 +9,8 @@ import ProfileButtons from '../components/profile/ProfileButtons';
 import EditProfileModal from '../components/profile/EditProfileModal';
 import CreatePosse from '../components/profile/CreatePosse';
 import CreatePosseModal from '../components/profile/CreatePosseModal';
+import JoinPosse from '../components/profile/JoinPosse';
+import JoinPosseModal from '../components/profile/JoinPosseModal';
 import Posse from '../components/profile/Posse';
 import Post from '../components/posts/Post';
 import Empty from '../components/profile/Empty';
@@ -31,6 +33,7 @@ const Profile = ({ username, likeSearch, backToFeed }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [editingProfile, setEditingProfile] = useState(false);
   const [creatingPosse, setCreatingPosse] = useState(false);
+  const [joiningPosse, setJoiningPosse] = useState(false);
 
   const Tabs = {
     POSSES: 0,
@@ -59,6 +62,10 @@ const Profile = ({ username, likeSearch, backToFeed }) => {
     setCreatingPosse(true);
   };
 
+  const joinPosse = () => {
+    setJoiningPosse(true);
+  };
+
   const logoutUser = async () => {
     await logout();
   };
@@ -84,6 +91,8 @@ const Profile = ({ username, likeSearch, backToFeed }) => {
       />;
     else if (item.type === 'posseAdd')
       return <CreatePosse createFunction={createPosse} />;
+    else if (item.type === 'posseJoin')
+      return <JoinPosse joinFunction={joinPosse} />;
     else if (item.type === 'empty')
       return <Empty />;
   };
@@ -127,9 +136,15 @@ const Profile = ({ username, likeSearch, backToFeed }) => {
           type: 'posseAdd',
         };
 
+        const posseJoin = {
+          id: '5',
+          type: 'posseJoin',
+        };
+
         tempPosseData.push(header);
         tempPosseData.push(buttons);
         tempPosseData.push(posseAdd);
+        tempPosseData.push(posseJoin);
 
         if (res.data.possesData) {
           res.data.possesData.forEach(f => {
@@ -264,6 +279,11 @@ const Profile = ({ username, likeSearch, backToFeed }) => {
       <CreatePosseModal
         creating={creatingPosse}
         updateCreating={setCreatingPosse}
+        refreshProfile={updateProfile}
+      />
+      <JoinPosseModal 
+        joining={joiningPosse}
+        updateJoining={setJoiningPosse}
         refreshProfile={updateProfile}
       />
       <StatusBar style='dark' backgroundColor='white' />
