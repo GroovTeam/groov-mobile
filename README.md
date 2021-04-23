@@ -1,4 +1,4 @@
-# Expo App
+# Groov
 > A mobile client for ThePoopCrew's music social media.
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/fdbefffc0ef345a8b72bfd5a28793d89)](https://www.codacy.com/gh/ThePoopCrew/expo-app/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ThePoopCrew/expo-app&amp;utm_campaign=Badge_Grade)
